@@ -36,3 +36,28 @@
     transform: rotate(360deg);
   }
 }
+.container{
+  display: flex;
+  align-items: center;
+}
+.card{
+  margin-top: 1rem;
+  width: 18rem;
+  max-height: 360px;
+}
+
+.card-select{
+  background-color: aquamarine;
+  height: 100%;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+Footer{
+  background-color: lime;
+  
+}
+
+.search{
+  margin: 10px;
+}
