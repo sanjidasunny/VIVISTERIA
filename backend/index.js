@@ -7,11 +7,11 @@ mongoDB();
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "https://vivisteria.vercel.app");
-  res.header("Access-Control-Allow-Headers",
-    "Origin, X-requested-With, Content-Type,Accept"
-  );
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   next();
 })
+
 
 app.use(express.json());
 app.get('/', query('person').notEmpty(), (req, res) => {
