@@ -1,6 +1,6 @@
 import React from "react";
 
-function Carousel() {
+export default function Carousel() {
   return (
     <div>
       <div>
@@ -10,32 +10,22 @@ function Carousel() {
           data-bs-ride="carousel"
         >
           <div className="carousel-inner">
-            <div
-              className="carousel-caption d-none d-md-block"
-              style={{ zIndex: "10" }}
-            ></div>
             <div className="carousel-item active">
               <img
-                src="https://source.unsplash.com/random/?pasta"
+                src="https://source.unsplash.com/random/900*700/?burger"
                 className="d-block w-100"
-                style={{ filter: "brightness(30%)" }}
-                alt="..."
               />
             </div>
             <div className="carousel-item">
               <img
-                src="https://source.unsplash.com/random/?pastry"
+                src="https://source.unsplash.com/random/900*700/?burger"
                 className="d-block w-100"
-                style={{ filter: "brightness(30%)" }}
-                alt="..."
               />
             </div>
             <div className="carousel-item">
               <img
-                src="https://source.unsplash.com/random/?burger"
+                src="https://source.unsplash.com/random/900*700/?burger"
                 className="d-block w-100"
-                style={{ filter: "brightness(30%)" }}
-                alt="..."
               />
             </div>
           </div>
@@ -68,12 +58,3 @@ function Carousel() {
     </div>
   );
 }
-
-export default Carousel;
-/*
- <form className="d-flex">
-      <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button className="btn btn-outline-success" type="submit">Search</button>
-    </form>
-
-*/

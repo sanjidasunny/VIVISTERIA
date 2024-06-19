@@ -2,13 +2,13 @@ import React from 'react'
 
 function Card() {
   return (
-    <div>
-      <div className="card">
+    <div style={{ marginLeft: "10px" }}>
+      <div className="card" style={{ "width": "18rem;" }}>
         <img src="https://static01.nyt.com/images/2023/12/20/multimedia/LH-Shrimp-Pasta-ftvh/LH-Shrimp-Pasta-ftvh-superJumbo.jpg" className="card-img-top" alt="..." />
         <div className="card-body">
           <h5 className="card-title">Card title</h5>
           <p className="card-text">Some important text</p>
-          <div className="container">
+          <div className="d-flex align-items-center">
             <select className="card-select" name="" id="">
               <option value="half">Half</option>
               <option value="full">Full</option>
