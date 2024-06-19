@@ -36,10 +36,7 @@
     transform: rotate(360deg);
   }
 }
-.container{
-  display: flex;
-  align-items: center;
-}
+
 .card{
   margin-top: 1rem;
   width: 18rem;
