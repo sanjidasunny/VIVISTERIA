@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios"; 
 
 function Signup() {
   const [credentials, setcredentials] = useState({
@@ -11,7 +12,7 @@ function Signup() {
   let navigate = useNavigate();
   const submit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/createuser", {
+    const response = await axios("https://vivisteria.vercel.app/api/createuser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
