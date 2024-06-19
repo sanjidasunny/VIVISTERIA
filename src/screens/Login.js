@@ -27,6 +27,8 @@ function Login() {
     if (!json.success) {
       alert("enter valid email or password");
     } else {
+      localStorage.setItem("authToken", json.authToken);
+      console.log(localStorage.getItem("authToken"));
       navigate("/");
     }
   };
