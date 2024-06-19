@@ -6,7 +6,7 @@ const mongoDB = require("./database")
 mongoDB();
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", "https://vivisteria.vercel.app");
   res.header("Access-Control-Allow-Headers",
     "Origin, X-requested-With, Content-Type,Accept"
   );
