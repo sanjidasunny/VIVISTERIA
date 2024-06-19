@@ -1,7 +1,7 @@
 const express = require('express')
 const { query, matchedData, validationResult } = require('express-validator');
 const app = express()
-const port = 5000
+const port = "https://vivisteria-2lrx.vercel.app"
 const mongoDB = require("./database")
 mongoDB();
 
