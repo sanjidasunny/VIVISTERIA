@@ -12,7 +12,7 @@ function Signup() {
   let navigate = useNavigate();
   const submit = async (e) => {
     e.preventDefault();
-    const response = await axios("https://vivisteria.vercel.app/api/createuser", {
+    const response = await axios("https://vivisteria-2lrx.vercel.app//api/createuser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
