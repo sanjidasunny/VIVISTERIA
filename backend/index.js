@@ -19,7 +19,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use('/api', createUser); // Use the createUser route
-
+app.options('*', cors(corsOptions));
 app.get('/', query('person').notEmpty(), (req, res) => {
   res.send('Hello World!');
 });
