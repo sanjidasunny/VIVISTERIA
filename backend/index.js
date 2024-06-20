@@ -11,7 +11,7 @@ mongoDB();
 
 const corsOptions = {
   origin: 'https://vivisteria.vercel.app',
-  methods: ['GET', 'POST'], 
+  methods: ['GET', 'POST'], // Allow only specific methods
   allowedHeaders: ['Content-Type'], 
 };
 
@@ -23,7 +23,6 @@ app.use('/api', createUser); // Use the createUser route
 app.get('/', query('person').notEmpty(), (req, res) => {
   res.send('Hello World!');
 });
-app.options('*', cors(corsOptions));
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

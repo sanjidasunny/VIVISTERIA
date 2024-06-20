@@ -3,38 +3,48 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Signup() {
-  const [credentials, setcredentials] = useState({
+  const [credentials, setCredentials] = useState({
     name: "",
     password: "",
     email: "",
     location: "",
   });
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+
   const submit = async (e) => {
     e.preventDefault();
-    const response = await fetch("https://vivisteria-2lrx.vercel.app//api/createuser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: credentials.name,
-        password: credentials.password,
-        email: credentials.email,
-        location: credentials.location,
-      }),
-    });
-    const json = await response.json();
-    console.log(json);
 
-    if (!json.success) {
-      alert("enter valid credentials");
-    } else {
-      navigate("/login");
+    try {
+      const response = await axios.post(
+        "https://vivisteria-2lrx.vercel.app/api/createuser",
+        {
+          name: credentials.name,
+          password: credentials.password,
+          email: credentials.email,
+          location: credentials.location,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log(response.data);
+
+      if (!response.data.success) {
+        alert("Enter valid credentials");
+      } else {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error('Error creating user:', error);
+      alert("An error occurred while creating the user. Please try again.");
     }
   };
+
   const onChange = (e) => {
-    setcredentials({ ...credentials, [e.target.name]: e.target.value });
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
   return (
@@ -52,6 +62,7 @@ function Signup() {
               value={credentials.name}
               name="name"
               id="userName"
+              required
             />
           </div>
           <div className="mb-3">
@@ -66,6 +77,7 @@ function Signup() {
               name="email"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
+              required
             />
             <div id="emailHelp" className="form-text">
               We'll never share your email with anyone else.
@@ -82,11 +94,12 @@ function Signup() {
               value={credentials.password}
               name="password"
               id="exampleInputPassword1"
+              required
             />
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputLocation1" className="form-label">
-              address
+              Address
             </label>
             <input
               type="text"
@@ -95,6 +108,7 @@ function Signup() {
               value={credentials.location}
               name="location"
               id="exampleInputLocation1"
+              required
             />
           </div>
 
@@ -102,7 +116,7 @@ function Signup() {
             Submit
           </button>
           <Link to="/login" className="m-3" style={{ color: "black" }}>
-            already has an account? Log in
+            Already have an account? Log in
           </Link>
         </form>
       </div>
