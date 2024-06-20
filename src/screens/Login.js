@@ -1,49 +1,39 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from 'react'
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: ''
+  const [credentials, setcredentials] = useState({
+    password: "",
+    email: "",
   });
-
-  const navigate = useNavigate();
-
+  let navigate = useNavigate();
   const submit = async (e) => {
     e.preventDefault();
+    const response = await fetch("http://localhost:5000/api/loginuser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
 
-    try {
-      const response = await axios.post(
-        'https://vivisteria-2lrx.vercel.app/api/loginuser',
-        {
-          email: credentials.email,
-          password: credentials.password
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-      );
+        password: credentials.password,
+        email: credentials.email,
 
-      console.log(response.data);
+      }),
+    });
+    const json = await response.json();
+    console.log(json);
 
-      if (!response.data.success) {
-        alert('Enter valid email or password');
-      } else {
-        localStorage.setItem('authToken', response.data.authToken);
-        console.log(localStorage.getItem('authToken'));
-        navigate('/');
-      }
-    } catch (error) {
-      console.error('Error logging in:', error);
-      alert('An error occurred while logging in. Please try again.');
+    if (!json.success) {
+      alert("enter valid email or password");
+    } else {
+      localStorage.setItem("authToken", json.authToken);
+      console.log(localStorage.getItem("authToken"));
+      navigate("/");
     }
   };
-
   const onChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    setcredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
   return (
@@ -62,7 +52,6 @@ function Login() {
               name="email"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
-              required
             />
             <div id="emailHelp" className="form-text">
               We'll never share your email with anyone else.
@@ -79,19 +68,18 @@ function Login() {
               value={credentials.password}
               name="password"
               id="exampleInputPassword1"
-              required
             />
           </div>
           <button type="submit" className="btn btn-success">
             Submit
           </button>
-          <Link to="/signup" className="m-3" style={{ color: 'black' }}>
+          <Link to="/signup" className="m-3" style={{ color: "black" }}>
             Don't have an account? Sign up
           </Link>
         </form>
       </div>
     </>
-  );
+  )
 }
 
-export default Login;
+export default Login
