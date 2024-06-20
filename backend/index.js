@@ -10,9 +10,9 @@ const port = 5000;
 mongoDB();
 //https://vivisteria.vercel.app
 const allowCrossDomain = (req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "https://vivisteria.vercel.app");
   res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 };
 
@@ -20,7 +20,7 @@ app.use(allowCrossDomain);
 app.use(express.json());
 
 app.use('/api', createUser); // Use the createUser route
-app.options('*', allowCrossDomain);
+app.options('https://vivisteria.vercel.app', allowCrossDomain);
 app.get('/', query('person').notEmpty(), (req, res) => {
   res.send('Hello World!');
 });
