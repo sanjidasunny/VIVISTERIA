@@ -5,16 +5,17 @@ const mongoDB = require('./database');
 const createUser = require('./Routes/CreateUser'); // Import the createUser route
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT||5000;
 
 mongoDB();
 
 const corsOptions = {
   origin: 'https://vivisteria.vercel.app',
-  optionsSuccessStatus: 200
+  credential:true,
+  methods:["POST","GET","PUT","DELETE"],
 };
-
-app.use(cors(corsOptions));
+app.options("",cors(corsOptions));
+app.use(cors({corsOptions}));
 app.use(express.json());
 
 app.use('/api', createUser); // Use the createUser route
