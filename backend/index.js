@@ -10,7 +10,7 @@ const port = 5000;
 mongoDB();
 //https://vivisteria.vercel.app
 const allowCrossDomain = (req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://vivisteria.vercel.app");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   next();
