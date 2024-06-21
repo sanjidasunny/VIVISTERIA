@@ -7,6 +7,7 @@ import Search from "../components/Search";
 function Home() {
   const [foodCat, setFoodCat] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
+  const [search, setSearch] = useState(""); 
 
   const loadData = async () => {
     let response = await fetch("http://localhost:5000/api/foodData", {
@@ -30,7 +31,7 @@ function Home() {
         <Navbar />
       </div>
       <div>
-        <Search />
+        <Search setSearch={setSearch} /> 
       </div>
       <div className="container">
         {foodCat != [] ? (
@@ -43,8 +44,11 @@ function Home() {
                 </div>
                 <hr />
                 {foodItem != [] ?
-                  foodItem.filter((item) => item.CategoryName == data.CategoryName)
-                    .map(filterItems => {
+                  foodItem.filter((item) =>  (
+                    (item.CategoryName === data.CategoryName) &&typeof search === 'string' &&
+                    item.name.toLowerCase().includes(search.toLowerCase())
+                  ))                
+                  .map(filterItems => {
                       return(
                         <div key={filterItems._id} className="col-12 col-md-6 col-lg-3">
                         <Card foodName = {filterItems.name}
