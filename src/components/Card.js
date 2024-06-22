@@ -6,7 +6,7 @@ function Card(props) {
 
   return (
     <div style={{ marginLeft: "10px" }}>
-      <div className="card" style={{ width: "18rem" }}>
+      <div className="card " style={{ width: "18rem" }}>
         <img
           src={props.imgSrc}
           className="card-img-top"
@@ -16,8 +16,8 @@ function Card(props) {
           <h5 className="card-title">{props.foodName}</h5>
           <div className="d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center">
-              
-              <select className="m-2 h-100 bg-success rounded">
+
+              <select className="m-2 p-1 h-100  rounded">
                 {Array.from(Array(6), (e, i) => (
                   <option key={i + 1} value={i + 1}>
                     {i + 1}
@@ -26,10 +26,10 @@ function Card(props) {
               </select>
             </div>
 
-            
+
 
             <div className="d-flex align-items-center">
-              
+
               <select className="form-select">
                 {priceOptions.map((data) => (
                   <option key={data} value={options[data]}>
@@ -38,7 +38,7 @@ function Card(props) {
                 ))}
               </select>
             </div>
-           
+
             <div className="text-uppercase">price</div>
           </div>
         </div>

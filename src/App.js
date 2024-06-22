@@ -7,6 +7,7 @@ import "../node_modules/bootstrap/dist/js/bootstrap.bundle";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Profile from "./screens/Profile.js";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
+          <Route exact path="/profile" element={<Profile />} />
         </Routes>
       </div>
     </Router>

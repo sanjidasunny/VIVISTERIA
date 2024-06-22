@@ -41,7 +41,7 @@ function Login() {
       <div className="container mt-3 p-10">
         <form onSubmit={submit}>
           <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
+            <label htmlFor="exampleInputEmail1" className="form-label text-black">
               Email address
             </label>
             <input
@@ -58,7 +58,7 @@ function Login() {
             </div>
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
+            <label htmlFor="exampleInputPassword1" className="form-label text-black">
               Password
             </label>
             <input
