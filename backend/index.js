@@ -2,25 +2,24 @@ const express = require('express');
 const cors = require('cors');
 const { query } = require('express-validator');
 const mongoDB = require('./database');
-const createUser = require('./Routes/CreateUser'); // Import the createUser route
+const createUser = require('./Routes/CreateUser');
 
 const app = express();
 const port = 5000;
 
 mongoDB();
-//https://vivisteria.vercel.app
-const allowCrossDomain = (req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://vivisteria.vercel.app");
-  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-};
 
-app.use(allowCrossDomain);
+// Allow requests from http://vivisteria.vercel.app
+app.use(cors({
+  origin: 'http://vivisteria.vercel.app',
+  methods: ['POST', 'GET', 'PUT'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 
-app.use('/api', createUser); // Use the createUser route
-app.options('http://vivisteria.vercel.app', allowCrossDomain);
+app.use('/api', createUser);
+
 app.get('/', query('person').notEmpty(), (req, res) => {
   res.send('Hello World!');
 });
