@@ -1,25 +1,30 @@
-const express = require('express')
-const { query, matchedData, validationResult } = require('express-validator');
-const app = express()
-const port = 5000
-const mongoDB = require("./database")
+const express = require('express');
+const cors = require('cors');
+const { query } = require('express-validator');
+const mongoDB = require('./database');
+const createUser = require('./Routes/CreateUser'); // Import the createUser route
+
+const app = express();
+const port = 5000;
+
 mongoDB();
-
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Headers",
-    "Origin, X-requested-With, Content-Type,Accept"
-  );
+//https://vivisteria.vercel.app
+const allowCrossDomain = (req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://vivisteria.vercel.app");
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
-})
+};
 
+app.use(allowCrossDomain);
 app.use(express.json());
+
+app.use('/api', createUser); // Use the createUser route
+app.options('https://vivisteria.vercel.app', allowCrossDomain);
 app.get('/', query('person').notEmpty(), (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello World!');
 });
 
-app.use('/api', require("./Routes/CreateUser"));
-app.use('/api', require("./Routes/DisplayData"));
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});
