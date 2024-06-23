@@ -13,7 +13,7 @@ function Signup() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://vivisteria-2lrx.vercel.app/api/createuser",
+        "https://vivisteria-2lrx.vercel.app/api/createuser",
         {
           name: credentials.name,
           password: credentials.password,

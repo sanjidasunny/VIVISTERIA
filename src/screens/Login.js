@@ -12,7 +12,7 @@ function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        'http://vivisteria-2lrx.vercel.app/api/loginuser',
+        'https://vivisteria-2lrx.vercel.app/api/loginuser',
         {
           email: credentials.email,
           password: credentials.password
