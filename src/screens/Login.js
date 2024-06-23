@@ -9,7 +9,7 @@ function Login() {
   let navigate = useNavigate();
   const submit = async (e) => {
     e.preventDefault();
-    const response = await fetch('https://vivisteria-2lrx.vercel.app/api/loginuser', {
+    const response = await fetch('http://vivisteria-2lrx.vercel.app/api/loginuser', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
