@@ -9,27 +9,32 @@ function Login() {
   let navigate = useNavigate();
   const submit = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://vivisteria-2lrx.vercel.app/api/loginuser', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    try {
+      const response = await axios.post(
+        'http://vivisteria-2lrx.vercel.app/api/loginuser',
+        {
+          email: credentials.email,
+          password: credentials.password
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
 
-        password: credentials.password,
-        email: credentials.email,
+      console.log(response.data);
 
-      }),
-    });
-    const json = await response.json();
-    console.log(json);
-
-    if (!json.success) {
-      alert("enter valid email or password");
-    } else {
-      localStorage.setItem("authToken", json.authToken);
-      console.log(localStorage.getItem("authToken"));
-      navigate("/");
+      if (!response.data.success) {
+        alert('Enter valid email or password');
+      } else {
+        localStorage.setItem('authToken', response.data.authToken);
+        console.log(localStorage.getItem('authToken'));
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+      alert('An error occurred while logging in. Please try again.');
     }
   };
   const onChange = (e) => {
