@@ -1,7 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import Cart from "../screens/Cart";
+import { Link, useNavigate } from "react-router-dom";
+import { Badge } from "react-bootstrap";
+import Modal from "../Modal";
+import { useCart } from "./ContextReducer";
 
 function Navbar() {
+  let data = useCart();
+  const navigate = useNavigate();
+  const Logout = () => {
+    localStorage.removeItem("authToken");
+    navigate("/login");
+  };
+  const [cartView, setCartView] = useState(false);
   return (
     <div>
       <nav className="nav navbar navbar-expand-lg shadow">
@@ -24,27 +35,62 @@ function Navbar() {
             ></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
+            <ul className="navbar-nav me-auto mb-2">
               <li className="nav-item">
                 <Link
-                  className="nav-link text-white"
+                  className="nav-link text-white active"
                   aria-current="page"
                   to="/profile"
                 >
                   Profile
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link text-white" to="/login">
+              {localStorage.getItem("authToken") ? (
+                <li className="nav-item">
+                  <Link
+                    className="nav-link text-white active"
+                    aria-current="page"
+                    to="/profile"
+                  >
+                    My Orders
+                  </Link>
+                </li>
+              ) : (
+                ""
+              )}
+            </ul>
+            {!localStorage.getItem("authToken") ? (
+              <div className="d-flex">
+                <Link className="btn bg-white mx-2 text-danger" to="/login">
                   Login
                 </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link text-white" to="/signup">
+                <Link className="btn bg-white mx-2 text-danger" to="/signup">
                   Sign up
                 </Link>
-              </li>
-            </ul>
+              </div>
+            ) : (
+              <div>
+                <div
+                  className="btn bg-white mx-2 text-danger"
+                  onClick={() => setCartView(true)}
+                >
+                  cart{" "}
+                  <Badge pill bg="danger">
+                    {data.length}
+                  </Badge>
+                </div>
+                {cartView ? (
+                  <Modal onClose={() => setCartView(false)}>
+                    <Cart />
+                  </Modal>
+                ) : (
+                  ""
+                )}
+                <div className="btn bg-white mx-2 text-danger" onClick={Logout}>
+                  Log out
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </nav>
