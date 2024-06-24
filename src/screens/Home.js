@@ -10,7 +10,7 @@ function Home() {
   const [search, setSearch] = useState("");
 
   const loadData = async () => {
-    let response = await fetch("http://vivisteria-2lrx.vercel.app//api/foodData", {
+    let response = await fetch("http://localhost:5000/api/foodData", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'

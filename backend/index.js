@@ -1,29 +1,25 @@
-const express = require('express');
-const cors = require('cors');
-const { query } = require('express-validator');
-const mongoDB = require('./database');
-const createUser = require('./Routes/CreateUser');
-
-const app = express();
-const port = 5000;
-
+const express = require('express')
+const { query, matchedData, validationResult } = require('express-validator');
+const app = express()
+const port = 5000
+const mongoDB = require("./database")
 mongoDB();
 
-// Allow requests from http://vivisteria.vercel.app
-app.use(cors({
-  origin: 'http://vivisteria.vercel.app',
-  methods: ['POST', 'GET', 'PUT'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Headers",
+    "Origin, X-requested-With, Content-Type,Accept"
+  );
+  next();
+})
 
 app.use(express.json());
-
-app.use('/api', createUser);
-
 app.get('/', query('person').notEmpty(), (req, res) => {
-  res.send('Hello World!');
+  res.send('Hello World!')
 });
 
+app.use('/api', require("./Routes/CreateUser"));
+app.use('/api', require("./Routes/DisplayData"));
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+  console.log(`Example app listening on port ${port}`)
+})

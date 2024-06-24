@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
+
 function Login() {
   const [credentials, setcredentials] = useState({
     password: "",
@@ -10,32 +9,27 @@ function Login() {
   let navigate = useNavigate();
   const submit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        'http://vivisteria-2lrx.vercel.app/api/loginuser',
-        {
-          email: credentials.email,
-          password: credentials.password
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-      );
+    const response = await fetch("http://localhost:5000/api/loginuser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
 
-      console.log(response.data);
+        password: credentials.password,
+        email: credentials.email,
 
-      if (!response.data.success) {
-        alert('Enter valid email or password');
-      } else {
-        localStorage.setItem('authToken', response.data.authToken);
-        console.log(localStorage.getItem('authToken'));
-        navigate('/');
-      }
-    } catch (error) {
-      console.error('Error logging in:', error);
-      alert('An error occurred while logging in. Please try again.');
+      }),
+    });
+    const json = await response.json();
+    console.log(json);
+
+    if (!json.success) {
+      alert("enter valid email or password");
+    } else {
+      localStorage.setItem("authToken", json.authToken);
+      console.log(localStorage.getItem("authToken"));
+      navigate("/");
     }
   };
   const onChange = (e) => {

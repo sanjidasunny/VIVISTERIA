@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
+
 function Signup() {
   const [credentials, setcredentials] = useState({
     name: "",
@@ -11,32 +11,25 @@ function Signup() {
   let navigate = useNavigate();
   const submit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://vivisteria-2lrx.vercel.app/api/createuser",
-        {
-          name: credentials.name,
-          password: credentials.password,
-          email: credentials.email,
-          location: credentials.location,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+    const response = await fetch("http://localhost:5000/api/createuser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: credentials.name,
+        password: credentials.password,
+        email: credentials.email,
+        location: credentials.location,
+      }),
+    });
+    const json = await response.json();
+    console.log(json);
 
-      console.log(response.data);
-
-      if (!response.data.success) {
-        alert("Enter valid credentials");
-      } else {
-        navigate("/login");
-      }
-    } catch (error) {
-      console.error('Error creating user:', error);
-      alert("An error occurred while creating the user. Please try again.");
+    if (!json.success) {
+      alert("enter valid credentials");
+    } else {
+      navigate("/login");
     }
   };
   const onChange = (e) => {
