@@ -6,9 +6,7 @@ const cors = require('cors');
 
 const Order = require('../models/orders');
 
-router.use(cors()); // Allow all CORS requests, adjust options as needed
-
-// Your route handling code here
+router.use(cors()); 
 
 
 router.post('/orderData', async (req, res) => {
@@ -42,5 +40,13 @@ router.post('/orderData', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+router.post('/myorderData', async (req, res) => {
+    try {
+        let myData=await Order.findOne({'email':req.body.email})
+        res.json({orderData:myData})
+    } catch (error) {
+        res.send("Server Error",error.message)
+    }
+})
 
 module.exports=router;

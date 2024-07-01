@@ -50,7 +50,7 @@ function Navbar() {
                   <Link
                     className="nav-link text-white active"
                     aria-current="page"
-                    to="/profile"
+                    to="/myOrder"
                   >
                     My Orders
                   </Link>
