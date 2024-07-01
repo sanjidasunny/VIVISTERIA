@@ -20,6 +20,8 @@ app.get('/', query('person').notEmpty(), (req, res) => {
 
 app.use('/api', require("./Routes/CreateUser"));
 app.use('/api', require("./Routes/DisplayData"));
+app.use('/api', require("./Routes/orderData"));
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

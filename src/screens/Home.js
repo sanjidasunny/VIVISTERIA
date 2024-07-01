@@ -10,16 +10,25 @@ function Home() {
   const [search, setSearch] = useState("");
 
   const loadData = async () => {
-    let response = await fetch("http://localhost:5000/api/foodData", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
+    try {
+      let response = await fetch("http://localhost:5000/api/foodData", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
       }
-    });
-    response = await response.json();
-    setFoodItem(response[0]);
-    setFoodCat(response[1]);
+      response = await response.json();
+      setFoodItem(response[0]);
+      setFoodCat(response[1]);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Handle error state here, e.g., show a message to the user
+    }
   }
+  
 
   useEffect(() => {
     loadData();
