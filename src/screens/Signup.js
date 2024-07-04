@@ -37,8 +37,10 @@ function Signup() {
   };
 
   return (
-    <>
-      <div className="container mt-3 p-10">
+    <div className="signupPage" >
+
+      <div className="inside container p-10" >
+        <h1 className="text-black">Sign up</h1>
         <form onSubmit={submit}>
           <div className="mb-3">
             <label htmlFor="userName" className="form-label text-black">
@@ -114,7 +116,7 @@ function Signup() {
           </Link>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 

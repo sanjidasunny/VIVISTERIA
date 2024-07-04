@@ -6,6 +6,7 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const jwtSecret = "Helloworldhowareyoumynameis52_ndSymphonyThankyou";
+const jwtRefreshSecret = "HelloworldhowareyouWhatisYourNameThankyou";
 
 
 router.post("/createuser",
@@ -37,7 +38,7 @@ router.post("/createuser",
     })
 
 router.post("/loginuser", async (req, res) => {
-
+    console.log('Login route hit');
     let email = req.body.email;
 
     try {
@@ -54,7 +55,13 @@ router.post("/loginuser", async (req, res) => {
                 id: userData.id,
             }
         }
-        const authToken = jwt.sign(data, jwtSecret);
+        console.log('Creating token with expiration time of 1 minute');
+        const authToken = jwt.sign(data, jwtSecret, { expiresIn: "30m" });
+        const refreshToken = jwt.sign(data, jwtRefreshSecret, { expiresIn: "10d" });
+        console.log('Generated token:', authToken);
+
+        const decodedToken = jwt.decode(authToken);
+        console.log('Token expiration time:', new Date(decodedToken.exp * 1000));
         return res.json({ success: true, authToken: authToken });
 
     } catch (error) {
