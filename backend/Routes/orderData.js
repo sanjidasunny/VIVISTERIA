@@ -6,7 +6,7 @@ const cors = require('cors');
 
 const Order = require('../models/orders');
 
-router.use(cors()); 
+router.use(cors());
 
 
 router.post('/orderData', async (req, res) => {
@@ -42,11 +42,11 @@ router.post('/orderData', async (req, res) => {
 });
 router.post('/myorderData', async (req, res) => {
     try {
-        let myData=await Order.findOne({'email':req.body.email})
-        res.json({orderData:myData})
+        let myData = await Order.findOne({ 'email': req.body.email })
+        res.json({ orderData: myData })
     } catch (error) {
-        res.send("Server Error",error.message)
+        res.send("Server Error", error.message)
     }
 })
 
-module.exports=router;
+module.exports = router;

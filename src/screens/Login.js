@@ -38,8 +38,9 @@ function Login() {
   };
 
   return (
-    <>
-      <div className="container mt-3 p-10">
+    <div className='loginPage'>
+      <div className="inside container  p-10" >
+        <h1 className="text-black">Log in</h1>
         <form onSubmit={submit}>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label text-black">
@@ -79,7 +80,7 @@ function Login() {
           </Link>
         </form>
       </div>
-    </>
+    </div>
   )
 }
 

@@ -15,7 +15,7 @@ function Navbar() {
   const [cartView, setCartView] = useState(false);
   return (
     <div>
-      <nav className="nav navbar navbar-expand-lg shadow">
+      <nav className="nav1 navbar navbar-expand-lg shadow">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <img src="/logo-3.png" className="navbar-logo" alt="" />

@@ -69,6 +69,40 @@ Footer{
   height: auto; 
 
 }
-.nav{
+.nav1{
   background-color: rgb(255, 85, 85);
+}
+
+.sidebar {
+  display: flex;
+  
+}
+
+.sidebar-content {
+  width: 100%;
+  min-height: 100vh;
+  padding: 3rem 1rem;
+  
+}
+.loginPage,.signupPage {
+  
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+
+}
+.loginPage{
+  background-image: url("../public/login.jpg");
+}
+.signupPage{
+  background-image: url("../public/signup.jpeg");
+}
+
+.inside {
+  background-color: rgba(255, 255, 255, 0.9); /* White with 80% opacity */
+  padding: 10px; /* Adjust padding as needed */
+  border-radius: 10px; /* Optional: Rounded corners */
 }
