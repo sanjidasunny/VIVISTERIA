@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import Card from "../components/Card";
 import Search from "../components/Search";
 import Sidebar from "../components/Sidebar";
+import axios from "axios";
 
 function Home() {
   const [foodCat, setFoodCat] = useState([]);
