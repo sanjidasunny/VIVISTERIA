@@ -24,21 +24,22 @@ export default function MyOrder() {
       await setorderData(response);
     });*/
     const userEmail = localStorage.getItem('userEmail');
-        try {
-            const response = await axios.post(
-                'https://vivisteria.vercel.app/api/myOrderData',
-                { email: userEmail },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        // You can add additional headers as needed
-                    },
-                }
-            );
-            setOrderData(response.data);
-        } catch (error) {
-            console.error('Error fetching order data:', error);
+try {
+    const response = await axios.post(
+        'https://vivisteria.vercel.app/api/myOrderData',
+        { email: userEmail },
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                // You can add additional headers as needed
+            },
         }
+    );
+    setorderData(response.data);
+} catch (error) {
+    console.error('Error fetching order data:', error);
+}
+
 
     // await res.map((data)=>{
     //    console.log(data)
