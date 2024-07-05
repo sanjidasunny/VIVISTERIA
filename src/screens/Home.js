@@ -13,25 +13,32 @@ function Home() {
 
   const loadData = async () => {
     try {
-      const response = await axios.get('https://vivisteria.vercel.app/api/foodData', {}, {
+      const response = await axios.get('https://vivisteria.vercel.app/api/foodData', {
         headers: {
           'Content-Type': 'application/json'
-        },
+        }
       });
-      if (!response.ok) {
-        throw new Error("Failed to fetch data"+response.status);
-        
-
+  
+      if (response.status !== 200) {
+        throw new Error(`Failed to fetch data. Status code: ${response.status}`);
       }
-      response = await response.json();
-      setFoodItem(response[0]);
-      setFoodCat(response[1]);
+  
+      const responseData = response.data; 
+  
+      if (!Array.isArray(responseData) || responseData.length !== 2) {
+        throw new Error("Invalid data format received");
+      }
+  
+      const [foodItemsData, foodCategoriesData] = responseData;
+  
+      setFoodItem(foodItemsData);
+      setFoodCat(foodCategoriesData);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching data:", error.message);
       // Handle error state here, e.g., show a message to the user
     }
   };
-
+  
   useEffect(() => {
     loadData();
   }, []);
