@@ -33,7 +33,7 @@ export default function Cart() {
         }),
       });*/
       const response = await axios.post(
-        'https://vivisteria.vercel.app/api/orderData',
+        'https://vivisteria-2lrx.vercel.app/api/orderData',
         
         {
           headers: {
