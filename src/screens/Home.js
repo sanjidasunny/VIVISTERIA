@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import Card from "../components/Card";
 import Search from "../components/Search";
 import Sidebar from "../components/Sidebar";
+import axios from 'axios';
 
 function Home() {
   const [foodCat, setFoodCat] = useState([]);
@@ -12,11 +13,19 @@ function Home() {
 
   const loadData = async () => {
     try {
-      let response = await fetch("http://localhost:5000/api/foodData", {
+      /*let response = await fetch("http://localhost:5000/api/foodData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-        },
+        },*/
+        const response = await axios.post(
+          'https://vivisteria.vercel.app/api/foodData',
+          
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            },
+
       });
       if (!response.ok) {
         throw new Error("Failed to fetch data");

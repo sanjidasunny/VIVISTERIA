@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import axios from "axios";
 
 export default function MyOrder() {
   const [orderData, setorderData] = useState({});
 
   const fetchMyOrder = async () => {
-    console.log(localStorage.getItem("userEmail"));
+   /* console.log(localStorage.getItem("userEmail"));
     await fetch("http://localhost:5000/api/myOrderData", {
       // credentials: 'include',
       // Origin:"http://localhost:3000/login",
@@ -17,10 +18,27 @@ export default function MyOrder() {
       body: JSON.stringify({
         email: localStorage.getItem("userEmail"),
       }),
+      
     }).then(async (res) => {
       let response = await res.json();
       await setorderData(response);
-    });
+    });*/
+    const userEmail = localStorage.getItem('userEmail');
+        try {
+            const response = await axios.post(
+                'https://vivisteria.vercel.app/api/myOrderData',
+                { email: userEmail },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // You can add additional headers as needed
+                    },
+                }
+            );
+            setOrderData(response.data);
+        } catch (error) {
+            console.error('Error fetching order data:', error);
+        }
 
     // await res.map((data)=>{
     //    console.log(data)

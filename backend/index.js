@@ -1,27 +1,41 @@
-const express = require('express')
-const { query, matchedData, validationResult } = require('express-validator');
-const app = express()
-const port = 5000
-const mongoDB = require("./database")
-mongoDB();
+const express = require('express');
+const { query } = require('express-validator');
+const mongoDB = require('./database');
+const createUserRoute = require('./Routes/CreateUser'); 
+const displayDataRoute = require('./Routes/DisplayData');
+const orderDataRoute = require('./Routes/orderData');
+const cors = require('cors');
+//const helmet = require('helmet'); // Import helmet for security headers
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Headers",
-    "Origin, X-requested-With, Content-Type,Accept"
-  );
-  next();
-})
+const app = express();
+const port = process.env.PORT || 5000; // Use PORT environment variable or default to 5000
 
-app.use(express.json());
+mongoDB(); // Connect to MongoDB
+
+// Middleware
+app.use(cors({
+  origin: 'https://vivisteria.vercel.app',
+  methods: ['POST', 'GET', 'PUT'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+app.use(express.json()); 
+
+// Routes
+app.use('/api', createUserRoute); 
+app.use('/api', displayDataRoute);
+app.use('/api', orderDataRoute);
+app.options('*', cors()); 
 app.get('/', query('person').notEmpty(), (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello World!');
 });
 
-app.use('/api', require("./Routes/CreateUser"));
-app.use('/api', require("./Routes/DisplayData"));
-app.use('/api', require("./Routes/orderData"));
+
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Server is running on http://localhost:${port}`);
+});

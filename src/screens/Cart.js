@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 //import Delete from "@material-ui/icons/Delete";
 import { useCart, useDispatchCart } from "../components/ContextReducer";
 export default function Cart() {
@@ -20,7 +21,7 @@ export default function Cart() {
     let userEmail = localStorage.getItem("userEmail");
     let response;
     try {
-      response = await fetch("http://localhost:5000/api/orderData", {
+      /*response = await fetch("http://localhost:5000/api/orderData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,7 +31,20 @@ export default function Cart() {
           email: userEmail,
           order_date: new Date().toDateString(),
         }),
-      });
+      });*/
+      const response = await axios.post(
+        'https://vivisteria.vercel.app/api/orderData',
+        
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            order_data: data,
+            email: userEmail,
+            order_date: new Date().toDateString(),
+          }),
+        });
       console.log("Response status:", response.status);
       if (!response.ok) {
         throw new Error('Network response was not ok');

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 function Login() {
   const [credentials, setcredentials] = useState({
@@ -9,17 +10,22 @@ function Login() {
   let navigate = useNavigate();
   const submit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/loginuser", {
+    /*const response = await fetch("http://localhost:5000/api/loginuser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-
-        password: credentials.password,
-        email: credentials.email,
-
-      }),
+      },*/
+      const response = await axios.post(
+        'https://vivisteria-2lrx.vercel.app/api/loginuser',
+        {
+          email: credentials.email,
+          password: credentials.password
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          
     });
     const json = await response.json();
     console.log(json);
