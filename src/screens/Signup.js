@@ -10,7 +10,7 @@ function Signup() {
     location: "",
   });
   let navigate = useNavigate();
-  const submit = async (e) => {
+  const submit = async (e) => { const submit = async (e) => {
     e.preventDefault();
     // const response = await fetch("http://localhost:5000/api/createuser", {
     //   method: "POST",
@@ -23,6 +23,37 @@ function Signup() {
     //     email: credentials.email,
     //     location: credentials.location,
     //   }),
+    try {
+      const response = await axios.post(
+        'https://vivisteria-2lrx.vercel.app/api/createuser',
+        {
+          name: credentials.name,
+          email: credentials.email,
+          password: credentials.password,
+          location: credentials.location,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      const data = response.data; // Access the response data directly
+
+      if (!data.success) {
+        alert('Enter valid credentials');
+      } else {
+        navigate('/login');
+      }
+    } catch (error) {
+      console.error('Error creating user:', error);
+      alert('Error creating user. Please try again.');
+    }
+  };
+
+    e.preventDefault();
+    
     const response = await axios.post(
       "https://vivisteria-2lrx.vercel.app/api/createuser",
       {
