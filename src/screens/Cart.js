@@ -19,46 +19,31 @@ export default function Cart() {
 
   const handleCheckOut = async () => {
     let userEmail = localStorage.getItem("userEmail");
-    let response;
     try {
-      /*response = await fetch("http://localhost:5000/api/orderData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      const response = await axios.post(
+        'https://vivisteria.vercel.app/api/orderData',
+        {
           order_data: data,
           email: userEmail,
           order_date: new Date().toDateString(),
-        }),
-      });*/
-      const response = await axios.post(
-        'https://vivisteria.vercel.app/api/orderData',
-        
+        },
         {
           headers: {
             'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            order_data: data,
-            email: userEmail,
-            order_date: new Date().toDateString(),
-          }),
-        });
+          }
+        }
+      );
       console.log("Response status:", response.status);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const responseData = await response.json();
-      console.log("JSON Response:", responseData);
       if (response.status === 200) {
         dispatch({ type: "DROP" });
+        // Optionally, handle success message or redirect user
       }
     } catch (error) {
       console.error("Fetch error:", error);
       // Handle error state here, e.g., show an error message to the user
     }
   };
+  
   
 
   let totalPrice = data.reduce((total, food) => total + food.price, 0);

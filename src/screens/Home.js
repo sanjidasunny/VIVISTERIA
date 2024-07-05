@@ -16,7 +16,7 @@ function Home() {
     try {
       const response = await axios.get('https://vivisteria.vercel.app/api/foodData');
       if (response.status !== 200) {
-        throw new Error("Failed to fetch data");
+        throw new Error("Failed to fetch data - Status: " + response.status);
       }
       const responseData = response.data;
       if (!Array.isArray(responseData) || responseData.length !== 2) {
@@ -29,6 +29,7 @@ function Home() {
       setError(error.message);
     }
   };
+  
   
 
   useEffect(() => {
