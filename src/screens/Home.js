@@ -35,7 +35,10 @@ function Home() {
   };
 
   useEffect(() => {
-    loadData();
+    loadData().catch((error) => {
+      console.error("Error loading data:", error);
+      setError(error.message);
+    });
   }, []);
 
   // Filtered items based on search and selected food category
@@ -54,7 +57,9 @@ function Home() {
             <Sidebar />
           </div>
           <div className="col-12 col-md-10">
-            {foodCat.length > 0 ? (
+            {error ? (
+              <div>Error: {error}</div>
+            ) : foodCat.length > 0 ? (
               foodCat.map(data => (
                 <div className="row mb-3" key={data._id}>
                   <div className="fs-3 m-3 text-success">
