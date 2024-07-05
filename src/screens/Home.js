@@ -18,7 +18,7 @@ function Home() {
           'Content-Type': 'application/json'
         },
       });
-      if (!response.status !== 200) {
+      if (!response.status == 200) {
         throw new Error("Failed to fetch data"+response.status);
         
 
