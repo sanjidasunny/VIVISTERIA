@@ -38,10 +38,11 @@ function Home() {
     loadData();
   }, []);
 
-  const filteredFoodItems = foodItem.filter(item =>
+  // Filtered items based on search and selected food category
+  const filteredFoodItems = foodItem ? foodItem.filter(item =>
     item.CategoryName === foodCat.CategoryName &&
     (typeof search === "string" && item.name.toLowerCase().includes(search.toLowerCase()))
-  );
+  ) : [];
 
   return (
     <div className="mainBody">
