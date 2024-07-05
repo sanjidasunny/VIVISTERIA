@@ -5,7 +5,11 @@ import Card from "../components/Card";
 import Search from "../components/Search";
 import Sidebar from "../components/Sidebar";
 import axios from 'axios';
-
+/*let response = await fetch("http://localhost:5000/api/foodData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },*/
 function Home() {
   const [foodCat, setFoodCat] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
@@ -13,31 +17,23 @@ function Home() {
 
   const loadData = async () => {
     try {
-      /*let response = await fetch("http://localhost:5000/api/foodData", {
-        method: "POST",
+      const response = await axios.post('https://vivisteria.vercel.app/api/foodData', {
         headers: {
-          "Content-Type": "application/json",
-        },*/
-        const response = await axios.post(
-          'https://vivisteria.vercel.app/api/foodData',
-          
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            },
-
+          'Content-Type': 'application/json'
+        },
       });
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error("Failed to fetch data");
       }
-      response = await response.json();
-      setFoodItem(response[0]);
-      setFoodCat(response[1]);
+      const responseData = response.data; // Assuming response.data contains the expected JSON data
+      setFoodItem(responseData[0]);
+      setFoodCat(responseData[1]);
     } catch (error) {
       console.error("Error fetching data:", error);
       // Handle error state here, e.g., show a message to the user
     }
   };
+  
 
   useEffect(() => {
     loadData();
