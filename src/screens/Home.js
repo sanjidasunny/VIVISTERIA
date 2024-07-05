@@ -42,7 +42,7 @@ function Home() {
   }, []);
 
   // Filtered items based on search and selected food category
-  const filteredFoodItems = foodItem ? foodItem.filter(item =>
+  const filteredFoodItems = foodItem && foodCat ? foodItem.filter(item =>
     item.CategoryName === foodCat.CategoryName &&
     (typeof search === "string" && item.name.toLowerCase().includes(search.toLowerCase()))
   ) : [];
