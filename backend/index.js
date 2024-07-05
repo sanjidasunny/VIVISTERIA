@@ -14,7 +14,7 @@ mongoDB(); // Connect to MongoDB
 
 // Middleware
 app.use(cors({
-  origin: 'https://vivisteria.vercel.app',
+  origin: 'https://vivisteria-2lrx.vercel.app/api/foodData',
   methods: ['POST', 'GET', 'PUT'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));

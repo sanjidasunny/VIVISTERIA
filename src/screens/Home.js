@@ -17,7 +17,7 @@ function Home() {
 
   const loadData = async () => {
     try {
-      const response = await axios.post('https://vivisteria.vercel.app/api/foodData', {
+      const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/foodData', {
         headers: {
           'Content-Type': 'application/json'
         },
