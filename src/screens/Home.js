@@ -13,13 +13,15 @@ function Home() {
 
   const loadData = async () => {
     try {
-      const response = await axios.get('https://vivisteria.vercel.app/api/foodData', {}, {
+      const response = await axios.post('https://vivisteria.vercel.app/api/foodData', {}, {
         headers: {
           'Content-Type': 'application/json'
         },
       });
       if (!response.ok) {
-        throw new Error("Failed to fetch data");
+        throw new Error("Failed to fetch data"+response.status);
+        
+
       }
       response = await response.json();
       setFoodItem(response[0]);
