@@ -36,7 +36,7 @@ export default function Cart() {
       console.log("Response status:", response.status);
       if (response.status === 200) {
         dispatch({ type: "DROP" });
-        // Optionally, handle success message or redirect user
+        
       }
     } catch (error) {
       console.error("Fetch error:", error);

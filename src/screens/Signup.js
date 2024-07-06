@@ -3,20 +3,29 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Signup() {
-  const [credentials, setCredentials] = useState({
+  const [credentials, setcredentials] = useState({
     name: "",
     password: "",
     email: "",
     location: "",
   });
   let navigate = useNavigate();
-
-  const submit = async (e) => {
+  const submit = async (e) => { const submit = async (e) => {
     e.preventDefault();
-  
+    // const response = await fetch("http://localhost:5000/api/createuser", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     name: credentials.name,
+    //     password: credentials.password,
+    //     email: credentials.email,
+    //     location: credentials.location,
+    //   }),
     try {
       const response = await axios.post(
-        "https://vivisteria-2lrx.vercel.app/api/createuser",
+        'https://vivisteria-2lrx.vercel.app/api/createuser',
         {
           name: credentials.name,
           email: credentials.email,
@@ -25,31 +34,56 @@ function Signup() {
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
-  
+
       const data = response.data; // Access the response data directly
-  
+
       if (!data.success) {
-        alert("Enter valid credentials");
+        alert('Enter valid credentials');
       } else {
-        navigate("/login");
+        navigate('/login');
       }
     } catch (error) {
-      console.error("Error creating user:", error);
-      alert("Error creating user. Please try again.");
+      console.error('Error creating user:', error);
+      alert('Error creating user. Please try again.');
     }
   };
-  
+
+    e.preventDefault();
+    
+    const response = await axios.post(
+      "https://vivisteria-2lrx.vercel.app/api/createuser",
+      {
+        name: credentials.name,
+        password: credentials.password,
+        email: credentials.email,
+        location: credentials.location,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+    });
+    //const json = await response.json();
+    console.log(json);
+
+    if (!json.success) {
+      alert("enter valid credentials");
+    } else {
+      navigate("/login");
+    }
+  };
   const onChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    setcredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
   return (
-    <div className="signupPage">
-      <div className="inside container p-10">
+    <div className="signupPage" >
+
+      <div className="inside container p-10" >
         <h1 className="text-black">Sign up</h1>
         <form onSubmit={submit}>
           <div className="mb-3">
@@ -106,7 +140,7 @@ function Signup() {
               htmlFor="exampleInputLocation1"
               className="form-label text-black"
             >
-              Address
+              address
             </label>
             <input
               type="text"
@@ -122,7 +156,7 @@ function Signup() {
             Submit
           </button>
           <Link to="/login" className="m-3" style={{ color: "black" }}>
-            Already have an account? Log in
+            already has an account? Log in
           </Link>
         </form>
       </div>
