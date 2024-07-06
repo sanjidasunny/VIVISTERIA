@@ -31,8 +31,8 @@ function Home() {
     } catch (error) {
       console.error('Error fetching data:', error);
       console.log("Hello \n");
-      const responseBody = await response.text();
-      console.log('Response body:', responseBody);
+      //const responseBody = await response.text();
+      console.log('Response body:', await response.text());
     }
   };
 
