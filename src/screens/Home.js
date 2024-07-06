@@ -16,8 +16,8 @@ function Home() {
     try {
       const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/foodData');
       const responseData = response.data;
-      setFoodItem(responseData[0]);
-      setFoodCat(responseData[1]);
+      setFoodItem(responseData[0] || []);
+      setFoodCat(responseData[1] || []);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -50,7 +50,7 @@ function Home() {
             <Sidebar />
           </div>
           <div className="col-12 col-md-10">
-            {foodCat.length > 0 ? (
+            {foodCat && foodCat.length > 0 ? (
               foodCat.map((data) => {
                 return (
                   <div className="row mb-3" key={data._id}>
