@@ -52,29 +52,9 @@ function Signup() {
     }
   };
 
-    e.preventDefault();
     
-    const response = await axios.post(
-      "https://vivisteria-2lrx.vercel.app/api/createuser",
-      {
-        name: credentials.name,
-        password: credentials.password,
-        email: credentials.email,
-        location: credentials.location,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-    });
-    const json = await response.json();
-    console.log(json);
-
-    if (!json.success) {
-      alert("enter valid credentials");
-    } else {
-      navigate("/login");
-    }
+    
+   
   };
   const onChange = (e) => {
     setcredentials({ ...credentials, [e.target.name]: e.target.value });
