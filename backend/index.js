@@ -1,7 +1,7 @@
 const express = require('express');
 const { query } = require('express-validator');
 const mongoDB = require('./database');
-const createUserRoute = require('./Routes/CreateUser'); 
+const createUserRoute = require('./Routes/CreateUser');
 const displayDataRoute = require('./Routes/DisplayData');
 const orderDataRoute = require('./Routes/orderData');
 
@@ -10,7 +10,7 @@ const cors = require('cors');
 const app = express();
 //const port = process.env.PORT || 5000;
 
-mongoDB(); 
+mongoDB();
 
 // CORS middleware
 app.use(cors({
@@ -19,10 +19,10 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-app.use(express.json()); 
+app.use(express.json());
 
 // Routes
-app.use('/api', createUserRoute); 
+app.use('/api', createUserRoute);
 app.use('/api', displayDataRoute);
 app.use('/api', orderDataRoute);
 
@@ -35,7 +35,7 @@ app.get('/', query('person').notEmpty(), (req, res) => {
 });
 
 // Error handling middleware
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
