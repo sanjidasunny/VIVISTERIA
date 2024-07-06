@@ -8,7 +8,7 @@ const cors = require('cors');
 
 const app = express();
 
-
+// Connect to MongoDB
 connectDB();
 
 // CORS middleware
@@ -18,6 +18,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
+// Body parsing middleware
 app.use(express.json());
 
 // Routes
@@ -36,7 +37,7 @@ app.get('/', query('person').notEmpty(), (req, res) => {
 // Error handling middleware
 app.use(function (err, req, res, next) {
   console.error(err.stack);
-  res.status(500).send('Something broke!');
+  res.status(500).send('Internal Server Error');
 });
 
-
+module.exports = app;
