@@ -10,22 +10,12 @@ function Signup() {
     location: "",
   });
   let navigate = useNavigate();
-  const submit = async (e) => { const submit = async (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    // const response = await fetch("http://localhost:5000/api/createuser", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     name: credentials.name,
-    //     password: credentials.password,
-    //     email: credentials.email,
-    //     location: credentials.location,
-    //   }),
+  
     try {
       const response = await axios.post(
-        'https://vivisteria-2lrx.vercel.app/api/createuser',
+        "https://vivisteria-2lrx.vercel.app/api/createuser",
         {
           name: credentials.name,
           email: credentials.email,
@@ -34,48 +24,24 @@ function Signup() {
         },
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
-
+  
       const data = response.data; // Access the response data directly
-
+  
       if (!data.success) {
-        alert('Enter valid credentials');
+        alert("Enter valid credentials");
       } else {
-        navigate('/login');
+        navigate("/login");
       }
     } catch (error) {
-      console.error('Error creating user:', error);
-      alert('Error creating user. Please try again.');
+      console.error("Error creating user:", error);
+      alert("Error creating user. Please try again.");
     }
   };
-
-    e.preventDefault();
-    
-    const response = await axios.post(
-      "https://vivisteria-2lrx.vercel.app/api/createuser",
-      {
-        name: credentials.name,
-        password: credentials.password,
-        email: credentials.email,
-        location: credentials.location,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-    });
-    const json = await response.json();
-    console.log(json);
-
-    if (!json.success) {
-      alert("enter valid credentials");
-    } else {
-      navigate("/login");
-    }
-  };
+  
   const onChange = (e) => {
     setcredentials({ ...credentials, [e.target.name]: e.target.value });
   };
