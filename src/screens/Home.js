@@ -10,25 +10,31 @@ function Home() {
   const [foodCat, setFoodCat] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const loadData = async () => {
     try {
       const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/foodData');
-      //hello
       const responseData = response.data;
       setFoodItem(responseData[0]);
       setFoodCat(responseData[1]);
-
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
-      // Log the actual error response
-      //console.log('Response data:', response.data);
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+      }
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     loadData();
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="mainBody">
@@ -44,23 +50,21 @@ function Home() {
             <Sidebar />
           </div>
           <div className="col-12 col-md-10">
-            {foodCat.length > 0
-              ? foodCat.map((data) => {
+            {foodCat.length > 0 ? (
+              foodCat.map((data) => {
                 return (
                   <div className="row mb-3" key={data._id}>
                     <div className="fs-3 m-3 text-success">
                       {data.CategoryName}
                     </div>
                     <hr className="text-success" />
-                    {foodItem && foodItem.length > 0  ? (
+                    {foodItem && foodItem.length > 0 ? (
                       foodItem
                         .filter(
                           (item) =>
                             item.CategoryName === data.CategoryName &&
                             typeof search === "string" &&
-                            item.name
-                              .toLowerCase()
-                              .includes(search.toLowerCase())
+                            item.name.toLowerCase().includes(search.toLowerCase())
                         )
                         .map((filterItems) => {
                           return (
@@ -81,7 +85,9 @@ function Home() {
                   </div>
                 );
               })
-              : ""}
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>
