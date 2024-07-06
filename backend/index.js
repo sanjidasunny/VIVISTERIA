@@ -1,16 +1,15 @@
 const express = require('express');
 const { query } = require('express-validator');
-const mongoDB = require('./database');
+const connectDB = require('./database');
 const createUserRoute = require('./Routes/CreateUser');
 const displayDataRoute = require('./Routes/DisplayData');
 const orderDataRoute = require('./Routes/orderData');
-
 const cors = require('cors');
 
 const app = express();
-//const port = process.env.PORT || 5000;
 
-mongoDB();
+// Connect to MongoDB
+connectDB();
 
 // CORS middleware
 app.use(cors({
@@ -40,3 +39,4 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Something broke!');
 });
 
+module.exports = app;
