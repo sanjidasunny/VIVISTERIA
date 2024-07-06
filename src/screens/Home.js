@@ -23,9 +23,9 @@ function Home() {
         throw new Error(`Failed to fetch data. Status code: ${response.status}`);
       }
 
-      const responseData = response.data; 
-      setFoodItem(responseData[0]);
-      setFoodCat(responseData[1]);
+      const { foodItem, foodCat } = response.data; // Assuming response.data is an object with foodItem and foodCat arrays
+      setFoodItem(foodItem);
+      setFoodCat(foodCat);
     } catch (error) {
       console.error("Error fetching data:", error);
       // Handle error state here, e.g., show a message to the user
@@ -46,40 +46,34 @@ function Home() {
             <Sidebar />
           </div>
           <div className="col-12 col-md-10">
-            {foodCat.length > 0
-              ? foodCat.map((data) => (
-                  <div className="row mb-3" key={data._id}>
-                    <div className="fs-3 m-3 text-success">
-                      {data.CategoryName}
-                    </div>
-                    <hr className="text-success" />
-                    {foodItem.length > 0 ? (
-                      foodItem
-                        .filter(
-                          (item) =>
-                            item.CategoryName === data.CategoryName &&
-                            typeof search === "string" &&
-                            item.name
-                              .toLowerCase()
-                              .includes(search.toLowerCase())
-                        )
-                        .map((filterItems) => (
-                          <div
-                            key={filterItems._id}
-                            className="col-12 col-sm-6 col-lg-3 mb-3"
-                          >
-                            <Card
-                              foodItem={filterItems}
-                              options={filterItems.options[0]}
-                            />
-                          </div>
-                        ))
-                    ) : (
-                      <div>No Such Data Found</div>
-                    )}
+            {foodCat.length > 0 &&
+              foodCat.map((data) => (
+                <div className="row mb-3" key={data._id}>
+                  <div className="fs-3 m-3 text-success">
+                    {data.CategoryName}
                   </div>
-                ))
-              : ""}
+                  <hr className="text-success" />
+                  {foodItem.length > 0 &&
+                    foodItem
+                      .filter(
+                        (item) =>
+                          item.CategoryName === data.CategoryName &&
+                          typeof search === "string" &&
+                          item.name.toLowerCase().includes(search.toLowerCase())
+                      )
+                      .map((filterItems) => (
+                        <div
+                          key={filterItems._id}
+                          className="col-12 col-sm-6 col-lg-3 mb-3"
+                        >
+                          <Card
+                            foodItem={filterItems}
+                            options={filterItems.options[0]}
+                          />
+                        </div>
+                      ))}
+                </div>
+              ))}
           </div>
         </div>
       </div>
@@ -87,5 +81,8 @@ function Home() {
     </div>
   );
 }
+
+
+
 
 export default Home;
