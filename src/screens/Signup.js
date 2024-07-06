@@ -23,41 +23,36 @@ function Signup() {
     //     email: credentials.email,
     //     location: credentials.location,
     //   }),
-    try {
-      const response = await axios.post(
-        'https://vivisteria-2lrx.vercel.app/api/createuser',
-        {
-          name: credentials.name,
-          email: credentials.email,
-          password: credentials.password,
-          location: credentials.location,
+    e.preventDefault();
+    
+    const response = await axios.post(
+      "https://vivisteria-2lrx.vercel.app/api/createuser",
+      {
+        name: credentials.name,
+        password: credentials.password,
+        email: credentials.email,
+        location: credentials.location,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+    });
+    const json = await response.json();
+    console.log(json);
 
-      const data = response.data; // Access the response data directly
-
-      if (!data.success) {
-        alert('Enter valid credentials');
-      } else {
-        navigate('/login');
-      }
-    } catch (error) {
-      console.error('Error creating user:', error);
-      alert('Error creating user. Please try again.');
+    if (!json.success) {
+      alert("enter valid credentials");
+    } else {
+      navigate("/login");
     }
-  };
-
-    
-    
-   
   };
   const onChange = (e) => {
     setcredentials({ ...credentials, [e.target.name]: e.target.value });
+    
+  };
+
+    
   };
 
   return (
