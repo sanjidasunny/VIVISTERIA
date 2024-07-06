@@ -1,142 +1,85 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { navigate } from "gatsby";
 import axios from "axios";
 
-function Signup() {
-  const [credentials, setcredentials] = useState({
+function MyForm() {
+  const [credentials, setCredentials] = useState({
     name: "",
     password: "",
     email: "",
     location: "",
   });
-  let navigate = useNavigate();
-  const submit = async (e) => { const submit = async (e) => {
-    e.preventDefault();
-    // const response = await fetch("http://localhost:5000/api/createuser", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     name: credentials.name,
-    //     password: credentials.password,
-    //     email: credentials.email,
-    //     location: credentials.location,
-    //   }),
-    e.preventDefault();
-    
-    const response = await axios.post(
-      "https://vivisteria-2lrx.vercel.app/api/createuser",
-      {
-        name: credentials.name,
-        password: credentials.password,
-        email: credentials.email,
-        location: credentials.location,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-    });
-    const json = await response.json();
-    console.log(json);
 
-    if (!json.success) {
-      alert("enter valid credentials");
-    } else {
-      navigate("/login");
+  const submit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "https://vivisteria-2lrx.vercel.app/api/createuser",
+        {
+          name: credentials.name,
+          password: credentials.password,
+          email: credentials.email,
+          location: credentials.location,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      
+      console.log(response.data);
+
+      if (!response.data.success) {
+        alert("Enter valid credentials");
+      } else {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error("Error creating user:", error);
+
     }
   };
-  const onChange = (e) => {
-    setcredentials({ ...credentials, [e.target.name]: e.target.value });
-    
-  };
 
-    
+  const onChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
   return (
-    <div className="signupPage" >
-
-      <div className="inside container p-10" >
-        <h1 className="text-black">Sign up</h1>
-        <form onSubmit={submit}>
-          <div className="mb-3">
-            <label htmlFor="userName" className="form-label text-black">
-              Name
-            </label>
-            <input
-              type="text"
-              className="form-control w-100"
-              onChange={onChange}
-              value={credentials.name}
-              name="name"
-              id="userName"
-            />
-          </div>
-          <div className="mb-3">
-            <label
-              htmlFor="exampleInputEmail1"
-              className="form-label text-black"
-            >
-              Email address
-            </label>
-            <input
-              type="email"
-              className="form-control w-100"
-              onChange={onChange}
-              value={credentials.email}
-              name="email"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-            />
-            <div id="emailHelp" className="form-text">
-              We'll never share your email with anyone else.
-            </div>
-          </div>
-          <div className="mb-3">
-            <label
-              htmlFor="exampleInputPassword1"
-              className="form-label text-black"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control w-100"
-              onChange={onChange}
-              value={credentials.password}
-              name="password"
-              id="exampleInputPassword1"
-            />
-          </div>
-          <div className="mb-3">
-            <label
-              htmlFor="exampleInputLocation1"
-              className="form-label text-black"
-            >
-              address
-            </label>
-            <input
-              type="text"
-              className="form-control w-100"
-              onChange={onChange}
-              value={credentials.location}
-              name="location"
-              id="exampleInputLocation1"
-            />
-          </div>
-
-          <button type="submit" className="btn btn-success">
-            Submit
-          </button>
-          <Link to="/login" className="m-3" style={{ color: "black" }}>
-            already has an account? Log in
-          </Link>
-        </form>
-      </div>
-    </div>
+    <form onSubmit={submit}>
+      <input
+        type="text"
+        name="name"
+        placeholder="Name"
+        value={credentials.name}
+        onChange={onChange}
+      />
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        value={credentials.password}
+        onChange={onChange}
+      />
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        value={credentials.email}
+        onChange={onChange}
+      />
+      <input
+        type="text"
+        name="location"
+        placeholder="Location"
+        value={credentials.location}
+        onChange={onChange}
+      />
+      <button type="submit">Submit</button>
+    </form>
   );
 }
 
-export default Signup;
+export default MyForm;
