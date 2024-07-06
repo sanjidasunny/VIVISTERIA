@@ -20,7 +20,6 @@ function Home() {
       });
       if (!response.status == 200) {
         throw new Error("Failed to fetch data"+response.status);
-    
       }
       response = await response.json();
       setFoodItem(response[0]);
