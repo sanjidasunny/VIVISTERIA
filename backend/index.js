@@ -4,6 +4,7 @@ const mongoDB = require('./database');
 const createUserRoute = require('./Routes/CreateUser'); 
 const displayDataRoute = require('./Routes/DisplayData');
 const orderDataRoute = require('./Routes/orderData');
+const bodyParser = require("body-parser"); router.use(bodyParser.json());
 const cors = require('cors');
 
 const app = express();
