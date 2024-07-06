@@ -13,23 +13,26 @@ function Home() {
 
   const loadData = async () => {
     try {
-      const response = await axios.get('https://vivisteria.vercel.app/api/foodData', {}, {
+      const response = await fetch('https://vivisteria.vercel.app/api/foodData', {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json'
-        },
+        }
       });
-      if (!response.status == 200) {
-        throw new Error("Failed to fetch data"+response.status);
-    
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch data: ' + response.status);
       }
-      response = await response.json();
-      setFoodItem(response[0]);
-      setFoodCat(response[1]);
+  
+      const responseData = await response.json();
+      setFoodItem(responseData[0]);
+      setFoodCat(responseData[1]);
+  
     } catch (error) {
-      console.error("Error fetching data:", error);
-      
+      console.error('Error fetching data:', error);
     }
   };
+  
 
   useEffect(() => {
     loadData();
