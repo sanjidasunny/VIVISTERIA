@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Signup() {
   const [credentials, setCredentials] = useState({
@@ -14,26 +15,32 @@ function Signup() {
   const submit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("https://vivisteria-2lrx.vercel.app/api/createuser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: credentials.name,
-        password: credentials.password,
-        email: credentials.email,
-        location: credentials.location,
-      }),
-    });
+    try {
+      const response = await axios.post(
+        'https://vivisteria-2lrx.vercel.app/api/createuser',
+        {
+          name: credentials.name,
+          email: credentials.email,
+          password: credentials.password,
+          location: credentials.location,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-    const json = await response.json();
-    console.log(json);
+      const data = response.data;
 
-    if (!json.success) {
-      alert("Enter valid credentials");
-    } else {
-      navigate("/login");
+      if (!data.success) {
+        alert('Enter valid credentials');
+      } else {
+        navigate('/login');
+      }
+    } catch (error) {
+      console.error('Error creating user:', error);
+      alert('Error creating user. Please try again.');
     }
   };
 
@@ -60,7 +67,10 @@ function Signup() {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label text-black">
+            <label
+              htmlFor="exampleInputEmail1"
+              className="form-label text-black"
+            >
               Email address
             </label>
             <input
@@ -77,7 +87,10 @@ function Signup() {
             </div>
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label text-black">
+            <label
+              htmlFor="exampleInputPassword1"
+              className="form-label text-black"
+            >
               Password
             </label>
             <input
@@ -90,7 +103,10 @@ function Signup() {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInputLocation1" className="form-label text-black">
+            <label
+              htmlFor="exampleInputLocation1"
+              className="form-label text-black"
+            >
               Address
             </label>
             <input
