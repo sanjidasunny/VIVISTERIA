@@ -40,7 +40,7 @@ function Signup() {
       }
     } catch (error) {
       console.error('Error creating user:', error);
-      alert('Error creating user. Please try again.');
+      //alert('Error creating user. Please try again.');
     }
   };
 
