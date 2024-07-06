@@ -4,39 +4,45 @@ import Footer from "../components/Footer";
 import Card from "../components/Card";
 import Search from "../components/Search";
 import Sidebar from "../components/Sidebar";
-import axios from "axios";
 
 function Home() {
   const [foodCat, setFoodCat] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
   const [search, setSearch] = useState("");
 
-  const loadData = async () => {
-    try {
-      const response = await fetch('https://vivisteria.vercel.app/api/foodData', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+  const loadData = () => {
+    fetch('https://vivisteria.vercel.app/api/foodData', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(function(response) {
+      // Clone the response before attempting to read it as JSON
+      const responseClone = response.clone();
 
       if (!response.ok) {
         throw new Error('Failed to fetch data: ' + response.status);
       }
 
-      const responseData = await response.json();
+      return response.json();
+    })
+    .then(function(responseData) {
       setFoodItem(responseData[0]);
       setFoodCat(responseData[1]);
-
-    } catch (error) {
+    }, function(rejectionReason) {
+      // Error handler for parsing JSON
+      console.log('Error parsing JSON from response:', rejectionReason);
+      responseClone.text()
+        .then(function(bodyText) {
+          console.log('Received the following instead of valid JSON:', bodyText);
+        });
+    })
+    .catch(function(error) {
+      // General catch for fetch errors
       console.error('Error fetching data:', error);
-      console.log("Hello\n");
-      console.log('Response:', await response.text()); // Log response content
-    }
+    });
   };
-
-
-
 
   useEffect(() => {
     loadData();
