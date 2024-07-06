@@ -13,7 +13,15 @@ function Signup() {
 
   const submit = async (e) => {
     e.preventDefault();
+    if (credentials.name.length < 6) {
+      alert("Username must be at least 6 characters long");
+      return;
+    }
 
+    if (credentials.password.length < 6) {
+      alert("Password must be at least 6 characters long");
+      return;
+    }
     try {
       const response = await fetch('https://vivisteria-2lrx.vercel.app/api/createuser', {
         method: 'POST',

@@ -15,7 +15,7 @@ function Login() {
       headers: {
         "Content-Type": "application/json",
       },*/
-  
+
     try {
       const response = await axios.post(
         'https://vivisteria-2lrx.vercel.app/api/loginuser',
@@ -29,9 +29,9 @@ function Login() {
           },
         }
       );
-  
-      const data = response.data; // Access the response data directly
-  
+
+      const data = response.data;
+
       if (!data.success) {
         alert('Enter valid email or password');
       } else {
@@ -45,7 +45,7 @@ function Login() {
       alert('Error logging in. Please try again.');
     }
   };
-  
+
   const onChange = (e) => {
     setcredentials({ ...credentials, [e.target.name]: e.target.value });
   };

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatchCart, useCart } from "./ContextReducer";
-import { type } from "@testing-library/user-event/dist/type";
+
+
 function Card(props) {
   const priceRef = useRef();
   let options = props.options;
@@ -18,10 +19,15 @@ function Card(props) {
         break;
       }
     }
-    if (food != []) {
+    if (food.length !== 0) {
       if (food.size === size) {
-        await dispatch({ type: "UPDATE", id: props.foodItem._id, price: finalPrice, quantity: quantity })
-        return
+        await dispatch({
+          type: "UPDATE",
+          id: props.foodItem._id,
+          price: finalPrice,
+          quantity: quantity,
+        });
+        return;
       } else if (food.size !== size) {
         await dispatch({
           type: "ADD",
@@ -31,12 +37,9 @@ function Card(props) {
           quantity: quantity,
           size: size,
         });
-        return
-
+        return;
       }
-      return
-
-
+      return;
     }
     await dispatch({
       type: "ADD",
@@ -48,25 +51,26 @@ function Card(props) {
     });
     console.log(data);
   };
+
   let finalPrice = quantity * parseInt(size);
   useEffect(() => {
     setSize(priceRef.current.value);
   }, []);
+
   return (
-    <div style={{ marginLeft: "10px" }}>
-      <div className="card " style={{ width: "18rem" }}>
+    <div className="card-container">
+      <div className="card">
         <img
           src={props.foodItem.img}
           className="card-img-top"
           alt="..."
-          style={{ height: "160px", objectFit: "fill" }}
         />
         <div className="card-body">
           <h5 className="card-title">{props.foodItem.name}</h5>
           <div className="d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center">
               <select
-                className="m-2 p-1 h-100  rounded"
+                className="m-2 p-1 h-100 rounded"
                 onChange={(e) => setQuantity(e.target.value)}
               >
                 {Array.from(Array(6), (e, i) => (
