@@ -15,7 +15,8 @@ function Home() {
     try {
       const response = await fetch('https://vivisteria.vercel.app/api/foodData', {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'User-agent': 'learning app',
         }
       });
   
