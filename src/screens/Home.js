@@ -22,7 +22,7 @@ function Home() {
     } catch (error) {
       console.error('Error fetching data:', error);
       // Log the actual error response
-      console.log('Response data:', error.response.data);
+      console.log('Response data:', response.data);
     }
   };
 
