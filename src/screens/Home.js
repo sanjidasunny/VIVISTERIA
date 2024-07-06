@@ -31,6 +31,7 @@ function Home() {
     } catch (error) {
       console.error('Error fetching data:', error);
       console.log("Hello\n");
+      console.log('Response:', await response.text()); // Log response content
     }
   };
 
