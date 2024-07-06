@@ -21,7 +21,7 @@ export default function Cart() {
     let userEmail = localStorage.getItem("userEmail");
     try {
       const response = await axios.post(
-        'https://vivisteria.vercel.app/api/orderData',
+        'http://vivisteria-2lrx.vercel.app/api/orderData',
         {
           order_data: data,
           email: userEmail,
@@ -36,15 +36,15 @@ export default function Cart() {
       console.log("Response status:", response.status);
       if (response.status === 200) {
         dispatch({ type: "DROP" });
-        
+
       }
     } catch (error) {
       console.error("Fetch error:", error);
       // Handle error state here, e.g., show an error message to the user
     }
   };
-  
-  
+
+
 
   let totalPrice = data.reduce((total, food) => total + food.price, 0);
   return (

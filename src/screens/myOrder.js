@@ -7,9 +7,9 @@ export default function MyOrder() {
 
   const fetchMyOrder = async () => {
     const userEmail = localStorage.getItem("userEmail");
-    
+
     try {
-      const response = await fetch('https://vivisteria.vercel.app/api/myOrderData', {
+      const response = await fetch('http://vivisteria-2lrx.vercel.app/api/myOrderData', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
