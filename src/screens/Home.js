@@ -4,7 +4,6 @@ import Footer from "../components/Footer";
 import Card from "../components/Card";
 import Search from "../components/Search";
 import Sidebar from "../components/Sidebar";
-import axios from "axios";
 
 function Home() {
   const [foodCat, setFoodCat] = useState([]);
@@ -13,25 +12,24 @@ function Home() {
 
   const loadData = async () => {
     try {
-      const response = await axios.get('https://vivisteria.vercel.app/api/foodData', {
+      const response = await fetch('https://vivisteria.vercel.app/api/foodData', {
         headers: {
           'Content-Type': 'application/json'
         },
       });
-      
-      if (response.status !== 200) {
+
+      if (!response.ok) {
         throw new Error("Failed to fetch data: " + response.status);
       }
-      
-      // Handle response data directly
-      setFoodItem(response.data[0]);
-      setFoodCat(response.data[1]);
+
+      const data = await response.json();
+      setFoodItem(data[0]);
+      setFoodCat(data[1]);
     } catch (error) {
       console.error("Error fetching data:", error);
       // Handle error state here, e.g., show a message to the user
     }
   };
-  
 
   useEffect(() => {
     loadData();
