@@ -24,6 +24,11 @@ function Home() {
         throw new Error(`Failed to fetch data. Status code: ${response.status}`);
       }
   
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Expected JSON response, but received HTML or other content.');
+      }
+  
       const responseData = await response.json();
       setFoodItem(responseData[0]);
       setFoodCat(responseData[1]);
@@ -32,6 +37,7 @@ function Home() {
       // Handle error state here, e.g., show a message to the user
     }
   };
+  
   
 
   useEffect(() => {
