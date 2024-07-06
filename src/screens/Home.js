@@ -13,23 +13,17 @@ function Home() {
 
   const loadData = async () => {
     try {
-      const response = await fetch('https://vivisteria.vercel.app/api/foodData', {
+      const response = await axios.get('https://vivisteria.vercel.app/api/foodData', {
         headers: {
-          'Content-Type': 'application/json',
-          'User-agent': 'learning app',
+          'Content-Type': 'application/json'
         }
       });
-  
-      if (!response.ok) {
+
+      if (response.status !== 200) {
         throw new Error(`Failed to fetch data. Status code: ${response.status}`);
       }
-  
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
-        throw new Error('Expected JSON response, but received HTML or other content.');
-      }
-  
-      const responseData = await response.json();
+
+      const responseData = response.data; 
       setFoodItem(responseData[0]);
       setFoodCat(responseData[1]);
     } catch (error) {
@@ -37,8 +31,6 @@ function Home() {
       // Handle error state here, e.g., show a message to the user
     }
   };
-  
-  
 
   useEffect(() => {
     loadData();
@@ -46,12 +38,8 @@ function Home() {
 
   return (
     <div className="mainBody">
-      <div>
-        <Navbar />
-      </div>
-      <div>
-        <Search setSearch={setSearch} />
-      </div>
+      <Navbar />
+      <Search setSearch={setSearch} />
       <div className="container-fluid">
         <div className="row">
           <div className="col-12 col-md-2">
@@ -59,49 +47,43 @@ function Home() {
           </div>
           <div className="col-12 col-md-10">
             {foodCat.length > 0
-              ? foodCat.map((data) => {
-                  return (
-                    <div className="row mb-3" key={data._id}>
-                      <div className="fs-3 m-3 text-success">
-                        {data.CategoryName}
-                      </div>
-                      <hr className="text-success" />
-                      {foodItem.length > 0 ? (
-                        foodItem
-                          .filter(
-                            (item) =>
-                              item.CategoryName === data.CategoryName &&
-                              typeof search === "string" &&
-                              item.name
-                                .toLowerCase()
-                                .includes(search.toLowerCase())
-                          )
-                          .map((filterItems) => {
-                            return (
-                              <div
-                                key={filterItems._id}
-                                className="col-12 col-sm-6 col-lg-3 mb-3"
-                              >
-                                <Card
-                                  foodItem={filterItems}
-                                  options={filterItems.options[0]}
-                                />
-                              </div>
-                            );
-                          })
-                      ) : (
-                        <div>No Such Data Found</div>
-                      )}
+              ? foodCat.map((data) => (
+                  <div className="row mb-3" key={data._id}>
+                    <div className="fs-3 m-3 text-success">
+                      {data.CategoryName}
                     </div>
-                  );
-                })
+                    <hr className="text-success" />
+                    {foodItem.length > 0 ? (
+                      foodItem
+                        .filter(
+                          (item) =>
+                            item.CategoryName === data.CategoryName &&
+                            typeof search === "string" &&
+                            item.name
+                              .toLowerCase()
+                              .includes(search.toLowerCase())
+                        )
+                        .map((filterItems) => (
+                          <div
+                            key={filterItems._id}
+                            className="col-12 col-sm-6 col-lg-3 mb-3"
+                          >
+                            <Card
+                              foodItem={filterItems}
+                              options={filterItems.options[0]}
+                            />
+                          </div>
+                        ))
+                    ) : (
+                      <div>No Such Data Found</div>
+                    )}
+                  </div>
+                ))
               : ""}
           </div>
         </div>
       </div>
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 }
