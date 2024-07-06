@@ -52,7 +52,7 @@ function Home() {
                       {data.CategoryName}
                     </div>
                     <hr className="text-success" />
-                    {foodItem.length > 0 ? (
+                    {foodItem && foodItem.length > 0  ? (
                       foodItem
                         .filter(
                           (item) =>
