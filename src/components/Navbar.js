@@ -74,7 +74,8 @@ function Navbar() {
                   className="btn bg-white mx-2 text-danger"
                   onClick={() => setCartView(true)}
                 >
-                  cart{" "}
+                  <i class="fa-solid fa-cart-shopping"></i>
+                  {"     "}
                   <Badge pill bg="danger">
                     {data.length}
                   </Badge>
