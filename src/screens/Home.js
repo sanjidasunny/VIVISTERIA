@@ -13,31 +13,18 @@ function Home() {
 
   const loadData = async () => {
     try {
-      const response = await fetch('https://vivisteria.vercel.app/api/foodData', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+      const response = await axios.get('https://vivisteria.vercel.app/api/foodData');
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch data: ' + response.status);
-      }
-
-      const responseData = await response.json();
+      const responseData = response.data;
       setFoodItem(responseData[0]);
       setFoodCat(responseData[1]);
 
     } catch (error) {
       console.error('Error fetching data:', error);
-      console.log("Hello \n");
-      const responseBody = await response.text();
-      console.log('Response body:', responseBody);
+      // Log the actual error response
+      console.log('Response data:', error.response.data);
     }
   };
-
-
-
 
   useEffect(() => {
     loadData();
@@ -59,41 +46,41 @@ function Home() {
           <div className="col-12 col-md-10">
             {foodCat.length > 0
               ? foodCat.map((data) => {
-                return (
-                  <div className="row mb-3" key={data._id}>
-                    <div className="fs-3 m-3 text-success">
-                      {data.CategoryName}
+                  return (
+                    <div className="row mb-3" key={data._id}>
+                      <div className="fs-3 m-3 text-success">
+                        {data.CategoryName}
+                      </div>
+                      <hr className="text-success" />
+                      {foodItem.length > 0 ? (
+                        foodItem
+                          .filter(
+                            (item) =>
+                              item.CategoryName === data.CategoryName &&
+                              typeof search === "string" &&
+                              item.name
+                                .toLowerCase()
+                                .includes(search.toLowerCase())
+                          )
+                          .map((filterItems) => {
+                            return (
+                              <div
+                                key={filterItems._id}
+                                className="col-12 col-sm-6 col-lg-3 mb-3"
+                              >
+                                <Card
+                                  foodItem={filterItems}
+                                  options={filterItems.options[0]}
+                                />
+                              </div>
+                            );
+                          })
+                      ) : (
+                        <div>No Such Data Found</div>
+                      )}
                     </div>
-                    <hr className="text-success" />
-                    {foodItem.length > 0 ? (
-                      foodItem
-                        .filter(
-                          (item) =>
-                            item.CategoryName === data.CategoryName &&
-                            typeof search === "string" &&
-                            item.name
-                              .toLowerCase()
-                              .includes(search.toLowerCase())
-                        )
-                        .map((filterItems) => {
-                          return (
-                            <div
-                              key={filterItems._id}
-                              className="col-12 col-sm-6 col-lg-3 mb-3"
-                            >
-                              <Card
-                                foodItem={filterItems}
-                                options={filterItems.options[0]}
-                              />
-                            </div>
-                          );
-                        })
-                    ) : (
-                      <div>No Such Data Found</div>
-                    )}
-                  </div>
-                );
-              })
+                  );
+                })
               : ""}
           </div>
         </div>
