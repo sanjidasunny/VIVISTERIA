@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 
 function Signup() {
   const [credentials, setCredentials] = useState({
@@ -16,22 +15,20 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        'https://vivisteria-2lrx.vercel.app/api/createuser',
-        {
+      const response = await fetch('https://vivisteria-2lrx.vercel.app/api/createuser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           name: credentials.name,
           email: credentials.email,
           password: credentials.password,
           location: credentials.location,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+        }),
+      });
 
-      const data = response.data;
+      const data = await response.json();
 
       if (!data.success) {
         alert('Enter valid credentials');
