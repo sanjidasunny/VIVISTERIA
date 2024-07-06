@@ -3,13 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Signup() {
-  const [credentials, setcredentials] = useState({
+  const [credentials, setCredentials] = useState({
     name: "",
     password: "",
     email: "",
     location: "",
   });
   let navigate = useNavigate();
+
   const submit = async (e) => {
     e.preventDefault();
   
@@ -43,13 +44,12 @@ function Signup() {
   };
   
   const onChange = (e) => {
-    setcredentials({ ...credentials, [e.target.name]: e.target.value });
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
   return (
-    <div className="signupPage" >
-
-      <div className="inside container p-10" >
+    <div className="signupPage">
+      <div className="inside container p-10">
         <h1 className="text-black">Sign up</h1>
         <form onSubmit={submit}>
           <div className="mb-3">
@@ -106,7 +106,7 @@ function Signup() {
               htmlFor="exampleInputLocation1"
               className="form-label text-black"
             >
-              address
+              Address
             </label>
             <input
               type="text"
@@ -122,7 +122,7 @@ function Signup() {
             Submit
           </button>
           <Link to="/login" className="m-3" style={{ color: "black" }}>
-            already has an account? Log in
+            Already have an account? Log in
           </Link>
         </form>
       </div>
