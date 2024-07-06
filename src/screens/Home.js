@@ -14,7 +14,7 @@ function Home() {
   const loadData = async () => {
     try {
       const response = await axios.get('https://vivisteria-2lrx.vercel.app/api/foodData');
-
+      //hello
       const responseData = response.data;
       setFoodItem(responseData[0]);
       setFoodCat(responseData[1]);
