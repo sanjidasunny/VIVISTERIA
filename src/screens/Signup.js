@@ -67,7 +67,7 @@ function Signup() {
           "Content-Type": "application/json",
         },
     });
-    //const json = await response.json();
+    const json = await response.json();
     console.log(json);
 
     if (!json.success) {
