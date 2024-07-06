@@ -8,7 +8,7 @@ const cors = require('cors');
 
 const app = express();
 
-// Connect to MongoDB
+
 connectDB();
 
 // CORS middleware
