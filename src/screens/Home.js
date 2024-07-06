@@ -11,6 +11,8 @@ function Home() {
   const [search, setSearch] = useState("");
 
   const loadData = () => {
+    let responseClone; // Declare responseClone in an outer scope
+  
     fetch('https://vivisteria.vercel.app/api/foodData', {
       method: 'GET',
       headers: {
@@ -19,30 +21,34 @@ function Home() {
     })
     .then(function(response) {
       // Clone the response before attempting to read it as JSON
-      const responseClone = response.clone();
-
+      responseClone = response.clone();
+  
       if (!response.ok) {
         throw new Error('Failed to fetch data: ' + response.status);
       }
-
+  
       return response.json();
     })
     .then(function(responseData) {
       setFoodItem(responseData[0]);
       setFoodCat(responseData[1]);
-    }, function(rejectionReason) {
-      // Error handler for parsing JSON
-      console.log('Error parsing JSON from response:', rejectionReason);
-      responseClone.text()
-        .then(function(bodyText) {
-          console.log('Received the following instead of valid JSON:', bodyText);
-        });
     })
     .catch(function(error) {
       // General catch for fetch errors
       console.error('Error fetching data:', error);
+  
+      if (responseClone) {
+        responseClone.text()
+          .then(function(bodyText) {
+            console.log('Received the following instead of valid JSON:', bodyText);
+          })
+          .catch(function(textError) {
+            console.error('Error reading response text:', textError);
+          });
+      }
     });
   };
+  
 
   useEffect(() => {
     loadData();
