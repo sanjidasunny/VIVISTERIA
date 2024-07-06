@@ -27,7 +27,7 @@ function Home() {
       setFoodCat(response[1]);
     } catch (error) {
       console.error("Error fetching data:", error);
-      // Handle error state here, e.g., show a message to the user
+      
     }
   };
 
