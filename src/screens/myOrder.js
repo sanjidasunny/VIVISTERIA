@@ -11,21 +11,15 @@ export default function MyOrder() {
 
     try {
       const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/myOrderData', 
-        {
-          email: userEmail,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+        { email: userEmail },
+        { headers: { 'Content-Type': 'application/json' } }
+    );
   
       if (response.status !== 200) {
         throw new Error(`Failed to fetch order data: ${response.status}`);
       }
   
-      setOrderData(response.data); // Assuming response.data is the array of orders
+      setOrderData(response.data.orderData); // Assuming response.data is the array of orders
     } catch (error) {
       console.error('Error fetching order data:', error);
     }
