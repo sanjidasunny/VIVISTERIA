@@ -21,7 +21,7 @@ export default function Cart() {
     let userEmail = localStorage.getItem("userEmail");
     try {
       const response = await axios.post(
-        'http://vivisteria-2lrx.vercel.app/api/orderData',
+        'https://vivisteria-2lrx.vercel.app/api/orderData',
         {
           order_data: data,
           email: userEmail,
