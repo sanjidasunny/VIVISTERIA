@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import axios from "axios";
 
 export default function MyOrder() {
   const [orderData, setOrderData] = useState([]);
