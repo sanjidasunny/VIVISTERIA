@@ -10,7 +10,7 @@ export default function MyOrder() {
     const userEmail = localStorage.getItem("userEmail");
 
     try {
-      const response = await axios.post('http://vivisteria-2lrx.vercel.app/api/myOrderData', {
+      const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/myOrderData', {
         
         headers: {
           'Content-Type': 'application/json',
