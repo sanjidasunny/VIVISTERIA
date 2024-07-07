@@ -10,22 +10,22 @@ export default function MyOrder() {
     const userEmail = localStorage.getItem("userEmail");
 
     try {
-      const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/myOrderData', {
-        
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/myOrderData', 
+        {
           email: userEmail,
-        }),
-      });
-
-      if (!response.ok) {
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+  
+      if (response.status !== 200) {
         throw new Error(`Failed to fetch order data: ${response.status}`);
       }
-
-      const data = await response.json();
-      setOrderData(data);
+  
+      setOrderData(response.data); // Assuming response.data is the array of orders
     } catch (error) {
       console.error('Error fetching order data:', error);
     }
