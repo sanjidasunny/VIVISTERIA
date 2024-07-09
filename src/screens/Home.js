@@ -11,6 +11,7 @@ function Home() {
   const [foodItem, setFoodItem] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [innerLoading, setInnerLoading] = useState(true);
 
   const loadData = async () => {
     try {
@@ -29,8 +30,10 @@ function Home() {
   };
 
   useEffect(() => {
-    loadData();
-  }, []);
+    if (!loading && foodCat.length > 0 && foodItem.length > 0) {
+      setInnerLoading(false);
+    }
+  }, [loading, foodCat, foodItem]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -50,9 +53,11 @@ function Home() {
             <Sidebar />
           </div>
           <div className="col-12 col-md-10">
-            {foodCat && foodCat.length > 0 ? (
-              foodCat.map((data) => {
-                return (
+            {innerLoading ? (
+              <div>Loading...</div>
+            ) : (
+              foodCat && foodCat.length > 0 ? (
+                foodCat.map((data) => (
                   <div className="row mb-3" key={data._id}>
                     <div className="fs-3 m-3 text-success">
                       {data.CategoryName}
@@ -66,27 +71,25 @@ function Home() {
                             typeof search === "string" &&
                             item.name.toLowerCase().includes(search.toLowerCase())
                         )
-                        .map((filterItems) => {
-                          return (
-                            <div
-                              key={filterItems._id}
-                              className="col-12 col-sm-6 col-lg-3 mb-3"
-                            >
-                              <Card
-                                foodItem={filterItems}
-                                options={filterItems.options[0]}
-                              />
-                            </div>
-                          );
-                        })
+                        .map((filterItems) => (
+                          <div
+                            key={filterItems._id}
+                            className="col-12 col-sm-6 col-lg-3 mb-3"
+                          >
+                            <Card
+                              foodItem={filterItems}
+                              options={filterItems.options[0]}
+                            />
+                          </div>
+                        ))
                     ) : (
                       <div>No Such Data Found</div>
                     )}
                   </div>
-                );
-              })
-            ) : (
-              ""
+                ))
+              ) : (
+                ""
+              )
             )}
           </div>
         </div>
