@@ -30,6 +30,10 @@ function Home() {
   };
 
   useEffect(() => {
+    loadData();
+  }, []);
+
+  useEffect(() => {
     if (!loading && foodCat.length > 0 && foodItem.length > 0) {
       setInnerLoading(false);
     }
