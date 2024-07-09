@@ -20,7 +20,8 @@ export default function MyOrder() {
         throw new Error(`Failed to fetch order data: ${response.status}`);
       }
 
-      setOrderData(response);
+      const responseData = response.data;
+      setOrderData(responseData);
       console.log(response.data.orderData);
     } catch (error) {
       console.error('Error fetching order data:', error);
