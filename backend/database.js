@@ -9,19 +9,12 @@ const mongoDB = async () => {
         const foodItemsCollection = mongoose.connection.db.collection("food_items");
         const foodCategoryCollection = mongoose.connection.db.collection("food_category");
 
-        // Fetch food_items
+        // Fetch food_items and food_category
         const foodItems = await foodItemsCollection.find({}).toArray();
-        console.log('food_items fetched successfully');
-
-        // Fetch food_category
         const foodCategories = await foodCategoryCollection.find({}).toArray();
-        console.log('food_category fetched successfully');
-
-        // Assign fetched data to global variables
-        global.food_items = foodItems;
-        global.foodCategory = foodCategories;
 
         console.log('Data fetched successfully');
+        return { foodItems, foodCategories };
     } catch (error) {
         console.error('MongoDB connection error:', error);
         process.exit(1);
