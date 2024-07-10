@@ -1,27 +1,45 @@
-const express = require('express')
-const { query, matchedData, validationResult } = require('express-validator');
-const app = express()
-const port = 5000
-const mongoDB = require("./database")
-mongoDB();
+const express = require('express');
+const cors = require('cors');
+const connectDB = require("./database");
+const createUserRoute = require('./Routes/CreateUser');
+const displayDataRoute = require('./Routes/DisplayData');
+const orderDataRoute = require('./Routes/orderData');
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Headers",
-    "Origin, X-requested-With, Content-Type,Accept"
-  );
-  next();
-})
+const app = express();
+const port = 5000;
 
+// Connect to MongoDB
+connectDB();
+
+// CORS middleware
+app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: ['POST', 'GET', 'PUT'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
+// Body parsing middleware
 app.use(express.json());
-app.get('/', query('person').notEmpty(), (req, res) => {
-  res.send('Hello World!')
+
+// Routes
+app.use('/api', createUserRoute);
+app.use('/api', displayDataRoute);
+app.use('/api', orderDataRoute);
+
+// Handle CORS preflight requests
+app.options('*', cors());
+
+// Test route
+app.get('/', (req, res) => {
+  res.send('Hello World!');
 });
 
-app.use('/api', require("./Routes/CreateUser"));
-app.use('/api', require("./Routes/DisplayData"));
-app.use('/api', require("./Routes/orderData"));
+// Error handling middleware
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Internal Server Error');
+});
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});
