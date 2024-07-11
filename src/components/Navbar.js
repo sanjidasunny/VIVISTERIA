@@ -10,6 +10,8 @@ function Navbar() {
   const navigate = useNavigate();
   const Logout = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("userID");
+    localStorage.removeItem("userEmail");
     navigate("/login");
   };
   const [cartView, setCartView] = useState(false);

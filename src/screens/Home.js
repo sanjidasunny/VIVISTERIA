@@ -10,21 +10,45 @@ function Home() {
   const [foodCat, setFoodCat] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);
 
+  /*
+   const [loading, setLoading] = useState(true);
+    const loadData = async () => {
+      try {
+        const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/foodData');
+        const responseData = response.data;
+        setFoodItem(responseData[0] || []);
+        setFoodCat(responseData[1] || []);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        if (error.response) {
+          console.error('Response data:', error.response.data);
+        }
+        setLoading(false);
+      }
+    };
+    if (loading) {
+    return <div>Loading...</div>;
+  }
+  */
   const loadData = async () => {
     try {
-      const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/foodData');
-      const responseData = response.data;
-      setFoodItem(responseData[0] || []);
-      setFoodCat(responseData[1] || []);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      if (error.response) {
-        console.error('Response data:', error.response.data);
+      let response = await fetch("http://localhost:5000/api/foodData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
       }
-      setLoading(false);
+      response = await response.json();
+      setFoodItem(response[0]);
+      setFoodCat(response[1]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      // Handle error state here, e.g., show a message to the user
     }
   };
 
@@ -32,9 +56,7 @@ function Home() {
     loadData();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+
 
   return (
     <div className="mainBody">

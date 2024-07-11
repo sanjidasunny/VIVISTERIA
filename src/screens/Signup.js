@@ -10,45 +10,68 @@ function Signup() {
   });
 
   let navigate = useNavigate();
-
+  /*
+    const submit = async (e) => {
+      e.preventDefault();
+      if (credentials.name.length < 6) {
+        alert("Username must be at least 6 characters long");
+        return;
+      }
+  
+      if (credentials.password.length < 6) {
+        alert("Password must be at least 6 characters long");
+        return;
+      }
+      try {
+        const response = await fetch('https://vivisteria-2lrx.vercel.app/api/createuser', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: credentials.name,
+            email: credentials.email,
+            password: credentials.password,
+            location: credentials.location,
+          }),
+        });
+  
+        const data = await response.json();
+  
+        if (!data.success) {
+          alert('Enter valid credentials');
+        } else {
+          navigate('/login');
+        }
+      } catch (error) {
+        console.error('Error creating user:', error);
+        //alert('Error creating user. Please try again.');
+      }
+    };
+  */
   const submit = async (e) => {
     e.preventDefault();
-    if (credentials.name.length < 6) {
-      alert("Username must be at least 6 characters long");
-      return;
-    }
+    const response = await fetch("http://localhost:5000/api/createuser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: credentials.name,
+        password: credentials.password,
+        email: credentials.email,
+        location: credentials.location,
+      }),
+    });
+    const json = await response.json();
+    console.log(json);
 
-    if (credentials.password.length < 6) {
-      alert("Password must be at least 6 characters long");
-      return;
-    }
-    try {
-      const response = await fetch('https://vivisteria-2lrx.vercel.app/api/createuser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: credentials.name,
-          email: credentials.email,
-          password: credentials.password,
-          location: credentials.location,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!data.success) {
-        alert('Enter valid credentials');
-      } else {
-        navigate('/login');
-      }
-    } catch (error) {
-      console.error('Error creating user:', error);
-      //alert('Error creating user. Please try again.');
+    if (!json.success) {
+      alert("enter valid credentials");
+    } else {
+      navigate("/login");
     }
   };
-
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };

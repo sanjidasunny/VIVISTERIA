@@ -8,13 +8,14 @@ function Login() {
     email: "",
   });
   let navigate = useNavigate();
+  /*
   const submit = async (e) => {
     e.preventDefault();
-    /*const response = await fetch("http://localhost:5000/api/loginuser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },*/
+    // const response = await fetch("http://localhost:5000/api/loginuser", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
 
     try {
       const response = await axios.post(
@@ -45,6 +46,36 @@ function Login() {
       alert('Error logging in. Please try again.');
     }
   };
+  */
+  const submit = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:5000/api/loginuser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+
+        password: credentials.password,
+        email: credentials.email,
+
+      }),
+    });
+    const json = await response.json();
+    //console.log(response.userID);
+
+    if (!json.success) {
+      alert("enter valid email or password");
+    } else {
+      localStorage.setItem("userEmail", credentials.email);
+      localStorage.setItem("userID", json.userID);
+      localStorage.setItem("authToken", json.authToken);
+      console.log(localStorage.getItem("userID"));
+
+      navigate("/");
+    }
+  };
+
 
   const onChange = (e) => {
     setcredentials({ ...credentials, [e.target.name]: e.target.value });

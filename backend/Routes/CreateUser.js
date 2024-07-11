@@ -62,7 +62,7 @@ router.post("/loginuser", async (req, res) => {
 
         const decodedToken = jwt.decode(authToken);
         console.log('Token expiration time:', new Date(decodedToken.exp * 1000));
-        return res.json({ success: true, authToken: authToken });
+        return res.json({ success: true, authToken: authToken, userID: userData.id });
 
     } catch (error) {
         console.log(error)
