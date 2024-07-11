@@ -8,8 +8,8 @@ router.post('/foodData', async (req, res) => {
         const foodItems = await FoodItem.find({});
         const foodCategories = await FoodCategory.find({});
 
-        console.log('Fetched Food Items:', foodItems);
-        console.log('Fetched Food Categories:', foodCategories);
+        // console.log('Fetched Food Items:', foodItems);
+        // console.log('Fetched Food Categories:', foodCategories);
 
         res.send([foodItems, foodCategories]);
     } catch (error) {
