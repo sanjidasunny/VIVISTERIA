@@ -65,49 +65,49 @@ export default function MyOrder() {
         <div className="row">
           {orderData != {}
             ? Array(orderData).map((data) => {
-                return data.orderData
-                  ? data.orderData.order_data
-                      .slice(0)
-                      .reverse()
-                      .map((item) => {
-                        return item.map((arrayData) => {
-                          return (
-                            <div>
-                              {arrayData.Order_date ? (
-                                <div className="m-auto mt-5 text-black">
-                                  {(data = arrayData.Order_date)}
-                                  <hr />
-                                </div>
-                              ) : (
-                                <div className="col-12 col-md-6 col-lg-3">
-                                  <div className="mt-3  border rounded p-3 m-3">
-                                    <h5 className="text-black">
-                                      {arrayData.name}
-                                    </h5>
-                                    <div className="container w-100 p-0">
-                                      <div className="m-1 text-danger">
-                                        {"Price: "}
-                                        {arrayData.size}
-                                      </div>
-                                      <div className="m-1 text-primary">
-                                        {"Quantity: "}
-                                        {arrayData.quantity}
-                                      </div>
+              return data.orderData
+                ? data.orderData.order_data
+                  .slice(0)
+                  .reverse()
+                  .map((item) => {
+                    return item.map((arrayData) => {
+                      return (
+                        <div>
+                          {arrayData.Order_date ? (
+                            <div className="m-auto mt-5 text-black">
+                              {(data = arrayData.Order_date)}
+                              <hr />
+                            </div>
+                          ) : (
+                            <div className="col-12 col-md-6 col-lg-3">
+                              <div className="mt-3  border rounded p-3 m-3">
+                                <h5 className="text-black">
+                                  {arrayData.name}
+                                </h5>
+                                <div className="container w-100 p-0">
+                                  <div className="m-1">
+                                    {"Price: "}
+                                    {arrayData.size}
+                                  </div>
+                                  <div className="m-1">
+                                    {"Quantity: "}
+                                    {arrayData.quantity}
+                                  </div>
 
-                                      <div className=" d-inline ms-2 h-100 w-20 fs-5 text-black">
-                                        {"Total price: "}
-                                        {arrayData.price}/-
-                                      </div>
-                                    </div>
+                                  <div className=" d-inline ms-2 h-100 w-20 fs-5 text-black">
+                                    {"Total price: "}
+                                    {arrayData.price}/-
                                   </div>
                                 </div>
-                              )}
+                              </div>
                             </div>
-                          );
-                        });
-                      })
-                  : "";
-              })
+                          )}
+                        </div>
+                      );
+                    });
+                  })
+                : "";
+            })
             : ""}
         </div>
       </div>

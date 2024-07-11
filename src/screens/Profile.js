@@ -47,7 +47,7 @@ function Profile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Set loading state while waiting for response
+    setLoading(true);
     try {
       const response = await fetch("http://localhost:5000/api/profile/update", {
         method: "POST",
@@ -63,15 +63,15 @@ function Profile() {
       if (response.ok) {
         setProfileData(data.profileData);
         setEditMode(false);
-        setError(""); // Clear any previous errors
+        setError("");
       } else {
-        setError("Invalid Password. Please try again."); // Set error message for wrong password
+        setError("Invalid Password. Please try again.");
       }
     } catch (error) {
       console.error("Error updating profile:", error);
-      setError("Server Error. Please try again later."); // Set error message for server errors
+      setError("Server Error. Please try again later.");
     } finally {
-      setLoading(false); // Always clear loading state after request completes
+      setLoading(false);
     }
   };
 
@@ -149,6 +149,7 @@ function Profile() {
                   <button type="submit" disabled={loading}>
                     {loading ? "Loading..." : "Submit"}
                   </button>
+                  <p>Enter the current password to edit data</p>{" "}
                   {error && <p className="error-message">{error}</p>}
                 </form>
               ) : (
