@@ -12,6 +12,9 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Profile from "./screens/Profile.js";
 import { CartProvider } from "./components/ContextReducer.js";
 import AdminPanel from "./screens/AdminPanel.js";
+import DashBoard from "./screens/DashBoard.js";
+import DetailsPage from "./screens/DetailsPage.js";
+import AddItem from "./screens/AddItem.js";
 
 function App() {
   return (
@@ -26,6 +29,9 @@ function App() {
             <Route exact path="/profile" element={<Profile />} />
             <Route exact path="/myOrder" element={<MyOrder />} />
             <Route exact path="/adminPanel" element={<AdminPanel />} />
+            <Route exact path="/dashboard" element={<DashBoard />} />
+            <Route exact path="/details/:id" element={<DetailsPage />} />
+            <Route exact path="/addItem" element={<AddItem />} />
           </Routes>
         </div>
       </Router>

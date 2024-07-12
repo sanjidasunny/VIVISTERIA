@@ -1,61 +1,60 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 export default function Sidebar() {
+  const [foodCat, setFoodCat] = useState([]);
 
+  const loadData = async () => {
+    try {
+      let response = await fetch("http://localhost:5000/api/foodCategory", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      response = await response.json();
+      const flatResponse = response.flat();
 
-    const [foodCat, setFoodCat] = useState([]);
+      setFoodCat(flatResponse);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      // Handle error state here, e.g., show a message to the user
+    }
+  };
 
-    const loadData = async () => {
-        try {
-            let response = await fetch("http://localhost:5000/api/foodData", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            if (!response.ok) {
-                throw new Error("Failed to fetch data");
-            }
-            response = await response.json();
+  useEffect(() => {
+    loadData();
+  }, []);
+  const isAdmin = localStorage.getItem("adminStatus") === "true";
+  return (
+    <div className="sidebar">
+      <div className="sidebar-content">
+        <span className="fs-4">Sidebar</span>
+        <hr />
+        {isAdmin ? (
+          <Link className="btn btn-success" to="/addItem">
+            Add New Item
+          </Link>
+        ) : (
+          ""
+        )}
 
-            setFoodCat(response[1]);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            // Handle error state here, e.g., show a message to the user
-        }
-    };
-
-    useEffect(() => {
-        loadData();
-    }, []);
-    return (
-        <div className='sidebar'>
-            <div className="sidebar-content">
-                <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                    <svg className="bi me-2" width="40" height="32"><use xlinkHref="#bootstrap"></use></svg>
-                    <span className="fs-4">Sidebar</span>
-                </a>
-                <hr />
-                <ul className="nav nav-pills flex-column mb-auto">
-                    <li className="nav-item">
-                        <a href="/" className="nav-link" aria-current="page">
-                            <svg className="bi me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>
-                            Biryani/Rice
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a href="/" className="nav-link link-dark">
-                            <svg className="bi me-2" width="16" height="16"><use xlinkHref="#speedometer2"></use></svg>
-                            Pizza
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a href="/" className="nav-link link-dark">
-                            <svg className="bi me-2" width="16" height="16"><use xlinkHref="#table"></use></svg>
-                            Starter
-                        </a>
-                    </li>
-                </ul>
-            </div>
+        <div
+          className="fs-4"
+          style={{ marginBottom: "15px", marginTop: "15px" }}
+        >
+          Catagories
         </div>
-    );
+        <div className="m-2 fs-6">All</div>
+        {foodCat && foodCat.length > 0
+          ? foodCat.map((data) => (
+            <div className="m-2 fs-6">{data.CategoryName}</div>
+          ))
+          : ""}
+      </div>
+    </div>
+  );
 }

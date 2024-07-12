@@ -18,4 +18,14 @@ router.post('/foodData', async (req, res) => {
     }
 });
 
+router.post('/foodCategory', async (req, res) => {
+    try {
+        const foodCategories = await FoodCategory.find({});
+        res.send([foodCategories]);
+    } catch (e) {
+        console.error(e.message);
+        res.status(500).send("Server Error");
+    }
+})
+
 module.exports = router;

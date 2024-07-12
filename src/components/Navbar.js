@@ -19,13 +19,13 @@ function Navbar() {
   const isAdmin = localStorage.getItem("adminStatus") === 'true';
   return (
     <div>
-      <nav className={`navbar navbar-expand-lg shadow ${isAdmin ? 'nav2' : 'nav1'}`}>
+      <nav className={`navbar navbar-expand-lg  shadow ${isAdmin ? 'nav2' : 'nav1'}`}>
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <img src="/logo-3.png" className="navbar-logo" alt="" />
           </Link>
           <button
-            className="navbar-toggler"
+            className="navbar-toggler active"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNav"
@@ -50,30 +50,36 @@ function Navbar() {
                 </Link>
               </li>
               {isAdmin ? (
-                <li className="nav-item">
-                  <Link
-                    className="nav-link text-white active"
-                    aria-current="page"
-                    to="/adminPanel"
-                  >
-                    Admin Panel
-                  </Link>
-                </li>) : ("")}
-              {isAdmin ? ("") :
-                localStorage.getItem("authToken") ? (
+                <div className="d-flex">
                   <li className="nav-item">
                     <Link
                       className="nav-link text-white active"
                       aria-current="page"
-                      to="/myOrder"
+                      to="/adminPanel"
                     >
-                      My Orders
+                      Admin Panel
                     </Link>
                   </li>
-                ) : (
-                  ""
-                )
-              }
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link text-white active"
+                      aria-current="page"
+                      to="/dashboard"
+                    >
+                      Dashboard
+                    </Link>
+                  </li>
+                </div>
+              ) : (<li className="nav-item">
+                <Link
+                  className="nav-link text-white active"
+                  aria-current="page"
+                  to="/myOrder"
+                >
+                  My Orders
+                </Link>
+              </li>)}
+
 
             </ul>
             {!localStorage.getItem("authToken") ? (
