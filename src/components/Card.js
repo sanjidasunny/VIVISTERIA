@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatchCart, useCart } from "./ContextReducer";
+import { Link } from "react-router-dom";
 
 
 function Card(props) {
@@ -67,11 +68,13 @@ function Card(props) {
   return (
     <div className="card-container">
       <div className="card">
-        <img
-          src={props.foodItem.img}
-          className="card-img-top"
-          alt="..."
-        />
+        <Link to={`/details/${props.foodItem._id}`} state={{ foodItem: props.foodItem }}>
+          <img
+            src={props.foodItem.img}
+            className="card-img-top"
+            alt="..."
+          />
+        </Link>
         <div className="card-body">
           <h5 className="card-title">{props.foodItem.name}</h5>
           <div className="d-flex align-items-center justify-content-between">
@@ -107,7 +110,6 @@ function Card(props) {
           <hr />
           {isAdmin ? (
             <div>
-
               <button className="btn ms-2 btn-warning" onClick={handleEdit}>
                 Edit
               </button>
@@ -120,7 +122,6 @@ function Card(props) {
               Add to Cart
             </button>
           )}
-
         </div>
       </div>
     </div>
