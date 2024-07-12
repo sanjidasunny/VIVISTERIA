@@ -52,11 +52,18 @@ function Card(props) {
     console.log(data);
   };
 
+  const handleEdit = async () => {
+
+  }
+  const handleDelete = async () => {
+
+  }
+
   let finalPrice = quantity * parseInt(size);
   useEffect(() => {
     setSize(priceRef.current.value);
   }, []);
-
+  const isAdmin = localStorage.getItem("adminStatus") === 'true';
   return (
     <div className="card-container">
       <div className="card">
@@ -98,9 +105,22 @@ function Card(props) {
             <div className="text-uppercase">{finalPrice}/-</div>
           </div>
           <hr />
-          <button className="btn ms-2 btn-success" onClick={addToCart}>
-            Add to Cart
-          </button>
+          {isAdmin ? (
+            <div>
+
+              <button className="btn ms-2 btn-warning" onClick={handleEdit}>
+                Edit
+              </button>
+              <button className="btn ms-2 btn-danger" onClick={handleDelete}>
+                Delete
+              </button>
+            </div>
+          ) : (
+            <button className="btn ms-2 btn-success" onClick={addToCart}>
+              Add to Cart
+            </button>
+          )}
+
         </div>
       </div>
     </div>

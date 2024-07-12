@@ -1,4 +1,7 @@
-
+html, body {
+  height: 100%;
+  margin: 0;
+}
 .App {
   text-align: center;
 }
@@ -91,6 +94,9 @@
 }
 .nav1{
   background-color: rgb(255, 85, 85);
+}
+.nav2{
+  background-color: rgb(136, 85, 255);
 }
 
 .sidebar {
@@ -268,4 +274,87 @@
 
 .edit-button button:focus {
   outline: none;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+.content-container {
+  flex: 1;
+}
+.user-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Heading styling */
+.heading {
+  margin-left: 20px;
+  margin-top: 10px;
+  font-size: 2rem;
+  color: #333;
+}
+
+/* User card styling */
+.user-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.user-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-field {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.user-label {
+  font-weight: bold;
+  color: #555;
+}
+
+.no-users {
+  margin: 20px;
+  font-size: 1.2rem;
+  color: #888;
+  text-align: center;
+}
+
+.delete-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.delete-button:hover {
+  background-color: darkred;
 }

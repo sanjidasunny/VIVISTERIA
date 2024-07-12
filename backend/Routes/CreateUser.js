@@ -28,7 +28,8 @@ router.post("/createuser",
                 name: req.body.name,
                 password: securepassword,
                 email: req.body.email,
-                location: req.body.location
+                location: req.body.location,
+                isAdmin: req.body.isAdmin
             })
             res.json({ success: true });
         } catch (error) {
@@ -53,6 +54,7 @@ router.post("/loginuser", async (req, res) => {
         const data = {
             user: {
                 id: userData.id,
+                isAdmin: userData.isAdmin
             }
         }
         console.log('Creating token with expiration time of 1 minute');
@@ -62,7 +64,7 @@ router.post("/loginuser", async (req, res) => {
 
         const decodedToken = jwt.decode(authToken);
         console.log('Token expiration time:', new Date(decodedToken.exp * 1000));
-        return res.json({ success: true, authToken: authToken, userID: userData.id });
+        return res.json({ success: true, authToken: authToken, userID: userData.id, adminStatus: userData.isAdmin });
 
     } catch (error) {
         console.log(error)

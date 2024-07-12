@@ -7,6 +7,7 @@ function Signup() {
     password: "",
     email: "",
     location: "",
+    isAdmin: false,
   });
 
   let navigate = useNavigate();
@@ -33,6 +34,7 @@ function Signup() {
             email: credentials.email,
             password: credentials.password,
             location: credentials.location,
+            isAdmin: credentials.isAdmin,
           }),
         });
   
@@ -61,6 +63,7 @@ function Signup() {
         password: credentials.password,
         email: credentials.email,
         location: credentials.location,
+        isAdmin: credentials.isAdmin,
       }),
     });
     const json = await response.json();
@@ -152,6 +155,9 @@ function Signup() {
           </button>
           <Link to="/login" className="m-3" style={{ color: "black" }}>
             Already have an account? Log in
+          </Link>
+          <Link to="/adminSignup" className="m-3" style={{ color: "black" }}>
+            Signup as admin
           </Link>
         </form>
       </div>

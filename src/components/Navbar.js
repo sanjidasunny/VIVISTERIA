@@ -12,12 +12,14 @@ function Navbar() {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userID");
     localStorage.removeItem("userEmail");
+    localStorage.removeItem("adminStatus");
     navigate("/login");
   };
   const [cartView, setCartView] = useState(false);
+  const isAdmin = localStorage.getItem("adminStatus") === 'true';
   return (
     <div>
-      <nav className="nav1 navbar navbar-expand-lg shadow">
+      <nav className={`navbar navbar-expand-lg shadow ${isAdmin ? 'nav2' : 'nav1'}`}>
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <img src="/logo-3.png" className="navbar-logo" alt="" />
@@ -47,19 +49,32 @@ function Navbar() {
                   Profile
                 </Link>
               </li>
-              {localStorage.getItem("authToken") ? (
+              {isAdmin ? (
                 <li className="nav-item">
                   <Link
                     className="nav-link text-white active"
                     aria-current="page"
-                    to="/myOrder"
+                    to="/adminPanel"
                   >
-                    My Orders
+                    Admin Panel
                   </Link>
-                </li>
-              ) : (
-                ""
-              )}
+                </li>) : ("")}
+              {isAdmin ? ("") :
+                localStorage.getItem("authToken") ? (
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link text-white active"
+                      aria-current="page"
+                      to="/myOrder"
+                    >
+                      My Orders
+                    </Link>
+                  </li>
+                ) : (
+                  ""
+                )
+              }
+
             </ul>
             {!localStorage.getItem("authToken") ? (
               <div className="d-flex">
@@ -72,7 +87,7 @@ function Navbar() {
               </div>
             ) : (
               <div>
-                <div
+                {isAdmin ? ("") : <div
                   className="btn bg-white mx-2 text-danger"
                   onClick={() => setCartView(true)}
                 >
@@ -82,6 +97,7 @@ function Navbar() {
                     {data.length}
                   </Badge>
                 </div>
+                }
                 {cartView ? (
                   <Modal onClose={() => setCartView(false)}>
                     <Cart />
@@ -89,6 +105,8 @@ function Navbar() {
                 ) : (
                   ""
                 )}
+
+
                 <div className="btn bg-white mx-2 text-danger" onClick={Logout}>
                   Log out
                 </div>

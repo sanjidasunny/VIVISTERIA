@@ -70,7 +70,13 @@ function Login() {
       localStorage.setItem("userEmail", credentials.email);
       localStorage.setItem("userID", json.userID);
       localStorage.setItem("authToken", json.authToken);
+      localStorage.setItem("adminStatus", json.adminStatus.toString())
       console.log(localStorage.getItem("userID"));
+      if (localStorage.getItem("adminStatus") === "true") {
+        console.log("user is an admin")
+      } else {
+        console.log("user is not an admin")
+      }
 
       navigate("/");
     }

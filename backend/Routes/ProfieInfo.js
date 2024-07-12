@@ -51,4 +51,23 @@ router.post('/profile/update', async (req, res) => {
     }
 });
 
+router.post('/displayuser', async (req, res) => {
+    try {
+        const alluser = await User.find({});
+        res.send([alluser])
+    } catch (e) {
+
+    }
+})
+router.delete('/deleteuser/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        await User.findByIdAndDelete(userId);
+        res.status(200).send({ message: 'User deleted successfully' });
+    } catch (e) {
+        res.status(500).send({ error: 'Failed to delete user' });
+    }
+});
+
+
 module.exports = router;
