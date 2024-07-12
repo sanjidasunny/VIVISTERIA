@@ -149,7 +149,7 @@ function Profile() {
                   <button type="submit" disabled={loading}>
                     {loading ? "Loading..." : "Submit"}
                   </button>
-                  <p>Enter the current password to edit data</p>{" "}
+
                   {error && <p className="error-message">{error}</p>}
                 </form>
               ) : (

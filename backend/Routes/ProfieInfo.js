@@ -25,10 +25,7 @@ router.post('/profile/update', async (req, res) => {
         }
 
         // Check if old password matches
-        const isMatch = await bcrypt.compare(oldPassword, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ msg: "Invalid credentials. Please try again." });
-        }
+
 
         // Update profile information
         user.name = name;
@@ -37,6 +34,10 @@ router.post('/profile/update', async (req, res) => {
 
         // Update password if new password is provided
         if (newPassword) {
+            const isMatch = await bcrypt.compare(oldPassword, user.password);
+            if (!isMatch) {
+                return res.status(400).json({ msg: "Invalid credentials. Please try again." });
+            }
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(newPassword, salt);
             user.password = hashedPassword;

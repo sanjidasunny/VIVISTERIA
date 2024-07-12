@@ -4,7 +4,7 @@ import { useDispatchCart, useCart } from "./ContextReducer";
 
 function Card(props) {
   const priceRef = useRef();
-  let options = props.options;
+  let options = props.options || {};
   let priceOptions = Object.keys(options);
   let dispatch = useDispatchCart();
   let data = useCart();
