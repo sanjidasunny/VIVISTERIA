@@ -20,10 +20,15 @@ router.post("/createuser",
             return res.status(400).json({ errors: result.array() });
         }
 
-        const salt = await bcrypt.genSalt(10);
-        const securepassword = await bcrypt.hash(req.body.password, salt);
+
 
         try {
+            let user = await User.findOne({ email: req.body.email });
+            if (user) {
+                return res.status(400).json({ errors: 'same email' });
+            }
+            const salt = await bcrypt.genSalt(10);
+            const securepassword = await bcrypt.hash(req.body.password, salt);
             await User.create({
                 name: req.body.name,
                 password: securepassword,

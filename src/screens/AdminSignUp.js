@@ -44,7 +44,11 @@ export default function AdminSignUp() {
        const data = await response.json();
  
        if (!data.success) {
-         alert('Enter valid credentials');
+         if (data.errors === 'same email') {
+        alert("email aleady exist")
+      } else {
+        alert("enter valid credentials");
+      }
        } else {
          navigate('/login');
        }
@@ -87,7 +91,11 @@ export default function AdminSignUp() {
         console.log(json);
 
         if (!json.success) {
-            alert("enter valid credentials");
+            if (json.errors === 'same email') {
+                alert("email aleady exist")
+            } else {
+                alert("enter valid credentials");
+            }
         } else {
             navigate("/login");
         }
