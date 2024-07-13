@@ -11,27 +11,6 @@ function Home() {
   const [foodItem, setFoodItem] = useState([]);
   const [search, setSearch] = useState("");
 
-  /*
-   const [loading, setLoading] = useState(true);
-    const loadData = async () => {
-      try {
-        const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/foodData');
-        const responseData = response.data;
-        setFoodItem(responseData[0] || []);
-        setFoodCat(responseData[1] || []);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        if (error.response) {
-          console.error('Response data:', error.response.data);
-        }
-        setLoading(false);
-      }
-    };
-    if (loading) {
-    return <div>Loading...</div>;
-  }
-  */
   const loadData = async () => {
     try {
       let response = await fetch("http://localhost:5000/api/foodData", {
@@ -48,7 +27,6 @@ function Home() {
       setFoodCat(response[1]);
     } catch (error) {
       console.error("Error fetching data:", error);
-      // Handle error state here, e.g., show a message to the user
     }
   };
 
@@ -56,7 +34,13 @@ function Home() {
     loadData();
   }, []);
 
+  const handleDelete = (id) => {
+    setFoodItem(foodItem.filter(item => item._id !== id));
+  };
 
+  const handleSave = (updatedItem) => {
+    setFoodItem(foodItem.map(item => item._id === updatedItem._id ? updatedItem : item));
+  };
 
   return (
     <div className="mainBody">
@@ -95,6 +79,8 @@ function Home() {
                           <Card
                             foodItem={filterItems}
                             options={filterItems.options[0]}
+                            onDelete={handleDelete}
+                            onSave={handleSave}
                           />
                         </div>
                       ))

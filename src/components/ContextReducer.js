@@ -13,7 +13,7 @@ const reducer = (state, action) => {
           quantity: action.quantity,
           size: action.size,
           price: action.price,
-          img: action.img,
+          CategoryName: action.CategoryName,
         },
       ];
     case "REMOVE":

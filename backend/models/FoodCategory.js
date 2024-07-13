@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const foodCategorySchema = new Schema({
-    CategoryName: { type: String, required: true }
+    CategoryName: { type: String, required: true },
+    purchased: { type: Number, required: true }
 }, {
     collection: 'food_category' // Specify the collection name explicitly
 });

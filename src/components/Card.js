@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatchCart, useCart } from "./ContextReducer";
-
+import { Link } from "react-router-dom";
+import EditModal from "./EditModal";
 
 function Card(props) {
   const priceRef = useRef();
@@ -10,6 +11,7 @@ function Card(props) {
   let data = useCart();
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState(priceOptions[0]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const addToCart = async () => {
     let food = [];
@@ -36,6 +38,7 @@ function Card(props) {
           price: finalPrice,
           quantity: quantity,
           size: size,
+          CategoryName: props.foodItem.CategoryName,
         });
         return;
       }
@@ -48,25 +51,56 @@ function Card(props) {
       price: finalPrice,
       quantity: quantity,
       size: size,
+      CategoryName: props.foodItem.CategoryName,
     });
     console.log(data);
+  };
+
+  const handleEdit = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/foodData/${props.foodItem._id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        alert("Food item deleted successfully");
+        props.onDelete(props.foodItem._id); // Call the onDelete prop
+      } else {
+        alert("Failed to delete the food item");
+        console.log(props.foodItem._id)
+      }
+    } catch (error) {
+      console.error("Error deleting food item:", error);
+      alert("Error deleting food item");
+    }
+  };
+
+  const handleSave = (updatedItem) => {
+    props.onSave(updatedItem);
+    setIsEditModalOpen(false);
   };
 
   let finalPrice = quantity * parseInt(size);
   useEffect(() => {
     setSize(priceRef.current.value);
   }, []);
-
+  const isAdmin = localStorage.getItem("adminStatus") === 'true';
   return (
     <div className="card-container">
       <div className="card">
-        <img
-          src={props.foodItem.img}
-          className="card-img-top"
-          alt="..."
-        />
+        <Link to={`/details/${props.foodItem._id}`} state={{ foodItem: props.foodItem }}>
+          <img
+            src={props.foodItem.img}
+            className="card-img-top"
+            alt="..."
+          />
+        </Link>
         <div className="card-body">
           <h5 className="card-title">{props.foodItem.name}</h5>
+
           <div className="d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center">
               <select
@@ -98,9 +132,26 @@ function Card(props) {
             <div className="text-uppercase">{finalPrice}/-</div>
           </div>
           <hr />
-          <button className="btn ms-2 btn-success" onClick={addToCart}>
-            Add to Cart
-          </button>
+          {isAdmin ? (
+            <div>
+              <button className="btn ms-2 btn-warning" onClick={handleEdit}>
+                Edit
+              </button>
+              <button className="btn ms-2 btn-danger" onClick={handleDelete}>
+                Delete
+              </button>
+              <EditModal
+                isOpen={isEditModalOpen}
+                onRequestClose={() => setIsEditModalOpen(false)}
+                foodItem={props.foodItem}
+                onSave={handleSave}
+              />
+            </div>
+          ) : (
+            <button className="btn ms-2 btn-success" onClick={addToCart}>
+              Add to Cart
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@ import "./App.css";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 import Signup from "./screens/Signup";
+import AdminSignUp from "./screens/AdminSignUp.js";
 import MyOrder from "./screens/myOrder.js";
 import "../node_modules/bootstrap-dark-5/dist/css/bootstrap-dark.min.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle";
@@ -10,6 +11,10 @@ import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Profile from "./screens/Profile.js";
 import { CartProvider } from "./components/ContextReducer.js";
+import AdminPanel from "./screens/AdminPanel.js";
+import DashBoard from "./screens/DashBoard.js";
+import DetailsPage from "./screens/DetailsPage.js";
+import AddItem from "./screens/AddItem.js";
 
 function App() {
   return (
@@ -20,8 +25,13 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/signup" element={<Signup />} />
+            <Route exact path="/adminSignup" element={<AdminSignUp />} />
             <Route exact path="/profile" element={<Profile />} />
             <Route exact path="/myOrder" element={<MyOrder />} />
+            <Route exact path="/adminPanel" element={<AdminPanel />} />
+            <Route exact path="/dashboard" element={<DashBoard />} />
+            <Route exact path="/details/:id" element={<DetailsPage />} />
+            <Route exact path="/addItem" element={<AddItem />} />
           </Routes>
         </div>
       </Router>
