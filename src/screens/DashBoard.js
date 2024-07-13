@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import './Dashboard.css';
+import '../Dashboard.css';
 import {
   BarChart,
   Bar,

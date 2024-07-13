@@ -8,16 +8,33 @@ router.post('/foodData', async (req, res) => {
         const foodItems = await FoodItem.find({});
         const foodCategories = await FoodCategory.find({});
 
-        // console.log('Fetched Food Items:', foodItems);
-        // console.log('Fetched Food Categories:', foodCategories);
-
         res.send([foodItems, foodCategories]);
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Server Error");
     }
 });
-
+router.delete('/foodData/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await FoodItem.findByIdAndDelete(id);
+        res.status(200).send({ message: "Food item deleted successfully" });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Server Error");
+    }
+});
+router.put('/foodData/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updateData = req.body;
+        const updatedItem = await FoodItem.findByIdAndUpdate(id, updateData, { new: true });
+        res.status(200).send(updatedItem);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Server Error");
+    }
+});
 router.post('/foodCategory', async (req, res) => {
     try {
         const foodCategories = await FoodCategory.find({});

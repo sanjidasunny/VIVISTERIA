@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatchCart, useCart } from "./ContextReducer";
 import { Link } from "react-router-dom";
-
+import EditModal from "./EditModal";
 
 function Card(props) {
   const priceRef = useRef();
@@ -11,6 +11,7 @@ function Card(props) {
   let data = useCart();
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState(priceOptions[0]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const addToCart = async () => {
     let food = [];
@@ -55,12 +56,32 @@ function Card(props) {
     console.log(data);
   };
 
-  const handleEdit = async () => {
+  const handleEdit = () => {
+    setIsEditModalOpen(true);
+  };
 
-  }
   const handleDelete = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/foodData/${props.foodItem._id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        alert("Food item deleted successfully");
+        props.onDelete(props.foodItem._id); // Call the onDelete prop
+      } else {
+        alert("Failed to delete the food item");
+        console.log(props.foodItem._id)
+      }
+    } catch (error) {
+      console.error("Error deleting food item:", error);
+      alert("Error deleting food item");
+    }
+  };
 
-  }
+  const handleSave = (updatedItem) => {
+    props.onSave(updatedItem);
+    setIsEditModalOpen(false);
+  };
 
   let finalPrice = quantity * parseInt(size);
   useEffect(() => {
@@ -119,6 +140,12 @@ function Card(props) {
               <button className="btn ms-2 btn-danger" onClick={handleDelete}>
                 Delete
               </button>
+              <EditModal
+                isOpen={isEditModalOpen}
+                onRequestClose={() => setIsEditModalOpen(false)}
+                foodItem={props.foodItem}
+                onSave={handleSave}
+              />
             </div>
           ) : (
             <button className="btn ms-2 btn-success" onClick={addToCart}>
