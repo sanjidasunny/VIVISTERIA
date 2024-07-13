@@ -66,6 +66,13 @@ export default function AdminPanel() {
             <Search setSearch={setSearch} />
           </div>
           {filteredUsers && filteredUsers.length > 0 ? (
+            <div>
+              <h4>Currently Signed in users: {filteredUsers.length}</h4>
+            </div>
+          ) : (
+            ""
+          )}
+          {filteredUsers && filteredUsers.length > 0 ? (
             filteredUsers.map((data) => (
               <div className="user-card" key={data._id}>
                 <div className="user-details">

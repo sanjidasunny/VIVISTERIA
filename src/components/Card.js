@@ -37,6 +37,7 @@ function Card(props) {
           price: finalPrice,
           quantity: quantity,
           size: size,
+          CategoryName: props.foodItem.CategoryName,
         });
         return;
       }
@@ -49,6 +50,7 @@ function Card(props) {
       price: finalPrice,
       quantity: quantity,
       size: size,
+      CategoryName: props.foodItem.CategoryName,
     });
     console.log(data);
   };
@@ -77,6 +79,7 @@ function Card(props) {
         </Link>
         <div className="card-body">
           <h5 className="card-title">{props.foodItem.name}</h5>
+
           <div className="d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center">
               <select

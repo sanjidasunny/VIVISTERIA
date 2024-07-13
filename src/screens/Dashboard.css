@@ -1,0 +1,56 @@
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  .dashboard {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .total-delivered {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .total-delivered h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .total-delivered span {
+    color: #4CAF50;
+    font-size: 28px;
+  }
+  
+  .charts-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .charts-container > div {
+    flex: 1 1 45%;
+  }
+  
+  @media (max-width: 768px) {
+    .charts-container > div {
+      flex: 1 1 100%;
+    }
+  }
+  
+  footer {
+    background-color: #f1f1f1;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+  }
+  
