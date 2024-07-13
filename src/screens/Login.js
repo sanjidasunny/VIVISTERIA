@@ -34,12 +34,24 @@ function Login() {
       const data = response.data;
 
       if (!data.success) {
-        alert('Enter valid email or password');
+       if (json.errors === "not approved") {
+        alert("You are not approved yet");
       } else {
-        localStorage.setItem('userEmail', credentials.email);
-        localStorage.setItem('authToken', data.authToken);
-        console.log(localStorage.getItem('authToken'));
-        navigate('/');
+        alert("Enter valid email or password");
+      }
+      } else {
+        localStorage.setItem("userEmail", credentials.email);
+      localStorage.setItem("userID", json.userID);
+      localStorage.setItem("authToken", json.authToken);
+      localStorage.setItem("adminStatus", json.adminStatus.toString())
+      console.log(localStorage.getItem("userID"));
+      if (localStorage.getItem("adminStatus") === "true") {
+        console.log("user is an admin")
+      } else {
+        console.log("user is not an admin")
+      }
+
+      navigate("/");
       }
     } catch (error) {
       console.error('Error logging in:', error);
@@ -65,7 +77,11 @@ function Login() {
     //console.log(response.userID);
 
     if (!json.success) {
-      alert("enter valid email or password");
+      if (json.errors === "not approved") {
+        alert("You are not approved as an Admin yet. \n Wait for othe admins to vaify you.");
+      } else {
+        alert("Enter valid email or password");
+      }
     } else {
       localStorage.setItem("userEmail", credentials.email);
       localStorage.setItem("userID", json.userID);

@@ -5,17 +5,19 @@ function Signup() {
   const [credentials, setCredentials] = useState({
     name: "",
     password: "",
+    confirmPassword: "",
     email: "",
     location: "",
     isAdmin: false,
+    isApproved: false
   });
 
   let navigate = useNavigate();
   /*
     const submit = async (e) => {
       e.preventDefault();
-      if (credentials.name.length < 6) {
-        alert("Username must be at least 6 characters long");
+      if (credentials.name.length < 5) {
+        alert("Username must be at least 5 characters long");
         return;
       }
   
@@ -35,6 +37,7 @@ function Signup() {
             password: credentials.password,
             location: credentials.location,
             isAdmin: credentials.isAdmin,
+            isApproved: credentials.isApproved
           }),
         });
   
@@ -53,6 +56,18 @@ function Signup() {
   */
   const submit = async (e) => {
     e.preventDefault();
+    if (credentials.name.length < 5) {
+      alert("Username must be at least 5 characters long");
+      return;
+    }
+    if (credentials.password !== credentials.confirmPassword) {
+      alert("Password doesn't match");
+      return;
+    }
+    if (credentials.password.length < 6) {
+      alert("Password must be at least 6 characters long");
+      return;
+    }
     const response = await fetch("http://localhost:5000/api/createuser", {
       method: "POST",
       headers: {
@@ -61,9 +76,11 @@ function Signup() {
       body: JSON.stringify({
         name: credentials.name,
         password: credentials.password,
+        confirmPassword: credentials.confirmPassword,
         email: credentials.email,
         location: credentials.location,
         isAdmin: credentials.isAdmin,
+        isApproved: credentials.isApproved
       }),
     });
     const json = await response.json();
@@ -130,6 +147,22 @@ function Signup() {
               onChange={onChange}
               value={credentials.password}
               name="password"
+              id="exampleInputPassword1"
+            />
+          </div>
+          <div className="mb-3">
+            <label
+              htmlFor="exampleInputPassword1"
+              className="form-label text-black"
+            >
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              className="form-control w-100"
+              onChange={onChange}
+              value={credentials.confirmPassword}
+              name="confirmPassword"
               id="exampleInputPassword1"
             />
           </div>

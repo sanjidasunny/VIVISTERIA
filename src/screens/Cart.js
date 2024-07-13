@@ -113,7 +113,7 @@ export default function Cart() {
         </table>
 
         <div>
-          <h1 className="fs-2">Total Price: {totalPrice}/-</h1>
+          <h1 className="fs-2 text-white">Total Price: {totalPrice}/-</h1>
         </div>
         <div>
           <button className="btn bg-success mt-5 text-white" onClick={handleCheckOut}>

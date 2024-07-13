@@ -11,7 +11,7 @@ const jwtRefreshSecret = "HelloworldhowareyouWhatisYourNameThankyou";
 
 router.post("/createuser",
     body('email').isEmail(),
-    body('name').optional().isLength({ min: 6 }),
+    body('name').optional().isLength({ min: 5 }),
     body('password', 'incorrect password').optional().isLength({ min: 6 }),
     async (req, res) => {
 
@@ -29,14 +29,16 @@ router.post("/createuser",
                 password: securepassword,
                 email: req.body.email,
                 location: req.body.location,
-                isAdmin: req.body.isAdmin
+                isAdmin: req.body.isAdmin,
+                isApproved: req.body.isApproved
             })
             res.json({ success: true });
         } catch (error) {
             console.log(error)
             res.json({ success: false });
         }
-    })
+    }
+)
 
 router.post("/loginuser", async (req, res) => {
     console.log('Login route hit');
@@ -50,6 +52,9 @@ router.post("/loginuser", async (req, res) => {
         const passwordCheck = await bcrypt.compare(req.body.password, userData.password);
         if (!passwordCheck) {
             return res.status(400).json({ errors: "wrong password" });
+        }
+        if (userData.isAdmin !== userData.isApproved) {
+            return res.status(400).json({ errors: "not approved" });
         }
         const data = {
             user: {
@@ -72,6 +77,15 @@ router.post("/loginuser", async (req, res) => {
     }
 })
 
-
+router.put('/toggleapproval/:id', async (req, res) => {
+    try {
+        const { isApproved } = req.body;
+        const user = await User.findByIdAndUpdate(req.params.id, { isApproved }, { new: true });
+        res.json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
 
 module.exports = router;

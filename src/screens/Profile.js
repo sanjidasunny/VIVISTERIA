@@ -47,6 +47,10 @@ function Profile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.newPassword && formData.newPassword.length < 6) {
+      alert("Password length must be atleast 6 characters");
+      return;
+    }
     setLoading(true);
     try {
       const response = await fetch("http://localhost:5000/api/profile/update", {

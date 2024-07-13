@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
+import jwt_decode from "jwt-decode";
 import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import Footer from "../components/Footer";
-
+import ToggleSwitch from "../components/ToggleSwitch"
 export default function AdminPanel() {
   const [allUsers, setAllUsers] = useState([]);
   const [search, setSearch] = useState("");
+
 
   const loadData = async () => {
     try {
@@ -48,12 +50,35 @@ export default function AdminPanel() {
     }
   };
 
+  const toggleApproval = async (userId, isApproved) => {
+    try {
+      let response = await fetch(
+        `http://localhost:5000/api/toggleapproval/${userId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ isApproved: !isApproved }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to toggle approval");
+      }
+      await response.json();
+      loadData();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
+
     loadData();
   }, []);
-
-  const filteredUsers = allUsers.filter((user) =>
-    user.name.toLowerCase().includes(search.toLowerCase())
+  const currentUserId = localStorage.getItem("userID");
+  const filteredUsers = allUsers.filter(
+    (user) => user.name.toLowerCase().includes(search.toLowerCase()) && user._id !== currentUserId
   );
 
   return (
@@ -67,7 +92,7 @@ export default function AdminPanel() {
           </div>
           {filteredUsers && filteredUsers.length > 0 ? (
             <div>
-              <h4>Currently Signed in users: {filteredUsers.length}</h4>
+              <h4>Currently Signed in users: {filteredUsers.length + 1}</h4>
             </div>
           ) : (
             ""
@@ -85,6 +110,15 @@ export default function AdminPanel() {
                   <div className="user-field">
                     <span className="user-label">Address:</span> {data.location}
                   </div>
+                  {data.isAdmin && (
+                    <div className="user-field">
+                      <span className="user-label">Approved as Admin:</span>
+                      <ToggleSwitch
+                        checked={data.isApproved}
+                        onChange={() => toggleApproval(data._id, data.isApproved)}
+                      />
+                    </div>
+                  )}
                 </div>
                 <button
                   className="delete-button"

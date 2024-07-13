@@ -26,6 +26,10 @@ const UserSchema = new Schema({
     isAdmin: {
         type: Boolean,
         required: true
+    },
+    isApproved: {
+        type: Boolean,
+        required: true
     }
 });
 module.exports = mongoose.model('User', UserSchema)
