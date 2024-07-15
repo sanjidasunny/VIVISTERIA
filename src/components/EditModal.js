@@ -3,19 +3,25 @@ import Modal from "react-modal";
 import "../EditModal.css"; // Import CSS file for modal styling
 
 const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
-    const [name, setName] = useState(foodItem.name);
-    const [img, setImg] = useState(foodItem.img);
-    const [options, setOptions] = useState(foodItem.options);
-    const [description, setDescription] = useState(foodItem.description);
-    const [categoryName, setCategoryName] = useState(foodItem.CategoryName);
+    const [name, setName] = useState("");
+    const [img, setImg] = useState("");
+    const [options, setOptions] = useState([]);
+    const [description, setDescription] = useState("");
+    const [categoryName, setCategoryName] = useState("");
+    const [portions, setPortions] = useState([]);
+    const [prices, setPrices] = useState([]);
 
     // Update state with foodItem data when it changes
     useEffect(() => {
-        setName(foodItem.name);
-        setImg(foodItem.img);
-        setOptions(foodItem.options);
-        setDescription(foodItem.description);
-        setCategoryName(foodItem.CategoryName);
+        if (foodItem) {
+            setName(foodItem.name || "");
+            setImg(foodItem.img || "");
+            setOptions(foodItem.options || []);
+            setDescription(foodItem.description || "");
+            setCategoryName(foodItem.CategoryName || "");
+            setPortions(foodItem.portions || []);
+            setPrices(foodItem.prices || []);
+        }
     }, [foodItem]);
 
     // Handle save button click to update food item
@@ -27,6 +33,8 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
             options,
             description,
             CategoryName: categoryName,
+            portions,
+            prices,
         };
 
         try {
@@ -50,8 +58,38 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
         }
     };
 
+    // Handle changes in portions and prices
+    const handlePortionChange = (index, value) => {
+        const newPortions = [...portions];
+        newPortions[index] = value;
+        setPortions(newPortions);
+    };
+
+    const handlePriceChange = (index, value) => {
+        const newPrices = [...prices];
+        newPrices[index] = value;
+        setPrices(newPrices);
+    };
+
+    // Function to add a new portion and price pair
+    const handleAddPortion = () => {
+        setPortions([...portions, ""]);
+        setPrices([...prices, ""]);
+    };
+
+    // Function to remove a portion and price pair
+    const handleRemovePortion = (index) => {
+        const newPortions = [...portions];
+        newPortions.splice(index, 1);
+        setPortions(newPortions);
+
+        const newPrices = [...prices];
+        newPrices.splice(index, 1);
+        setPrices(newPrices);
+    };
+
     return (
-        <Modal isOpen={isOpen} onRequestClose={onRequestClose} className="edit-modal">
+        <Modal isOpen={isOpen} onRequestClose={onRequestClose} className="edit-modal" ariaHideApp={false}>
             <div className="modal-content">
                 <h2>Edit Food Item</h2>
                 <form>
@@ -82,20 +120,25 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
                             onChange={(e) => setImg(e.target.value)}
                         />
                     </div>
-                    <div className="form-group">
-                        <label>Description:</label>
-                        <input
-                            type="text"
-                            className="form-control description"
+                    <div className="mb-3">
+                        <label htmlFor="description" className="form-label">Description:</label>
+                        <textarea
+                            id="description"
+                            className="form-control"
+                            style={{ minHeight: "100px", resize: "vertical" }}
+                            rows="3"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                        />
+                        ></textarea>
                     </div>
+
+                   
+
+                    {/* Save Button */}
                     <button type="button" className="btn btn-primary" onClick={handleSave}>
                         Save
                     </button>
                 </form>
-
             </div>
         </Modal>
     );
