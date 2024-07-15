@@ -49,7 +49,8 @@ const connectDB = require("./database");
 const createUserRoute = require('./Routes/CreateUser');
 const displayDataRoute = require('./Routes/DisplayData');
 const orderDataRoute = require('./Routes/orderData');
-const ProfileRoute = require('./Routes/ProfieInfo')
+const ProfileRoute = require('./Routes/ProfieInfo');
+const foodItemRoute = require('./Routes/addNewItem');
 
 const app = express();
 const port = 5000;
@@ -72,6 +73,8 @@ app.use('/api', createUserRoute);
 app.use('/api', displayDataRoute);
 app.use('/api', orderDataRoute);
 app.use('/api', ProfileRoute);
+app.use('/api', foodItemRoute);
+
 
 // Handle CORS preflight requests
 app.options('*', cors());

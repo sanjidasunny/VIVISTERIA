@@ -10,7 +10,8 @@ function Home() {
   const [foodCat, setFoodCat] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
   const [search, setSearch] = useState("");
-  /*
+  const [selectedCategory, setSelectedCategory] = useState("All");
+    /*
     const [loading, setLoading] = useState(true);
      const loadData = async () => {
        try {
@@ -31,6 +32,7 @@ function Home() {
      return <div>Loading...</div>;
    }
    */
+
   const loadData = async () => {
     try {
       let response = await fetch("http://localhost:5000/api/foodData", {
@@ -44,7 +46,11 @@ function Home() {
       }
       response = await response.json();
       setFoodItem(response[0]);
-      setFoodCat(response[1]);
+      const sortedCategories = response[1].sort((a, b) =>
+        a.CategoryName.localeCompare(b.CategoryName)
+      );
+
+      setFoodCat(sortedCategories);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -55,12 +61,23 @@ function Home() {
   }, []);
 
   const handleDelete = (id) => {
-    setFoodItem(foodItem.filter(item => item._id !== id));
+    setFoodItem(foodItem.filter((item) => item._id !== id));
   };
 
   const handleSave = (updatedItem) => {
-    setFoodItem(foodItem.map(item => item._id === updatedItem._id ? updatedItem : item));
+    setFoodItem(
+      foodItem.map((item) =>
+        item._id === updatedItem._id ? updatedItem : item
+      )
+    );
   };
+
+  const filteredItems = foodItem.filter((item) => {
+    const matchesCategory =
+      selectedCategory === "All" || item.CategoryName === selectedCategory;
+    const matchesSearch = item.name.toLowerCase().includes(search.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className="mainBody">
@@ -73,24 +90,44 @@ function Home() {
       <div className="container-fluid">
         <div className="row">
           <div className="col-12 col-md-2">
-            <Sidebar />
+            <Sidebar setSelectedCategory={setSelectedCategory} />
           </div>
           <div className="col-12 col-md-10">
-            {foodCat && foodCat.length > 0 ? (
-              foodCat.map((data) => (
-                <div className="row mb-3" key={data._id}>
+            {selectedCategory === "All" ? (
+              foodCat.map((category) => (
+                <div className="row mb-3" key={category._id}>
                   <div className="fs-3 m-3 text-success">
-                    {data.CategoryName}
+                    {category.CategoryName}
                   </div>
                   <hr className="text-success" />
-                  {foodItem && foodItem.length > 0 ? (
-                    foodItem
-                      .filter(
-                        (item) =>
-                          item.CategoryName === data.CategoryName &&
-                          typeof search === "string" &&
-                          item.name.toLowerCase().includes(search.toLowerCase())
-                      )
+                  {filteredItems
+                    .filter((item) => item.CategoryName === category.CategoryName)
+                    .map((item) => (
+                      <div
+                        key={item._id}
+                        className="col-12 col-sm-6 col-lg-3 mb-3"
+                      >
+                        <Card
+                          foodItem={item}
+                          options={item.options[0]}
+                          onDelete={handleDelete}
+                          onSave={handleSave}
+                        />
+                      </div>
+                    ))}
+                </div>
+              ))
+            ) : (
+              foodCat
+                .filter((category) => category.CategoryName === selectedCategory)
+                .map((data) => (
+                  <div className="row mb-3" key={data._id}>
+                    <div className="fs-3 m-3 text-success">
+                      {data.CategoryName}
+                    </div>
+                    <hr className="text-success" />
+                    {filteredItems
+                      .filter((item) => item.CategoryName === data.CategoryName)
                       .map((filterItems) => (
                         <div
                           key={filterItems._id}
@@ -103,14 +140,9 @@ function Home() {
                             onSave={handleSave}
                           />
                         </div>
-                      ))
-                  ) : (
-                    <div>No Such Data Found</div>
-                  )}
-                </div>
-              ))
-            ) : (
-              <div>No Categories Found</div>
+                      ))}
+                  </div>
+                ))
             )}
           </div>
         </div>

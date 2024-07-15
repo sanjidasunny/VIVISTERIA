@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function Sidebar() {
+export default function Sidebar({ setSelectedCategory }) {
   const [foodCat, setFoodCat] = useState([]);
 
   const loadData = async () => {
@@ -17,18 +17,22 @@ export default function Sidebar() {
       }
       response = await response.json();
       const flatResponse = response.flat();
+      const sortedCategories = flatResponse.sort((a, b) =>
+        a.CategoryName.localeCompare(b.CategoryName)
+      );
 
-      setFoodCat(flatResponse);
+      setFoodCat(sortedCategories);
     } catch (error) {
       console.error("Error fetching data:", error);
-      // Handle error state here, e.g., show a message to the user
     }
   };
 
   useEffect(() => {
     loadData();
   }, []);
+
   const isAdmin = localStorage.getItem("adminStatus") === "true";
+
   return (
     <div className="sidebar">
       <div className="sidebar-content">
@@ -46,13 +50,26 @@ export default function Sidebar() {
           className="fs-4"
           style={{ marginBottom: "15px", marginTop: "15px" }}
         >
-          Catagories
+          Categories
         </div>
-        <div className="m-2 fs-6">All</div>
+        <div
+          className="m-2 fs-6"
+          onClick={() => setSelectedCategory("All")}
+          style={{ cursor: "pointer" }}
+        >
+          All
+        </div>
         {foodCat && foodCat.length > 0
           ? foodCat.map((data) => (
-            <div className="m-2 fs-6">{data.CategoryName}</div>
-          ))
+              <div
+                key={data._id}
+                className="m-2 fs-6"
+                onClick={() => setSelectedCategory(data.CategoryName)}
+                style={{ cursor: "pointer" }}
+              >
+                {data.CategoryName}
+              </div>
+            ))
           : ""}
       </div>
     </div>

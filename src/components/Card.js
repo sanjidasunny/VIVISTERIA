@@ -5,13 +5,28 @@ import EditModal from "./EditModal";
 
 function Card(props) {
   const priceRef = useRef();
-  let options = props.options || {};
-  let priceOptions = Object.keys(options);
-  let dispatch = useDispatchCart();
-  let data = useCart();
+  const dispatch = useDispatchCart();
+  const data = useCart();
   const [quantity, setQuantity] = useState(1);
-  const [size, setSize] = useState(priceOptions[0]);
+  const [portion, setPortion] = useState('');
+  const [price, setPrice] = useState(0);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (props.foodItem.options.length > 0) {
+      setPortion(props.foodItem.options[0].portion);
+      setPrice(props.foodItem.options[0].price);
+    }
+  }, [props.foodItem.options]);
+
+  const handlePortionChange = (e) => {
+    const selectedPortion = e.target.value;
+    setPortion(selectedPortion);
+    const selectedOption = props.foodItem.options.find(option => option.portion === selectedPortion);
+    if (selectedOption) {
+      setPrice(selectedOption.price);
+    }
+  };
 
   const addToCart = async () => {
     let food = [];
@@ -22,7 +37,7 @@ function Card(props) {
       }
     }
     if (food.length !== 0) {
-      if (food.size === size) {
+      if (food.size === portion) {
         await dispatch({
           type: "UPDATE",
           id: props.foodItem._id,
@@ -30,14 +45,14 @@ function Card(props) {
           quantity: quantity,
         });
         return;
-      } else if (food.size !== size) {
+      } else if (food.size !== portion) {
         await dispatch({
           type: "ADD",
           id: props.foodItem._id,
           name: props.foodItem.name,
           price: finalPrice,
           quantity: quantity,
-          size: size,
+          size: portion,
           CategoryName: props.foodItem.CategoryName,
         });
         return;
@@ -50,7 +65,7 @@ function Card(props) {
       name: props.foodItem.name,
       price: finalPrice,
       quantity: quantity,
-      size: size,
+      size: portion,
       CategoryName: props.foodItem.CategoryName,
     });
     console.log(data);
@@ -70,7 +85,7 @@ function Card(props) {
         props.onDelete(props.foodItem._id); // Call the onDelete prop
       } else {
         alert("Failed to delete the food item");
-        console.log(props.foodItem._id)
+        console.log(props.foodItem._id);
       }
     } catch (error) {
       console.error("Error deleting food item:", error);
@@ -83,11 +98,9 @@ function Card(props) {
     setIsEditModalOpen(false);
   };
 
-  let finalPrice = quantity * parseInt(size);
-  useEffect(() => {
-    setSize(priceRef.current.value);
-  }, []);
+  let finalPrice = quantity * parseInt(price);
   const isAdmin = localStorage.getItem("adminStatus") === 'true';
+
   return (
     <div className="card-container">
       <div className="card">
@@ -119,11 +132,12 @@ function Card(props) {
               <select
                 className="form-select"
                 ref={priceRef}
-                onChange={(e) => setSize(e.target.value)}
+                onChange={handlePortionChange}
+                value={portion}
               >
-                {priceOptions.map((data) => (
-                  <option key={data} value={options[data]}>
-                    {data}
+                {props.foodItem.options.map((option) => (
+                  <option key={option.portion} value={option.portion}>
+                    {option.portion}
                   </option>
                 ))}
               </select>

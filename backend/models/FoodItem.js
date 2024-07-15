@@ -11,4 +11,5 @@ const foodItemSchema = new Schema({
     collection: 'food_items' // Specify the collection name explicitly
 });
 
+
 module.exports = mongoose.model('FoodItem', foodItemSchema);
