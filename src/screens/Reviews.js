@@ -9,6 +9,7 @@ const Reviews = () => {
   const [newReview, setNewReview] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [editReviewId, setEditReviewId] = useState(null);
+  
   const isAdmin = localStorage.getItem("adminStatus") === 'true';
 
   useEffect(() => {
@@ -59,7 +60,7 @@ const Reviews = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ comment: newReview, userId: localStorage.getItem("userID") }),
+          body: JSON.stringify({ comment: newReview, userId: localStorage.getItem("userID"), email: localStorage.getItem("userEmail") }),
         });
         if (!response.ok) {
           throw new Error("Failed to add review");
@@ -131,8 +132,12 @@ const Reviews = () => {
                   <div className="review-card" key={review._id}>
                     <div className="review-details">
                       <div className="review-field">
-                        <span className="review-label">User:</span>{" "}
-                        {review.userId}
+                        <span className="review-label">Email:</span>{" "}
+                        {review.email}
+                      </div>
+                      <div className="review-field">
+                        <span className="review-label">Date:</span>{" "}
+                        {new Date(review.createdAt).toLocaleDateString()}
                       </div>
                       <div className="review-field">
                         <span className="review-label">Comment:</span>{" "}

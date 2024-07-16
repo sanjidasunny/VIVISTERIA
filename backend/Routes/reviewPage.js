@@ -14,10 +14,11 @@ router.post('/displayreviews', async (req, res) => {
 
 // Add a new review
 router.post('/review', async (req, res) => {
-  const { userId, comment } = req.body;
+  const {userId, email, comment } = req.body;
 
   const review = new Review({
     userId,
+    email,
     comment,
   });
 

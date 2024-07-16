@@ -31,8 +31,6 @@ export default function AddItem() {
                     a.CategoryName.localeCompare(b.CategoryName)
                 );
                 setFoodCat(sortedCategories);
-                // Initialize with the first category
-                setCategoryName(sortedCategories[0].CategoryName);
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }
@@ -110,7 +108,7 @@ export default function AddItem() {
             });
 
             const json = await response.json();
-            
+
             if (!response.ok) {
                 throw new Error(`Failed to add new item: ${json.error || response.statusText}`);
             }
