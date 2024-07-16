@@ -98,6 +98,13 @@ html, body {
 .nav2{
   background-color: rgb(136, 85, 255);
 }
+.navbar-toggler-icon {
+  color: white;
+}
+
+.navbar-logo {
+  height: 40px;
+}
 
 .sidebar {
   display: flex;
@@ -371,3 +378,12 @@ html, body {
   justify-content: center;
   width: 100%;
 }
+
+
+
+.modal-header {
+  padding-top: 70px; 
+  
+}
+
+
