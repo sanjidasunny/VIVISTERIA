@@ -9,6 +9,35 @@ function Cart({ showPayment }) {
 
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
+    /*
+    const handleCheckOut = async () => {
+      let userEmail = localStorage.getItem("userEmail");
+      try {
+        const response = await axios.post(
+          'https://vivisteria-2lrx.vercel.app/api/orderData',
+          {
+            order_data: data,
+            email: userEmail,
+            order_date: new Date().toDateString(),
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        );
+        console.log("Response status:", response.status);
+        if (response.status === 200) {
+          dispatch({ type: "DROP" });
+  
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+       
+      }
+    };
+  
+  */
 
   useEffect(() => {
     if (isPaymentSuccessful) {
@@ -28,9 +57,9 @@ function Cart({ showPayment }) {
 
     axios
       .post("http://localhost:5000/api/payment", {
-        name: localStorage.getItem("userName"),
+        
         email: localStorage.getItem("userEmail"),
-        orderedItems: data.map((item) => ({ name: item.name, price: item.price })),
+        orderedItems: data.map((item) => ({ name: item.name, price: item.price,quantity:item.quantity })),
         totalAmount: totalPrice,
         paymentMethod: selectedPaymentMethod,
       })
@@ -54,6 +83,7 @@ function Cart({ showPayment }) {
         <td className="text-white">{food.quantity}</td>
         <td className="text-white">{food.size}</td>
         <td className="text-white">{food.price}</td>
+        
         <td>
           <button
             type="button"
@@ -82,6 +112,7 @@ function Cart({ showPayment }) {
               <th className="text-success" scope="col">Quantity</th>
               <th className="text-success" scope="col">Option</th>
               <th className="text-success" scope="col">Amount</th>
+              
               <th className="text-success" scope="col">Actions</th>
             </tr>
           </thead>

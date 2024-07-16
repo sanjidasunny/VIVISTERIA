@@ -7,9 +7,9 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
     const [img, setImg] = useState("");
     const [description, setDescription] = useState("");
     const [categoryName, setCategoryName] = useState("");
-    const [portions, setPortions] = useState([]);
-    const [prices, setPrices] = useState([]);
-    const [foodCat, setFoodCat] = useState([]); 
+    const [options, setOptions] = useState([]);
+    const [foodCat, setFoodCat] = useState([]);
+    const [newPortions, setNewPortions] = useState([]);
 
     // Update state with foodItem data when it changes
     useEffect(() => {
@@ -18,11 +18,11 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
             setImg(foodItem.img || "");
             setDescription(foodItem.description || "");
             setCategoryName(foodItem.CategoryName || "");
-            setPortions(foodItem.options?.map(option => option.portion) || []);
-            setPrices(foodItem.options?.map(option => option.price) || []);
-            
+            setOptions(foodItem.options || []);
+            setNewPortions([]);
         }
     }, [foodItem]);
+
     useEffect(() => {
         // Fetch category names from backend
         const loadData = async () => {
@@ -38,13 +38,7 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
                 }
                 const categories = await response.json();
                 const flatResponse = categories.flat();
-                const sortedCategories = flatResponse.sort((a, b) =>
-                    a.CategoryName.localeCompare(b.CategoryName)
-                );
-                setFoodCat(sortedCategories);
-                // Initialize with the first category
-                setCategoryName(sortedCategories[0].CategoryName);
-                //setPriceOptions(getPriceOptions(sortedCategories[0].CategoryName));
+                setFoodCat(flatResponse);
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }
@@ -55,16 +49,18 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
 
     // Handle save button click to update food item
     const handleSave = async () => {
-        const updatedOptions = portions.map((portion, index) => ({
-            portion,
-            price: prices[index]
-        }));
+        if (!validateFields()) {
+            return;
+        }
 
         const updatedItem = {
             ...foodItem,
             name,
             img,
-            options: updatedOptions,
+            options: [
+                ...options,
+                ...newPortions
+            ],
             description,
             CategoryName: categoryName,
         };
@@ -81,6 +77,7 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
             if (response.ok) {
                 const updatedFoodItem = await response.json();
                 onSave(updatedFoodItem); // Pass updated food item to parent component
+                onRequestClose(); // Close modal after saving
             } else {
                 alert("Failed to update the food item");
             }
@@ -90,38 +87,98 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
         }
     };
 
-    // Handle changes in portions and prices
+    // Validate fields before saving
+    const validateFields = () => {
+        if (!name || !img || !description || !categoryName) {
+            alert("All fields must be filled out.");
+            return false;
+        }
+
+        for (let option of options) {
+            if (!option.portion || !option.price) {
+                alert("All portion and price fields must be filled out.");
+                return false;
+            }
+        }
+
+        for (let newPortion of newPortions) {
+            if (!newPortion.portion || !newPortion.price) {
+                alert("All new portion and price fields must be filled out.");
+                return false;
+            }
+        }
+
+        return true;
+    };
+
+    // Handle changes in existing portions and prices
     const handlePortionChange = (index, value) => {
-        const newPortions = [...portions];
-        newPortions[index] = value;
-        setPortions(newPortions);
+        const newOptions = [...options];
+        newOptions[index].portion = value;
+        setOptions(newOptions);
     };
 
     const handlePriceChange = (index, value) => {
-        const newPrices = [...prices];
-        newPrices[index] = value;
-        setPrices(newPrices);
+        const newOptions = [...options];
+        newOptions[index].price = value;
+        setOptions(newOptions);
     };
 
     // Function to add a new portion and price pair
     const handleAddPortion = () => {
-        setPortions([...portions, ""]);
-        setPrices([...prices, ""]);
+        setNewPortions([...newPortions, { portion: "", price: "" }]);
     };
 
-    // Function to remove a portion and price pair
+    // Function to remove a new portion and price pair
     const handleRemovePortion = (index) => {
-        const newPortions = [...portions];
-        newPortions.splice(index, 1);
-        setPortions(newPortions);
+        const newPortionsCopy = [...newPortions];
+        newPortionsCopy.splice(index, 1);
+        setNewPortions(newPortionsCopy);
+    };
 
-        const newPrices = [...prices];
-        newPrices.splice(index, 1);
-        setPrices(newPrices);
+    // Function to remove an existing portion and price pair
+    const handleRemoveExistingPortion = (index) => {
+        const newOptions = [...options];
+        newOptions.splice(index, 1);
+        setOptions(newOptions);
+    };
+
+    // Handle changes in new portions and prices
+    const handleNewPortionChange = (index, value) => {
+        const newPortionsCopy = [...newPortions];
+        newPortionsCopy[index].portion = value;
+        setNewPortions(newPortionsCopy);
+    };
+
+    const handleNewPriceChange = (index, value) => {
+        const newPortionsCopy = [...newPortions];
+        newPortionsCopy[index].price = value;
+        setNewPortions(newPortionsCopy);
+    };
+
+    // Handle closing the modal and resetting the state
+    const handleCloseModal = () => {
+        // Reset state to initial food item state
+        if (foodItem) {
+            setName(foodItem.name || "");
+            setImg(foodItem.img || "");
+            setDescription(foodItem.description || "");
+            setCategoryName(foodItem.CategoryName || "");
+            setOptions(foodItem.options || []);
+            setNewPortions([]);
+        }
+        onRequestClose();
     };
 
     return (
-        <Modal isOpen={isOpen} onRequestClose={onRequestClose} className="edit-modal" ariaHideApp={false}>
+        <Modal 
+            isOpen={isOpen} 
+            onRequestClose={handleCloseModal} 
+            className="edit-modal" 
+            ariaHideApp={false} 
+            shouldCloseOnOverlayClick={true} 
+            
+        >
             <div className="modal-content">
                 <h2>Edit Food Item</h2>
                 <form>
@@ -141,7 +198,10 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
                             value={categoryName}
                             onChange={(e) => setCategoryName(e.target.value)}
                         >
-                            {foodCat.map((category) => (
+                            <option key="current" value={categoryName}>
+                                {categoryName}
+                            </option>
+                            {foodCat.filter(category => category.CategoryName !== categoryName).map((category) => (
                                 <option key={category._id} value={category.CategoryName}>
                                     {category.CategoryName}
                                 </option>
@@ -159,18 +219,18 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
                         />
                     </div>
                     <div className="mb-3">
-                    <label htmlFor="description" className="form-label">Description</label>
-                    <textarea className="form-control" id="description" rows="3" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-                </div>
+                        <label htmlFor="description" className="form-label">Description</label>
+                        <textarea className="form-control" id="description" rows="3" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                    </div>
 
-                    {portions.map((portion, index) => (
+                    {options.map((option, index) => (
                         <div key={index} className="form-group row">
                             <div className="col">
                                 <label>{`Portion ${index + 1}:`}</label>
                                 <input
                                     type="text"
                                     className="form-control"
-                                    value={portion}
+                                    value={option.portion}
                                     onChange={(e) => handlePortionChange(index, e.target.value)}
                                 />
                             </div>
@@ -179,8 +239,40 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    value={prices[index]}
+                                    value={option.price}
                                     onChange={(e) => handlePriceChange(index, e.target.value)}
+                                />
+                            </div>
+                            <div className="col-auto d-flex align-items-end">
+                                <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                    onClick={() => handleRemoveExistingPortion(index)}
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+
+                    {newPortions.map((portion, index) => (
+                        <div key={index} className="form-group row">
+                            <div className="col">
+                                <label>{`New Portion ${index + 1}:`}</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={portion.portion}
+                                    onChange={(e) => handleNewPortionChange(index, e.target.value)}
+                                />
+                            </div>
+                            <div className="col">
+                                <label>{`Price for New Portion ${index + 1}:`}</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={portion.price}
+                                    onChange={(e) => handleNewPriceChange(index, e.target.value)}
                                 />
                             </div>
                             <div className="col-auto d-flex align-items-end">

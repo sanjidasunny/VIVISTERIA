@@ -3,12 +3,18 @@ const router = express.Router();
 const Payment = require('../models/payment');
 
 router.post('/payment', async (req, res) => {
-  const { userId, orderedItems, totalAmount, paymentMethod } = req.body;
+  const { userId, email, orderedItems, totalAmount, paymentMethod } = req.body;
 
   try {
     const newPayment = new Payment({
       userId,
-      orderedItems,
+      email,
+      orderedItems: orderedItems.map(item => ({
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity 
+      })),
+      orderDate: new Date(), 
       totalAmount,
       paymentMethod,
     });
@@ -22,3 +28,4 @@ router.post('/payment', async (req, res) => {
 });
 
 module.exports = router;
+
