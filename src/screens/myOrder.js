@@ -5,115 +5,66 @@ import axios from "axios";
 
 export default function MyOrder() {
   const [orderData, setOrderData] = useState([]);
-  /*
+
+  useEffect(() => {
     const fetchMyOrder = async () => {
-      const userEmail = localStorage.getItem("userEmail");
-  
       try {
+        const userEmail = localStorage.getItem("userEmail");
         const response = await axios.post(
-          'https://vivisteria-2lrx.vercel.app/api/myOrderData',
+          "http://localhost:5000/api/myorderData",
           { email: userEmail },
-          { headers: { 'Content-Type': 'application/json' } }
+          { headers: { "Content-Type": "application/json" } }
         );
-  
+
         if (response.status !== 200) {
           throw new Error(`Failed to fetch order data: ${response.status}`);
         }
-  
-        const responseData = response.data;
-        setOrderData(responseData);
-        console.log(response.data.orderData);
+
+        const responseData = response.data.orderData;
+        setOrderData(responseData); // Assuming responseData is an array of orders
       } catch (error) {
         console.error('Error fetching order data:', error);
       }
     };
-  */
-  const fetchMyOrder = async () => {
-    console.log(localStorage.getItem("userEmail"));
-    await fetch("http://localhost:5000/api/myOrderData", {
-      // credentials: 'include',
-      // Origin:"http://localhost:3000/login",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: localStorage.getItem("userEmail"),
-      }),
-    }).then(async (res) => {
-      let response = await res.json();
-      await setOrderData(response);
-    });
 
-    // await res.map((data)=>{
-    //    console.log(data)
-    // })
-  };
-
-  useEffect(() => {
     fetchMyOrder();
   }, []);
 
+  const renderOrderDetails = () => {
+    return orderData.map((order, index) => (
+      <div key={index} className="col-12 col-md-6 col-lg-4 mb-4">
+        <div className="mt-3 border rounded p-3">
+          
+          {order.orderedItems.map((item, idx) => (
+            <div key={idx} className="container w-100 p-0">
+               <h5 className="text-black">Order Date: {new Date(order.orderDate).toLocaleDateString()}</h5>
+              <div className="m-1">Name: {item.name}</div>
+              <div className="m-1">Price: {item.price}/-</div>
+              <div className="m-1">Quantity: {item.quantity}
+                
+              </div>
+
+            </div>
+          ))}
+        </div>
+      </div>
+    ));
+  };
+
   return (
     <div>
-      <div>
-        <Navbar />
-      </div>
-
+      <Navbar />
       <div className="container min-vh-100">
         <h1 className="mt-4">Order History</h1>
         <div className="row">
-          {orderData != {}
-            ? Array(orderData).map((data) => {
-              return data.orderData
-                ? data.orderData.order_data
-                  .slice(0)
-                  .reverse()
-                  .map((item) => {
-                    return item.map((arrayData) => {
-                      return (
-                        <div>
-                          {arrayData.Order_date ? (
-                            <div className="m-auto mt-5 text-black">
-                              {(data = arrayData.Order_date)}
-                              <hr />
-                            </div>
-                          ) : (
-                            <div className="col-12 col-md-6 col-lg-3">
-                              <div className="mt-3  border rounded p-3 m-3">
-                                <h5 className="text-black">
-                                  {arrayData.name}
-                                </h5>
-                                <div className="container w-100 p-0">
-                                  <div className="m-1">
-                                    {"Price: "}
-                                    {arrayData.size}
-                                  </div>
-                                  <div className="m-1">
-                                    {"Quantity: "}
-                                    {arrayData.quantity}
-                                  </div>
-
-                                  <div className=" d-inline ms-2 h-100 w-20 fs-5 text-black">
-                                    {"Total price: "}
-                                    {arrayData.price}/-
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    });
-                  })
-                : "";
-            })
-            : ""}
+          {Array.isArray(orderData) && orderData.length > 0 ? (
+            renderOrderDetails()
+          ) : (
+            <p className="text-center">No orders found.</p>
+          )}
         </div>
       </div>
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 }

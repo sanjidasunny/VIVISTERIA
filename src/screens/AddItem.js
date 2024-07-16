@@ -7,7 +7,7 @@ export default function AddItem() {
     const [name, setName] = useState('');
     const [categoryName, setCategoryName] = useState('');
     const [priceOptions, setPriceOptions] = useState([]);
-    const [portions, setPortions] = useState([{ portion: '', price: '' }]);
+    const [portions, setPortions] = useState([]);
     const [image, setImage] = useState('');
     const [description, setDescription] = useState('');
     const [foodCat, setFoodCat] = useState([]);
@@ -31,9 +31,6 @@ export default function AddItem() {
                     a.CategoryName.localeCompare(b.CategoryName)
                 );
                 setFoodCat(sortedCategories);
-                // Initialize with the first category
-                setCategoryName(sortedCategories[0].CategoryName);
-                //setPriceOptions(getPriceOptions(sortedCategories[0].CategoryName));
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }
@@ -57,7 +54,7 @@ export default function AddItem() {
             case 'Rice':
                 return ['Half', 'Full'];
             case 'Roti/Paratha':
-                return ['Half', 'Full'];
+                return ['Small', 'large'];
             case 'Special Side Items':
                 return ['Half', 'Full'];
             case 'Sweets':
@@ -92,7 +89,7 @@ export default function AddItem() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         const newItem = {
             name,
             CategoryName: categoryName,
@@ -100,7 +97,7 @@ export default function AddItem() {
             img: image,
             description,
         };
-    
+
         try {
             const response = await fetch('http://localhost:5000/api/addFoodItem', {
                 method: 'POST',
@@ -109,13 +106,13 @@ export default function AddItem() {
                 },
                 body: JSON.stringify(newItem),
             });
-    
+
             const json = await response.json();
-            
+
             if (!response.ok) {
                 throw new Error(`Failed to add new item: ${json.error || response.statusText}`);
             }
-    
+
             console.log('New item added successfully:', json);
             navigate('/');
         } catch (error) {
@@ -129,14 +126,29 @@ export default function AddItem() {
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="itemName" className="form-label">Name</label>
-                    <input type="text" className="form-control" id="itemName" value={name} onChange={(e) => setName(e.target.value)} required />
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="itemName"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="categoryName" className="form-label">Category</label>
-                    <select className="form-control" id="categoryName" value={categoryName} onChange={handleCategoryChange} required>
+                    <select
+                        className="form-control"
+                        id="categoryName"
+                        value={categoryName}
+                        onChange={handleCategoryChange}
+                        required
+                    >
                         <option value="">Select Category</option>
                         {foodCat.map((data) => (
-                            <option key={data._id} value={data.CategoryName}>{data.CategoryName}</option>
+                            <option key={data._id} value={data.CategoryName}>
+                                {data.CategoryName}
+                            </option>
                         ))}
                     </select>
                 </div>
@@ -151,7 +163,9 @@ export default function AddItem() {
                         >
                             <option value="">Select Portion</option>
                             {priceOptions.map((option, i) => (
-                                <option key={i} value={option}>{option}</option>
+                                <option key={i} value={option}>
+                                    {option}
+                                </option>
                             ))}
                         </select>
                         <input
@@ -163,19 +177,46 @@ export default function AddItem() {
                             onChange={(e) => handlePortionChange(index, e)}
                             required
                         />
-                        <button type="button" className="btn btn-danger" onClick={() => removePortion(index)}>Remove</button>
+                        <button
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={() => removePortion(index)}
+                        >
+                            Remove
+                        </button>
                     </div>
                 ))}
-                <button type="button" className="btn btn-secondary mb-3" onClick={addPortion}>Add Portion</button>
+                <button
+                    type="button"
+                    className="btn btn-secondary mb-3"
+                    onClick={addPortion}
+                >
+                    Add Portion
+                </button>
                 <div className="mb-3">
                     <label htmlFor="imageUrl" className="form-label">Image URL</label>
-                    <input type="text" className="form-control" id="imageUrl" value={image} onChange={(e) => setImage(e.target.value)} required />
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="imageUrl"
+                        value={image}
+                        onChange={(e) => setImage(e.target.value)}
+                        required
+                    />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="description" className="form-label">Description</label>
-                    <textarea className="form-control" id="description" rows="3" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                    <textarea
+                        className="form-control"
+                        id="description"
+                        rows="3"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    ></textarea>
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" className="btn btn-primary">
+                    Submit
+                </button>
             </form>
         </div>
     );
