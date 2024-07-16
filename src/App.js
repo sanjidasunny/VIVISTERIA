@@ -16,6 +16,7 @@ import AdminPanel from "./screens/AdminPanel.js";
 import DashBoard from "./screens/DashBoard.js";
 import DetailsPage from "./screens/DetailsPage.js";
 import AddItem from "./screens/AddItem.js";
+import Reviews from './screens/Reviews';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route exact path="/dashboard" element={<DashBoard />} />
             <Route exact path="/details/:id" element={<DetailsPage />} />
             <Route exact path="/addItem" element={<AddItem />} />
+            <Route exact path="/reviews" element={<Reviews />} />
           </Routes>
         </div>
       </Router>

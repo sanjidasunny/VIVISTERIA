@@ -51,6 +51,7 @@ const displayDataRoute = require('./Routes/DisplayData');
 const orderDataRoute = require('./Routes/orderData');
 const ProfileRoute = require('./Routes/ProfieInfo');
 const foodItemRoute = require('./Routes/addNewItem');
+const reviewRoute=require('./Routes/reviewPage')
 
 const app = express();
 const port = 5000;
@@ -74,6 +75,8 @@ app.use('/api', displayDataRoute);
 app.use('/api', orderDataRoute);
 app.use('/api', ProfileRoute);
 app.use('/api', foodItemRoute);
+app.use('/api', reviewRoute);
+
 
 
 // Handle CORS preflight requests
