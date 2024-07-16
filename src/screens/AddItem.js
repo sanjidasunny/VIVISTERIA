@@ -54,7 +54,7 @@ export default function AddItem() {
             case 'Rice':
                 return ['Half', 'Full'];
             case 'Roti/Paratha':
-                return ['Half', 'Full'];
+                return ['Small', 'large'];
             case 'Special Side Items':
                 return ['Half', 'Full'];
             case 'Sweets':
