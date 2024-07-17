@@ -34,7 +34,7 @@ export default function Sidebar({ setSelectedCategory }) {
   const isAdmin = localStorage.getItem("adminStatus") === "true";
 
   return (
-    <div className="sidebar">
+    <div className="sidebar fixed-side">
       <div className="sidebar-content">
         <span className="fs-4">Sidebar</span>
         <hr />
@@ -61,15 +61,15 @@ export default function Sidebar({ setSelectedCategory }) {
         </div>
         {foodCat && foodCat.length > 0
           ? foodCat.map((data) => (
-              <div
-                key={data._id}
-                className="m-2 fs-6"
-                onClick={() => setSelectedCategory(data.CategoryName)}
-                style={{ cursor: "pointer" }}
-              >
-                {data.CategoryName}
-              </div>
-            ))
+            <div
+              key={data._id}
+              className="m-2 fs-6"
+              onClick={() => setSelectedCategory(data.CategoryName)}
+              style={{ cursor: "pointer" }}
+            >
+              {data.CategoryName}
+            </div>
+          ))
           : ""}
       </div>
     </div>

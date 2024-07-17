@@ -85,11 +85,13 @@ html, body {
 
 .search{
   margin: 10px;
+  margin-top: 100px;
 }
 
 .navbar-logo {
   width: 6rem; 
   height: auto; 
+  
 
 }
 .nav1{
@@ -101,13 +103,15 @@ html, body {
 .navbar-toggler-icon {
   color: white;
 }
-
-.navbar-logo {
-  height: 40px;
+.navbar{
+  height: 80px;
 }
+
 
 .sidebar {
   display: flex;
+  position: fixed;
+  
   
 }
 
