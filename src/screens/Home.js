@@ -16,13 +16,25 @@ function Home() {
 
   const loadData = async () => {
     try {
-      const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/foodData');
+      //const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/foodData');
+      const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/foodData', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       const responseData = response.data;
-      setFoodItem(responseData[0] || []);
-      const sortedCategories = response[1].sort((a, b) =>
-        a.CategoryName.localeCompare(b.CategoryName)
-      );
-      setFoodCat(sortedCategories);
+      if (Array.isArray(responseData) && responseData.length >= 2) {
+        setFoodItem(responseData[0] || []);
+        const sortedCategories = (responseData[1] || []).sort((a, b) =>
+          a.CategoryName.localeCompare(b.CategoryName)
+        );
+        setFoodCat(sortedCategories);
+      } else {
+        console.error('Unexpected response data structure:', responseData);
+        setFoodItem([]);
+        setFoodCat([]);
+      }
+
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
