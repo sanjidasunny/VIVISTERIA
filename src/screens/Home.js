@@ -32,9 +32,6 @@ function Home() {
       setLoading(false);
     }
   };
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
 
 
@@ -42,6 +39,9 @@ function Home() {
   useEffect(() => {
     loadData();
   }, []);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   const handleDelete = (id) => {
     setFoodItem(foodItem.filter((item) => item._id !== id));
