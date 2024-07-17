@@ -75,7 +75,7 @@ function Profile() {
   return (
     <div>
       <Navbar />
-      <div className="profile mt-4">
+      <div className="profile" style={{ marginTop: "120px" }}>
         {profileData ? (
           <>
             <div className="profile-header">

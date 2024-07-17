@@ -24,7 +24,7 @@ function Navbar() {
 
   return (
     <div>
-      <nav className={`navbar navbar-expand-lg shadow ${isAdmin ? 'nav2' : 'nav1'}`}>
+      <nav className={`navbar navbar-expand-lg shadow fixed-top ${isAdmin ? 'nav2' : 'nav1'}`}>
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <img src="/logo-3.png" className="navbar-logo" alt="" />
