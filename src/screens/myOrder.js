@@ -31,24 +31,23 @@ export default function MyOrder() {
   }, []);
 
   const renderOrderDetails = () => {
-    return orderData.map((order, index) => (
-      <div key={index} className="col-12 col-md-6 col-lg-4 mb-4">
+    return orderData.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate)).map((order, index) => (
+      <div key={index}>
         <div className="mt-3 border rounded p-3">
-          
+          <h3 className="text-black">Order Date: {new Date(order.orderDate).toLocaleDateString()}</h3>
           {order.orderedItems.map((item, idx) => (
             <div key={idx} className="container w-100 p-0">
-               <h5 className="text-black">Order Date: {new Date(order.orderDate).toLocaleDateString()}</h5>
-              <div className="m-1">Name: {item.name}</div>
+              <div className="m-1 fs-5">{item.name}</div>
               <div className="m-1">Price: {item.price}/-</div>
-              <div className="m-1">Quantity: {item.quantity}
-                
-              </div>
-
+              <div className="m-1">Quantity: {item.quantity}</div>
             </div>
           ))}
+          <div className="m-1 fs-4">Total Amount: {order.totalAmount}/-</div>
         </div>
       </div>
     ));
+
+
   };
 
   return (

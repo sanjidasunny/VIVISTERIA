@@ -17,7 +17,7 @@ import DashBoard from "./screens/DashBoard.js";
 import DetailsPage from "./screens/DetailsPage.js";
 import AddItem from "./screens/AddItem.js";
 import Reviews from './screens/Reviews';
-
+import ProtectedRoute from './components/ProtectedRoute.js'
 function App() {
   return (
     <CartProvider>
@@ -28,13 +28,13 @@ function App() {
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/signup" element={<Signup />} />
             <Route exact path="/adminSignup" element={<AdminSignUp />} />
-            <Route exact path="/profile" element={<Profile />} />
-            <Route exact path="/myOrder" element={<MyOrder />} />
-            <Route exact path="/adminPanel" element={<AdminPanel />} />
-            <Route exact path="/dashboard" element={<DashBoard />} />
-            <Route exact path="/details/:id" element={<DetailsPage />} />
-            <Route exact path="/addItem" element={<AddItem />} />
-            <Route exact path="/reviews" element={<Reviews />} />
+            <Route exact path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route exact path="/myOrder" element={<ProtectedRoute><MyOrder /></ProtectedRoute>} />
+            <Route exact path="/adminPanel" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+            <Route exact path="/dashboard" element={<ProtectedRoute><DashBoard /></ProtectedRoute>} />
+            <Route exact path="/details/:id" element={<ProtectedRoute><DetailsPage /></ProtectedRoute>} />
+            <Route exact path="/addItem" element={<ProtectedRoute><AddItem /></ProtectedRoute>} />
+            <Route exact path="/reviews" element={<ProtectedRoute><Reviews /></ProtectedRoute>} />
           </Routes>
         </div>
       </Router>

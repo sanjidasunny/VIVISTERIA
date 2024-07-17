@@ -51,9 +51,9 @@ const displayDataRoute = require('./Routes/DisplayData');
 //const orderDataRoute = require('./Routes/orderData');
 const ProfileRoute = require('./Routes/ProfieInfo');
 const foodItemRoute = require('./Routes/addNewItem');
-const reviewRoute=require('./Routes/reviewPage');
-const paymentRoute=require('./Routes/PaymentRoute');
-const myOrderRoute = require('./Routes/myorder'); 
+const reviewRoute = require('./Routes/reviewPage');
+const paymentRoute = require('./Routes/PaymentRoute');
+const myOrderRoute = require('./Routes/myorder');
 
 const app = express();
 const port = 5000;
@@ -65,7 +65,7 @@ connectDB();
 app.use(cors({
   origin: 'http://localhost:3000',
   methods: ['POST', 'GET', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'authToken'],
 }));
 
 // Body parsing middleware

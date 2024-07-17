@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatchCart, useCart } from "./ContextReducer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import EditModal from "./EditModal";
 
 function Card(props) {
@@ -11,6 +11,7 @@ function Card(props) {
   const [portion, setPortion] = useState('');
   const [price, setPrice] = useState(0);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (props.foodItem.options.length > 0) {
@@ -100,7 +101,7 @@ function Card(props) {
 
   let finalPrice = quantity * parseInt(price);
   const isAdmin = localStorage.getItem("adminStatus") === 'true';
-
+  const isLoggedIn = localStorage.getItem("authToken");
   return (
     <div className="card-container">
       <div className="card">
@@ -162,10 +163,15 @@ function Card(props) {
               />
             </div>
           ) : (
-            <button className="btn ms-2 btn-success" onClick={addToCart}>
+            isLoggedIn ? (
+              <button className="btn ms-2 btn-success" onClick={addToCart}>
+                Add to Cart
+              </button>
+            ) : <button className="btn ms-2 btn-success" onClick={() => navigate('/login')}>
               Add to Cart
             </button>
-          )}
+          )
+          }
         </div>
       </div>
     </div>

@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Payment = require('../models/payment');
-
 router.post('/myorderData', async (req, res) => {
   try {
     const userEmail = req.body.email;
 
     // Fetch orders from the database based on user's email
-    const orders = await Payment.find({ email: userEmail });
+    const orders = await Payment.find({ email: userEmail }).sort({ orderDate: -1 });
 
     if (!orders || orders.length === 0) {
       return res.status(404).json({ message: 'No orders found' });
@@ -15,14 +14,13 @@ router.post('/myorderData', async (req, res) => {
 
     // Format the fetched orders into the desired structure
     const formattedOrders = orders.map(order => ({
-        orderDate: order.orderDate,
-        orderedItems: order.orderedItems.map(item => ({
+      orderDate: order.orderDate,
+      totalAmount: order.totalAmount,
+      orderedItems: order.orderedItems.map(item => ({
         name: item.name,
         quantity: item.quantity,
         price: item.price,
-        
       })),
-      
     }));
 
     res.json({ orderData: formattedOrders });

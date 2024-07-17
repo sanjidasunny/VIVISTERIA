@@ -2,32 +2,29 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
-
-router.post('/profile', async (req, res) => {
+const authenticateToken = require('../middleware')
+router.post('/profile', authenticateToken, async (req, res) => {
     try {
         const data = await User.findById(req.body.id);
         if (!data) {
-            return res.status(404).json({ msg: "User not found" });
+            return res.status(404).json({ msg: "User not found1" });
         }
-        res.json({ profileData: data });
+        res.json({ success: true, profileData: data });
     } catch (error) {
         console.error(error);
         res.status(500).send("Server Error");
     }
 });
 
+
 router.post('/profile/update', async (req, res) => {
     const { id, name, email, location, oldPassword, newPassword } = req.body;
     try {
         let user = await User.findById(id);
         if (!user) {
-            return res.status(404).json({ msg: "User not found" });
+            return res.status(404).json({ success: false, msg: "User not found" });
         }
 
-        // Check if old password matches
-
-
-        // Update profile information
         user.name = name;
         user.email = email;
         user.location = location;
@@ -36,7 +33,7 @@ router.post('/profile/update', async (req, res) => {
         if (newPassword) {
             const isMatch = await bcrypt.compare(oldPassword, user.password);
             if (!isMatch) {
-                return res.status(400).json({ msg: "Invalid credentials. Please try again." });
+                return res.status(400).json({ success: false, msg: "Invalid credentials. Please try again." });
             }
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(newPassword, salt);
@@ -44,13 +41,12 @@ router.post('/profile/update', async (req, res) => {
         }
 
         await user.save();
-        res.json({ profileData: user });
+        res.json({ success: true, profileData: user });
     } catch (error) {
         console.error(error);
-        res.status(500).send("Server Error");
+        res.status(500).json({ success: false, msg: "Server Error" });
     }
 });
-
 router.post('/displayuser', async (req, res) => {
     try {
         const alluser = await User.find({});

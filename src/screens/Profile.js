@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axiosInstance from '../components/AxiosInstance';
 import Navbar from "../components/Navbar";
 
 function Profile() {
@@ -14,28 +15,27 @@ function Profile() {
   const [loading, setLoading] = useState(false); // State to track loading state
   const [error, setError] = useState(""); // State to track error message
 
-  const fetchProfile = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/profile", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axiosInstance.post("/profile", {
           id: localStorage.getItem("userID"),
-        }),
-      });
-      const data = await response.json();
-      setProfileData(data.profileData);
-      setFormData({
-        name: data.profileData.name,
-        email: data.profileData.email,
-        location: data.profileData.location,
-      });
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-    }
-  };
+        });
+        setProfileData(response.data.profileData);
+        setFormData({
+          name: response.data.profileData.name,
+          email: response.data.profileData.email,
+          location: response.data.profileData.location,
+          oldPassword: "",
+          newPassword: "",
+        });
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   const handleEdit = () => {
     setEditMode(true);
@@ -48,28 +48,21 @@ function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.newPassword && formData.newPassword.length < 6) {
-      alert("Password length must be atleast 6 characters");
+      alert("Password length must be at least 6 characters");
       return;
     }
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/profile/update", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: localStorage.getItem("userID"),
-          ...formData,
-        }),
+      const response = await axiosInstance.post("/profile/update", {
+        id: localStorage.getItem("userID"),
+        ...formData,
       });
-      const data = await response.json();
-      if (response.ok) {
-        setProfileData(data.profileData);
+      if (response.data.success) {
+        setProfileData(response.data.profileData);
         setEditMode(false);
         setError("");
       } else {
-        setError("Invalid Password. Please try again.");
+        setError(response.data.msg || "Error updating profile. Please try again.");
       }
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -78,10 +71,6 @@ function Profile() {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchProfile();
-  }, []);
 
   return (
     <div>

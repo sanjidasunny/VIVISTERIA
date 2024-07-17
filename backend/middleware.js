@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
-const jwtSecret = 'your_jwt_secret'; // Replace with your actual secret
+const jwtSecret = 'Helloworldhowareyoumynameis52_ndSymphonyThankyou';
 
 const authenticateToken = (req, res, next) => {
-    const token = req.header('auth-token');
+    const token = req.header('authToken');
     if (!token) return res.status(401).json({ message: 'Access denied' });
 
     try {

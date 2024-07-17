@@ -67,14 +67,12 @@ router.post("/loginuser", async (req, res) => {
                 isAdmin: userData.isAdmin
             }
         }
-        console.log('Creating token with expiration time of 1 minute');
+
         const authToken = jwt.sign(data, jwtSecret, { expiresIn: "30m" });
         const refreshToken = jwt.sign(data, jwtRefreshSecret, { expiresIn: "10d" });
-        console.log('Generated token:', authToken);
 
-        const decodedToken = jwt.decode(authToken);
-        console.log('Token expiration time:', new Date(decodedToken.exp * 1000));
-        return res.json({ success: true, authToken: authToken, userID: userData.id, adminStatus: userData.isAdmin });
+
+        return res.json({ success: true, authToken: authToken, refreshToken: refreshToken, userID: userData.id, adminStatus: userData.isAdmin });
 
     } catch (error) {
         console.log(error)
@@ -82,6 +80,20 @@ router.post("/loginuser", async (req, res) => {
     }
 })
 
+
+router.post('/refresh-token', (req, res) => {
+    const { refreshToken } = req.body;
+    if (!refreshToken) return res.status(401).json({ message: 'Access denied' });
+
+    try {
+        const verified = jwt.verify(refreshToken, jwtRefreshSecret);
+        const newToken = jwt.sign({ user: verified.user }, jwtSecret, { expiresIn: '30m' });
+        res.json({ token: newToken });
+    } catch (err) {
+        console.error('Invalid or expired refresh token:', err);
+        res.status(401).json({ message: 'Invalid or expired refresh token' });
+    }
+});
 router.put('/toggleapproval/:id', async (req, res) => {
     try {
         const { isApproved } = req.body;
