@@ -63,7 +63,7 @@ connectDB();
 
 // CORS middleware
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'https://vivisteria.vercel.app',
   methods: ['POST', 'GET', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'authToken'],
 }));
@@ -74,7 +74,6 @@ app.use(express.json());
 // Routes
 app.use('/api', createUserRoute);
 app.use('/api', displayDataRoute);
-//app.use('/api', orderDataRoute);
 app.use('/api', ProfileRoute);
 app.use('/api', foodItemRoute);
 app.use('/api', reviewRoute);
@@ -86,9 +85,8 @@ app.use('/api', myOrderRoute); // Mount the myOrderRoute
 
 // Handle CORS preflight requests
 app.options('*', cors());
-
 // Test route
-app.get('/', (req, res) => {
+app.get('/', query('person').notEmpty(), (req, res) => {
   res.send('Hello World!');
 });
 
@@ -98,6 +96,5 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Internal Server Error');
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+module.exports = app;
+

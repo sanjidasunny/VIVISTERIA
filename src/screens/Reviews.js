@@ -9,7 +9,7 @@ const Reviews = () => {
   const [newReview, setNewReview] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [editReviewId, setEditReviewId] = useState(null);
-  
+
   const isAdmin = localStorage.getItem("adminStatus") === 'true';
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const Reviews = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/displayreviews", {
+      const response = await fetch("https://vivisteria-2lrx.vercel.app/api/displayreviews", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -143,7 +143,7 @@ const Reviews = () => {
                         <span className="review-label">Comment:</span>{" "}
                         {review.comment}
                       </div>
-                      
+
                     </div>
                     {(localStorage.getItem("adminStatus") === "true" || localStorage.getItem("userID") === review.userId) && (
                       <div>

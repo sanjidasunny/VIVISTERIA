@@ -13,91 +13,48 @@ function Signup() {
   });
 
   let navigate = useNavigate();
-  /*
-    const submit = async (e) => {
-      e.preventDefault();
-      if (credentials.name.length < 5) {
-        alert("Username must be at least 5 characters long");
-        return;
-      }
-  
-      if (credentials.password.length < 6) {
-        alert("Password must be at least 6 characters long");
-        return;
-      }
-      try {
-        const response = await fetch('https://vivisteria-2lrx.vercel.app/api/createuser', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: credentials.name,
-            email: credentials.email,
-            password: credentials.password,
-            location: credentials.location,
-            isAdmin: credentials.isAdmin,
-            isApproved: credentials.isApproved
-          }),
-        });
-  
-        const data = await response.json();
-  
-        if (!data.success) {
-           if (data.errors === 'same email') {
-        alert("email aleady exist")
-      } else {
-        alert("enter valid credentials");
-      }
-        } else {
-          navigate('/login');
-        }
-      } catch (error) {
-        console.error('Error creating user:', error);
-        //alert('Error creating user. Please try again.');
-      }
-    };
-  */
   const submit = async (e) => {
     e.preventDefault();
     if (credentials.name.length < 5) {
       alert("Username must be at least 5 characters long");
       return;
     }
-    if (credentials.password !== credentials.confirmPassword) {
-      alert("Password doesn't match");
-      return;
-    }
+
     if (credentials.password.length < 6) {
       alert("Password must be at least 6 characters long");
       return;
     }
-    const response = await fetch("http://localhost:5000/api/createuser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: credentials.name,
-        password: credentials.password,
-        confirmPassword: credentials.confirmPassword,
-        email: credentials.email,
-        location: credentials.location,
-        isAdmin: credentials.isAdmin,
-        isApproved: credentials.isApproved
-      }),
-    });
-    const json = await response.json();
-    console.log(json);
+    try {
+      const response = await fetch('https://vivisteria-2lrx.vercel.app/api/createuser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: credentials.name,
+          email: credentials.email,
+          password: credentials.password,
+          confirmPassword: credentials.confirmPassword,
+          location: credentials.location,
+          isAdmin: credentials.isAdmin,
+          isApproved: credentials.isApproved
+        }),
+      });
 
-    if (!json.success) {
-      if (json.errors === 'same email') {
-        alert("email aleady exist")
+      const data = await response.json();
+
+      if (!data.success) {
+        if (data.errors === 'same email') {
+          alert("email aleady exist")
+        } else {
+          alert("enter valid credentials");
+        }
       } else {
-        alert("enter valid credentials");
+        navigate('/login');
       }
-    } else {
-      navigate("/login");
+    } catch (error) {
+      console.error('Error creating user:', error);
+      //alert('Error creating user. Please try again.');
     }
   };
   const onChange = (e) => {

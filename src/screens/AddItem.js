@@ -99,7 +99,7 @@ export default function AddItem() {
         };
 
         try {
-            const response = await fetch('http://localhost:5000/api/addFoodItem', {
+            const response = await fetch('https://vivisteria-2lrx.vercel.app/api/addFoodItem', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -9,35 +9,35 @@ function Cart({ showPayment }) {
 
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
-    /*
-    const handleCheckOut = async () => {
-      let userEmail = localStorage.getItem("userEmail");
-      try {
-        const response = await axios.post(
-          'https://vivisteria-2lrx.vercel.app/api/orderData',
-          {
-            order_data: data,
-            email: userEmail,
-            order_date: new Date().toDateString(),
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            }
+  /*
+  const handleCheckOut = async () => {
+    let userEmail = localStorage.getItem("userEmail");
+    try {
+      const response = await axios.post(
+        'https://vivisteria-2lrx.vercel.app/api/orderData',
+        {
+          order_data: data,
+          email: userEmail,
+          order_date: new Date().toDateString(),
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
           }
-        );
-        console.log("Response status:", response.status);
-        if (response.status === 200) {
-          dispatch({ type: "DROP" });
-  
         }
-      } catch (error) {
-        console.error("Fetch error:", error);
-       
+      );
+      console.log("Response status:", response.status);
+      if (response.status === 200) {
+        dispatch({ type: "DROP" });
+ 
       }
-    };
-  
-  */
+    } catch (error) {
+      console.error("Fetch error:", error);
+     
+    }
+  };
+ 
+*/
 
   useEffect(() => {
     if (isPaymentSuccessful) {
@@ -55,18 +55,17 @@ function Cart({ showPayment }) {
       return;
     }
 
-    axios
-      .post("http://localhost:5000/api/payment", {
-        
-        email: localStorage.getItem("userEmail"),
-        orderedItems: data.map((item) => ({ name: item.name, price: item.price,quantity:item.quantity })),
-        totalAmount: totalPrice,
-        paymentMethod: selectedPaymentMethod,
-      })
+    axios.post("https://vivisteria-2lrx.vercel.app/api/payment", {
+
+      email: localStorage.getItem("userEmail"),
+      orderedItems: data.map((item) => ({ name: item.name, price: item.price, quantity: item.quantity })),
+      totalAmount: totalPrice,
+      paymentMethod: selectedPaymentMethod,
+    })
       .then((response) => {
         console.log("Payment successful:", response.data);
         alert("Payment successful!");
-        dispatch({ type: "DROP" }); // Clear cart after successful payment
+        dispatch({ type: "DROP" });
         setIsPaymentSuccessful(true);
       })
       .catch((error) => {
@@ -83,7 +82,7 @@ function Cart({ showPayment }) {
         <td className="text-white">{food.quantity}</td>
         <td className="text-white">{food.size}</td>
         <td className="text-white">{food.price}</td>
-        
+
         <td>
           <button
             type="button"
@@ -112,7 +111,7 @@ function Cart({ showPayment }) {
               <th className="text-success" scope="col">Quantity</th>
               <th className="text-success" scope="col">Option</th>
               <th className="text-success" scope="col">Amount</th>
-              
+
               <th className="text-success" scope="col">Actions</th>
             </tr>
           </thead>
@@ -145,7 +144,7 @@ function Cart({ showPayment }) {
             >
               Rocket
             </button>
-            
+
           </div>
           <div className="mb-3">
             {selectedPaymentMethod && (
@@ -162,7 +161,7 @@ function Cart({ showPayment }) {
         </div>
       )}
 
-      
+
 
       {isPaymentSuccessful && (
         <div className="modal-content text-center">

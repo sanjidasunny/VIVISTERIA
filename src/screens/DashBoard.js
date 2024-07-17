@@ -22,7 +22,7 @@ export default function DashBoard() {
 
   const loadData = async () => {
     try {
-      let response = await fetch("http://localhost:5000/api/foodCategory", {
+      let response = await fetch("https://vivisteria-2lrx.vercel.app/api/foodCategory", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

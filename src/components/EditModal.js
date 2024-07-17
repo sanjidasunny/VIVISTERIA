@@ -27,7 +27,7 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
         // Fetch category names from backend
         const loadData = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/foodCategory', {
+                const response = await fetch('https://vivisteria-2lrx.vercel.app/api/foodCategory', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5000/api/foodData/${foodItem._id}`, {
+            const response = await fetch(`https://vivisteria-2lrx.vercel.app/api/foodData/${foodItem._id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -171,13 +171,13 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
     };
 
     return (
-        <Modal 
-            isOpen={isOpen} 
-            onRequestClose={handleCloseModal} 
-            className="edit-modal" 
-            ariaHideApp={false} 
-            shouldCloseOnOverlayClick={true} 
-            
+        <Modal
+            isOpen={isOpen}
+            onRequestClose={handleCloseModal}
+            className="edit-modal"
+            ariaHideApp={false}
+            shouldCloseOnOverlayClick={true}
+
         >
             <div className="modal-content">
                 <h2>Edit Food Item</h2>
@@ -208,7 +208,7 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
                             ))}
                         </select>
                     </div>
-                    
+
                     <div className="form-group">
                         <label>Image URL:</label>
                         <input

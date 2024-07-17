@@ -20,12 +20,7 @@ function Search({ setSearch }) {
             value={searchInput}
             onChange={handleInputChange}
           />
-          {/*<button
-                    className="btn btn-success text-white"
-                    type="submit"
-                >
-                    Search
-                </button>*/}
+
         </form>
       </div>
     </>
