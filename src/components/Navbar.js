@@ -18,6 +18,7 @@ function Navbar() {
     localStorage.removeItem("userID");
     localStorage.removeItem("userEmail");
     localStorage.removeItem("adminStatus");
+    localStorage.removeItem("refreshToken");
     navigate("/login");
   };
 
@@ -41,12 +42,15 @@ function Navbar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav me-auto mb-2">
-              <li className="nav-item">
-                <Link className="nav-link text-white active" aria-current="page" to="/profile">
-                  Profile
-                </Link>
-              </li>
-              {!isAdmin && (
+              {localStorage.getItem("authToken") ?
+                <li className="nav-item">
+                  <Link className="nav-link text-white active" aria-current="page" to="/profile">
+                    Profile
+                  </Link>
+                </li> : ""
+              }
+
+              {!isAdmin && localStorage.getItem("authToken") && (
                 <li className="nav-item">
                   <Link className="nav-link text-white active" aria-current="page" to="/myOrder">
                     My Orders
