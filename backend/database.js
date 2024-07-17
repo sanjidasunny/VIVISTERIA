@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const mongoURI = 'mongodb+srv://vivisteria:sunnybunny@cluster0.fjgpc3k.mongodb.net/Vivisteria?retryWrites=true&w=majority&appName=Cluster0';
 
 const mongoDB = async () => {
