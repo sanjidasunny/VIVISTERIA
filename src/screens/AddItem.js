@@ -16,7 +16,7 @@ export default function AddItem() {
         // Fetch category names from backend
         const loadData = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/foodCategory', {
+                const response = await fetch('https://vivisteria-2lrx.vercel.app/api/foodCategory', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
