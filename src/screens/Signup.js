@@ -20,11 +20,15 @@ function Signup() {
       alert("Username must be at least 5 characters long");
       return;
     }
-
+    if (credentials.password !== credentials.confirmPassword) {
+      alert("Password doesn't match");
+      return;
+    }
     if (credentials.password.length < 6) {
       alert("Password must be at least 6 characters long");
       return;
     }
+
     try {
       const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/createuser', {
         name: credentials.name,

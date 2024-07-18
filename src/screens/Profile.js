@@ -47,8 +47,8 @@ function Profile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.newPassword && formData.newPassword.length < 6) {
-      alert("Password length must be at least 6 characters");
+    if ((formData.oldPassword || formData.newPassword) && formData.newPassword.length < 6) {
+      alert("New Password length must be at least 6 characters");
       return;
     }
     setLoading(true);
