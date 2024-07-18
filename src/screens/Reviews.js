@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../Reviews.css";
@@ -18,16 +19,15 @@ const Reviews = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await fetch("https://vivisteria-2lrx.vercel.app/api/displayreviews", {
-        method: "POST",
+      const response = await axios.post("https://vivisteria-2lrx.vercel.app/api/displayreviews", {}, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error("Failed to fetch reviews");
       }
-      const data = await response.json();
+      const data = response.data;
       setReviews(data);
       setIsLoading(false);
     } catch (error) {
@@ -40,29 +40,30 @@ const Reviews = () => {
     try {
       if (editMode && editReviewId) {
         // Edit existing review
-        const response = await fetch(
-          `http://localhost:5000/api/review/${editReviewId}`,
+        const response = await axios.put(
+          `https://vivisteria-2lrx.vercel.app/api/review/${editReviewId}`,
+          { comment: newReview },
           {
-            method: "PUT",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ comment: newReview }),
           }
         );
-        if (!response.ok) {
+        if (response.status !== 200) {
           throw new Error("Failed to edit review");
         }
       } else {
         // Add new review
-        const response = await fetch("http://localhost:5000/api/review", {
-          method: "POST",
+        const response = await axios.post("https://vivisteria-2lrx.vercel.app/api/review", {
+          comment: newReview,
+          userId: localStorage.getItem("userID"),
+          email: localStorage.getItem("userEmail")
+        }, {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ comment: newReview, userId: localStorage.getItem("userID"), email: localStorage.getItem("userEmail") }),
         });
-        if (!response.ok) {
+        if (response.status !== 200) {
           throw new Error("Failed to add review");
         }
       }
@@ -77,13 +78,15 @@ const Reviews = () => {
 
   const handleDeleteReview = async (reviewId) => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/review/${reviewId}`,
+      const response = await axios.delete(
+        `https://vivisteria-2lrx.vercel.app/api/review/${reviewId}`,
         {
-          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error("Failed to delete review");
       }
       fetchReviews();

@@ -25,23 +25,17 @@ function Signup() {
       return;
     }
     try {
-      const response = await fetch('https://vivisteria-2lrx.vercel.app/api/createuser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: credentials.name,
-          email: credentials.email,
-          password: credentials.password,
-          confirmPassword: credentials.confirmPassword,
-          location: credentials.location,
-          isAdmin: credentials.isAdmin,
-          isApproved: credentials.isApproved
-        }),
+      const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/createuser', {
+        name: credentials.name,
+        email: credentials.email,
+        password: credentials.password,
+        confirmPassword: credentials.confirmPassword,
+        location: credentials.location,
+        isAdmin: credentials.isAdmin,
+        isApproved: credentials.isApproved
       });
 
-      const data = await response.json();
+      const data = response.data;
 
       if (!data.success) {
         if (data.errors === 'same email') {
