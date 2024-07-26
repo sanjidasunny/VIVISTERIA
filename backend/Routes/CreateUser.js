@@ -59,7 +59,7 @@ router.post("/loginuser", async (req, res) => {
             return res.status(400).json({ errors: "wrong password" });
         }
         if (userData.isAdmin !== userData.isApproved) {
-            return res.status(400).json({ errors: "not approved" });
+            return res.status(401).json({ errors: "not approved" });
         }
         const data = {
             user: {
