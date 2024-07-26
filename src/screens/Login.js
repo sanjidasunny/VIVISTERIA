@@ -51,9 +51,9 @@ function Login() {
         navigate("/");
       }
     } catch (error) {
-      if (error.response.status === 401) {
+      if (error.response && error.response.status === 401) {
         alert("You are not approved as an admin yet");
-      } else if (error.response.status === 400) {
+      } else if (error.response && error.response.status === 400) {
         alert(error.response.data.errors || "Enter valid email or password");
       } else {
         console.error('Error logging in:', error);
