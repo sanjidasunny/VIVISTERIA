@@ -150,10 +150,11 @@ function Signup() {
           <button type="submit" className="btn btn-success">
             Submit
           </button>
-          <Link to="/login" className="m-3" style={{ color: "black" }}>
+          <br></br>
+          <Link to="/login" className="m-3" style={{ color: "black", float: "left" }}>
             Already have an account? Log in
           </Link>
-          <Link to="/adminSignup" className="m-3" style={{ color: "black" }}>
+          <Link to="/adminSignup" className="m-3" style={{ color: "black", display: "flex", float: "left" }}>
             Signup as admin
           </Link>
         </form>
