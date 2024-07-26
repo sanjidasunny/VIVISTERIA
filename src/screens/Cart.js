@@ -120,13 +120,14 @@ function Cart({ showPayment }) {
       )}
 
       {showPayment && data.length > 0 && (
-        <div className="modal-content text-center">
-          <h3 className="text-center mb-3">Choose Your Payment Method</h3>
+        <div className="modal-content text-center" style={{ backgroundColor: "rgb(34, 34, 34)" }}>
+          <h3 className="text-center mb-3 text-white">Choose Your Payment Method</h3>
           <div className="btn-group mb-3" role="group" aria-label="Payment Method">
             <button
               type="button"
               className={`btn btn-outline-secondary ${selectedPaymentMethod === "Bkash" ? "active" : ""}`}
               onClick={() => setSelectedPaymentMethod("Bkash")}
+              style={{ backgroundColor: "#e2136e", color: "white" }}
             >
               Bkash
             </button>
@@ -134,6 +135,7 @@ function Cart({ showPayment }) {
               type="button"
               className={`btn btn-outline-secondary ${selectedPaymentMethod === "Nagad" ? "active" : ""}`}
               onClick={() => setSelectedPaymentMethod("Nagad")}
+              style={{ backgroundColor: "#f6921e", color: "white" }}
             >
               Nagad
             </button>
@@ -141,6 +143,7 @@ function Cart({ showPayment }) {
               type="button"
               className={`btn btn-outline-secondary ${selectedPaymentMethod === "Rocket" ? "active" : ""}`}
               onClick={() => setSelectedPaymentMethod("Rocket")}
+              style={{ backgroundColor: "#7c1a84", color: "white" }}
             >
               Rocket
             </button>
@@ -148,13 +151,13 @@ function Cart({ showPayment }) {
           </div>
           <div className="mb-3">
             {selectedPaymentMethod && (
-              <div className="border p-3">
-                <p>Selected Payment Method</p>
-                <div className="border p-2">{selectedPaymentMethod}</div>
+              <div className="border p-3 text-white">
+                <p className=" text-white">Selected Payment Method</p>
+                <div className="border p-2 text-white">{selectedPaymentMethod}</div>
               </div>
             )}
           </div>
-          <p className="mb-3">Total Amount: {totalPrice} /-</p>
+          <p className="mb-3 text-white">Total Amount: {totalPrice} /-</p>
           <button className="btn btn-success text-white" onClick={handlePayment}>
             Pay Now
           </button>

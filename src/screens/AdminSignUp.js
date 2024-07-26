@@ -104,7 +104,7 @@ export default function AdminSignUp() {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     };
     return (
-        <div className="signupPage">
+        <div className="adminsignup">
             <div className="inside container p-10">
                 <h1 className="text-black">Admin Sign up</h1>
                 <form onSubmit={submit}>
@@ -114,7 +114,7 @@ export default function AdminSignUp() {
                         </label>
                         <input
                             type="text"
-                            className="form-control w-100"
+                            className="form-control w-100 bg-white text-black"
                             onChange={onChange}
                             value={credentials.name}
                             name="name"
@@ -130,7 +130,7 @@ export default function AdminSignUp() {
                         </label>
                         <input
                             type="email"
-                            className="form-control w-100"
+                            className="form-control w-100 bg-white text-black"
                             onChange={onChange}
                             value={credentials.email}
                             name="email"
@@ -150,7 +150,7 @@ export default function AdminSignUp() {
                         </label>
                         <input
                             type="password"
-                            className="form-control w-100"
+                            className="form-control w-100 bg-white text-black"
                             onChange={onChange}
                             value={credentials.password}
                             name="password"
@@ -166,7 +166,7 @@ export default function AdminSignUp() {
                         </label>
                         <input
                             type="password"
-                            className="form-control w-100"
+                            className="form-control w-100 bg-white text-black"
                             onChange={onChange}
                             value={credentials.confirmPassword}
                             name="confirmPassword"
@@ -182,7 +182,7 @@ export default function AdminSignUp() {
                         </label>
                         <input
                             type="text"
-                            className="form-control w-100"
+                            className="form-control w-100 bg-white text-black"
                             onChange={onChange}
                             value={credentials.location}
                             name="location"

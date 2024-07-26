@@ -51,7 +51,7 @@ export default function MyOrder() {
   };
 
   return (
-    <div>
+    <div className="bg-white">
       <Navbar />
       <div className="container min-vh-100">
         <h1 className="mt-4">Order History</h1>

@@ -102,7 +102,7 @@ const Reviews = () => {
   };
 
   return (
-    <div className="main-container">
+    <div className="main-container bg-white">
       <Navbar />
       <div className="content-container">
         <div className="reviews-container">
@@ -114,7 +114,7 @@ const Reviews = () => {
                 <textarea
                   value={newReview}
                   onChange={(e) => setNewReview(e.target.value)}
-                  className="review-input"
+                  className="review-input bg-white"
                   placeholder="Write your review..."
                   required
                 />

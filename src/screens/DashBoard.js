@@ -54,7 +54,7 @@ export default function DashBoard() {
   }, []);
 
   return (
-    <div className="dashboard">
+    <div className="dashboard bg-white">
       <Navbar />
       <div className="content">
         <div className="total-delivered">

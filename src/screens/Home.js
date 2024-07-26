@@ -5,14 +5,14 @@ import Card from "../components/Card";
 import Search from "../components/Search";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 function Home() {
   const [foodCat, setFoodCat] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [loading, setLoading] = useState(true);
-
+  const isAdmin = localStorage.getItem("adminStatus") === 'true';
 
   const loadData = async () => {
     try {
@@ -76,22 +76,29 @@ function Home() {
 
   return (
     <div className="mainBody">
-      <div>
-        <Navbar />
-      </div>
+
+      <Navbar />
+
       <div>
         <Search setSearch={setSearch} />
       </div>
+      {isAdmin ? <Link className="AddNew" to="/addItem">
+        <i class="fa-solid fa-plus text-white"></i>
+      </Link> : ""
+
+      }
+
       <div className="container-fluid">
-        <div className="row">
-          <div className="col-12 col-md-2">
-            <Sidebar setSelectedCategory={setSelectedCategory} />
+        <div className="home">
+          <div className="sidebar">
+            <Sidebar selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
           </div>
-          <div className="col-12 col-md-10">
+          <div className="main">
             {selectedCategory === "All" ? (
               foodCat.map((category) => (
-                <div className="row mb-3" key={category._id}>
-                  <div className="fs-3 m-3 text-success">
+                <div className="category-container" key={category._id}>
+
+                  <div className="category-title ">
                     {category.CategoryName}
                   </div>
                   <hr className="text-success" />
@@ -100,7 +107,7 @@ function Home() {
                     .map((item) => (
                       <div
                         key={item._id}
-                        className="col-12 col-sm-6 col-lg-3 mb-3"
+                        className="box"
                       >
                         <Card
                           foodItem={item}
@@ -110,14 +117,15 @@ function Home() {
                         />
                       </div>
                     ))}
+
                 </div>
               ))
             ) : (
               foodCat
                 .filter((category) => category.CategoryName === selectedCategory)
                 .map((data) => (
-                  <div className="row mb-3" key={data._id}>
-                    <div className="fs-3 m-3 text-success">
+                  <div className="category-container" key={data._id} style={{ minHeight: "70vh" }}>
+                    <div className="category-title">
                       {data.CategoryName}
                     </div>
                     <hr className="text-success" />
@@ -126,7 +134,7 @@ function Home() {
                       .map((filterItems) => (
                         <div
                           key={filterItems._id}
-                          className="col-12 col-sm-6 col-lg-3 mb-3"
+                          className="box"
                         >
                           <Card
                             foodItem={filterItems}

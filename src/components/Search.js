@@ -13,7 +13,7 @@ function Search({ setSearch }) {
       <div className="search container">
         <form className="d-flex justify-content-center">
           <input
-            className="form-control me-2 "
+            className="form-control me-2 bg-white"
             type="search"
             placeholder="Search"
             aria-label="Search"

@@ -73,7 +73,7 @@ function Profile() {
   };
 
   return (
-    <div>
+    <div className="bg-white" style={{ height: "100vh" }}>
       <Navbar />
       <div className="profile" style={{ marginTop: "120px" }}>
         {profileData ? (

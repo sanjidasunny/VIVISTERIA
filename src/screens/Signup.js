@@ -71,7 +71,7 @@ function Signup() {
             </label>
             <input
               type="text"
-              className="form-control w-100"
+              className="form-control w-100 bg-white text-black"
               onChange={onChange}
               value={credentials.name}
               name="name"
@@ -87,7 +87,7 @@ function Signup() {
             </label>
             <input
               type="email"
-              className="form-control w-100"
+              className="form-control w-100 bg-white text-black"
               onChange={onChange}
               value={credentials.email}
               name="email"
@@ -107,7 +107,7 @@ function Signup() {
             </label>
             <input
               type="password"
-              className="form-control w-100"
+              className="form-control w-100 bg-white text-black"
               onChange={onChange}
               value={credentials.password}
               name="password"
@@ -123,7 +123,7 @@ function Signup() {
             </label>
             <input
               type="password"
-              className="form-control w-100"
+              className="form-control w-100 bg-white text-black"
               onChange={onChange}
               value={credentials.confirmPassword}
               name="confirmPassword"
@@ -139,7 +139,7 @@ function Signup() {
             </label>
             <input
               type="text"
-              className="form-control w-100"
+              className="form-control w-100 bg-white text-black"
               onChange={onChange}
               value={credentials.location}
               name="location"

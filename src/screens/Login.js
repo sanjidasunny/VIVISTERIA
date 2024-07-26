@@ -69,7 +69,7 @@ function Login() {
             <label htmlFor="exampleInputEmail1" className="form-label text-black">Email address</label>
             <input
               type="email"
-              className="form-control w-100"
+              className="form-control w-100 bg-white text-black"
               onChange={onChange}
               value={credentials.email}
               name="email"
@@ -82,7 +82,7 @@ function Login() {
             <label htmlFor="exampleInputPassword1" className="form-label text-black">Password</label>
             <input
               type="password"
-              className="form-control w-100"
+              className="form-control w-100 bg-white text-black"
               onChange={onChange}
               value={credentials.password}
               name="password"

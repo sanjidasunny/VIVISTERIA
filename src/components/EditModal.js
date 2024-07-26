@@ -179,14 +179,14 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
             shouldCloseOnOverlayClick={true}
 
         >
-            <div className="modal-content">
+            <div className="modal-content bg-white">
                 <h2>Edit Food Item</h2>
                 <form>
                     <div className="form-group">
                         <label>Name:</label>
                         <input
                             type="text"
-                            className="form-control"
+                            className="form-control bg-white text-black"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
@@ -194,7 +194,7 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
                     <div className="form-group">
                         <label>Category Name:</label>
                         <select
-                            className="form-control"
+                            className="form-control bg-white text-black"
                             value={categoryName}
                             onChange={(e) => setCategoryName(e.target.value)}
                         >
@@ -213,14 +213,14 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
                         <label>Image URL:</label>
                         <input
                             type="text"
-                            className="form-control"
+                            className="form-control bg-white text-black"
                             value={img}
                             onChange={(e) => setImg(e.target.value)}
                         />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="description" className="form-label">Description</label>
-                        <textarea className="form-control" id="description" rows="3" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                        <textarea className="form-control bg-white text-black" id="description" rows="3" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                     </div>
 
                     {options.map((option, index) => (
@@ -229,7 +229,7 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
                                 <label>{`Portion ${index + 1}:`}</label>
                                 <input
                                     type="text"
-                                    className="form-control"
+                                    className="form-control bg-white text-black"
                                     value={option.portion}
                                     onChange={(e) => handlePortionChange(index, e.target.value)}
                                 />
@@ -261,7 +261,7 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
                                 <label>{`New Portion ${index + 1}:`}</label>
                                 <input
                                     type="text"
-                                    className="form-control"
+                                    className="form-control bg-white text-black"
                                     value={portion.portion}
                                     onChange={(e) => handleNewPortionChange(index, e.target.value)}
                                 />
@@ -270,7 +270,7 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
                                 <label>{`Price for New Portion ${index + 1}:`}</label>
                                 <input
                                     type="text"
-                                    className="form-control"
+                                    className="form-control bg-white text-black"
                                     value={portion.price}
                                     onChange={(e) => handleNewPriceChange(index, e.target.value)}
                                 />

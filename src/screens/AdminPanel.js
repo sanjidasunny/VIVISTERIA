@@ -82,7 +82,7 @@ export default function AdminPanel() {
   );
 
   return (
-    <div className="main-container">
+    <div className="main-container bg-white">
       <Navbar />
       <div className="content-container">
         <div className="user-container">
@@ -124,7 +124,7 @@ export default function AdminPanel() {
                   className="delete-button"
                   onClick={() => deleteUser(data._id)}
                 >
-                  <i className="fa-solid fa-trash"></i>
+                  <i className="fa-solid fa-trashh text-white"></i>
                 </button>
               </div>
             ))
