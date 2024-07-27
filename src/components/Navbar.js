@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Badge } from "react-bootstrap";
 import Modal from "../Modal";
@@ -11,11 +11,23 @@ function Navbar() {
   const location = useLocation();
   const isAdmin = localStorage.getItem("adminStatus") === 'true';
   const [navbarOpen, setNavbarOpen] = useState(false);
+  const [cartView, setCartView] = useState(false);
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   const handleToggle = () => {
     setNavbarOpen(!navbarOpen);
   };
-  const [cartView, setCartView] = useState(false);
+
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem("cartData")) || [];
+    const itemCount = storedCart.reduce((count, item) => count + item.quantity, 0);
+    setCartItemCount(itemCount);
+  }, []);
+
+  useEffect(() => {
+    const itemCount = data.reduce((count, item) => count + item.quantity, 0);
+    setCartItemCount(itemCount);
+  }, [data]);
 
   const Logout = () => {
     localStorage.removeItem("authToken");
@@ -94,7 +106,7 @@ function Navbar() {
                     <i className="fa-solid fa-cart-shopping"></i>
                     {"     "}
                     <Badge pill bg="danger">
-                      {data.length}
+                      {cartItemCount}
                     </Badge>
                   </div>
                 )}
