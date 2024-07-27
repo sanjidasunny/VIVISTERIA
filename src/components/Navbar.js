@@ -18,20 +18,17 @@ function Navbar() {
     setNavbarOpen(!navbarOpen);
   };
   useEffect(() => {
-    const storedCartCount = JSON.parse(localStorage.getItem("cartItemCount")) || 0;
-    setCartItemCount(storedCartCount);
+    const storedCartData = JSON.parse(localStorage.getItem("cartData")) || [];
+    const itemCount = storedCartData.reduce((count, item) => count + item.quantity, 0);
+    setCartItemCount(itemCount);
   }, []);
 
   useEffect(() => {
     const itemCount = data.reduce((count, item) => count + item.quantity, 0);
-    setCartItemCount(prevCount => {
-      const newCount = prevCount + itemCount;
-      localStorage.setItem("cartItemCount", JSON.stringify(newCount));
-      return newCount;
-    });
+    setCartItemCount(itemCount);
     localStorage.setItem("cartData", JSON.stringify(data));
   }, [data]);
-  
+
   const Logout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userID");
