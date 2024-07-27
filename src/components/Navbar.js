@@ -12,35 +12,19 @@ function Navbar() {
   const isAdmin = localStorage.getItem("adminStatus") === 'true';
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [cartView, setCartView] = useState(false);
-  const [cartItemCount, setCartItemCount] = useState(0);
+  
 
   const handleToggle = () => {
     setNavbarOpen(!navbarOpen);
   };
-  useEffect(() => {
-    const storedCartData = JSON.parse(localStorage.getItem("cartData")) || [];
-    const itemCount = storedCartData.reduce((count, item) => count + item.quantity, 0);
-    setCartItemCount(itemCount);
-  }, []);
-
-  // Update localStorage and cart item count whenever the cart data changes
-  useEffect(() => {
-    const itemCount = data.reduce((count, item) => count + item.quantity, 0);
-    setCartItemCount(itemCount);
-    localStorage.setItem("cartData", JSON.stringify(data));
-
-    // If the cart is empty, reset the count to zero
-    if (itemCount === 0) {
-      localStorage.removeItem("cartData");
-    }
-  }, [data]);
+ 
   const Logout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userID");
     localStorage.removeItem("userEmail");
     localStorage.removeItem("adminStatus");
     localStorage.removeItem("refreshToken");
-    localStorage.removeItem("cartData");
+    
     navigate("/login");
   };
 
@@ -112,7 +96,7 @@ function Navbar() {
                     <i className="fa-solid fa-cart-shopping"></i>
                     {"     "}
                     <Badge pill bg="danger">
-                      {cartItemCount}
+                       {data.length}
                     </Badge>
                   </div>
                 )}
