@@ -4,8 +4,6 @@ import { Badge } from "react-bootstrap";
 import Modal from "../Modal";
 import Cart from "../screens/Cart";
 import { useCart } from "./ContextReducer";
-import { json } from "body-parser";
-const cartFromLocalStorage=JSON.parse(LocalStorage.getItem("cart")||'[]')
 
 function Navbar() {
   const data = useCart();
@@ -14,18 +12,28 @@ function Navbar() {
   const isAdmin = localStorage.getItem("adminStatus") === 'true';
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [cartView, setCartView] = useState(false);
-  const [cart, setCart] = useState(cartFromLocalStorage);
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   const handleToggle = () => {
     setNavbarOpen(!navbarOpen);
   };
-  
+  useEffect(() => {
+    const storedCartData = JSON.parse(localStorage.getItem("cartData")) || [];
+    const itemCount = storedCartData.reduce((count, item) => count + item.quantity, 0);
+    setCartItemCount(itemCount);
+  }, []);
 
-  
- useEffect(()=>{
-  LocalStorage.setItem("cart",JSON.stringify(cart));
- },[cart]);
+  // Update localStorage and cart item count whenever the cart data changes
+  useEffect(() => {
+    const itemCount = data.reduce((count, item) => count + item.quantity, 0);
+    setCartItemCount(itemCount);
+    localStorage.setItem("cartData", JSON.stringify(data));
 
+    // If the cart is empty, reset the count to zero
+    if (itemCount === 0) {
+      localStorage.removeItem("cartData");
+    }
+  }, [data]);
   const Logout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userID");
