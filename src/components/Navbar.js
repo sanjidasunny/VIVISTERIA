@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Badge } from "react-bootstrap";
 import Modal from "../Modal";
 import Cart from "../screens/Cart";
 import { useCart } from "./ContextReducer";
-
-const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || '[]');
+import { json } from "body-parser";
+const cartFromLocalStorage=JSON.parse(LocalStorage.getItem("cart")||'[]')
 
 function Navbar() {
   const data = useCart();
@@ -19,22 +19,12 @@ function Navbar() {
   const handleToggle = () => {
     setNavbarOpen(!navbarOpen);
   };
+  
 
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setCart(JSON.parse(localStorage.getItem("cart") || '[]'));
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
+  
+ useEffect(()=>{
+  LocalStorage.setItem("cart",JSON.stringify(cart));
+ },[cart]);
 
   const Logout = () => {
     localStorage.removeItem("authToken");
@@ -42,6 +32,7 @@ function Navbar() {
     localStorage.removeItem("userEmail");
     localStorage.removeItem("adminStatus");
     localStorage.removeItem("refreshToken");
+    localStorage.removeItem("cartData");
     navigate("/login");
   };
 
@@ -111,9 +102,9 @@ function Navbar() {
                     onClick={() => setCartView(true)}
                   >
                     <i className="fa-solid fa-cart-shopping"></i>
-                    {" "}
+                    {"     "}
                     <Badge pill bg="danger">
-                      {cart.length}
+                      {cartItemCount}
                     </Badge>
                   </div>
                 )}
