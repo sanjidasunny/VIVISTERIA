@@ -56,14 +56,7 @@ const Reviews = () => {
 
             const response = await axios({ url, method, data, headers: { "Content-Type": "application/json" } });
             if (response.status !== 200) throw new Error(`Failed to ${editMode ? 'edit' : 'add'} review`);
-            const updatedReview = response.data;
-
-            setReviews(prevReviews => {
-                if (editMode) {
-                    return prevReviews.map(review => review._id === editReviewId ? updatedReview : review);
-                }
-                return [updatedReview, ...prevReviews];
-            });
+            fetchReviews();
             setNewReview("");
             setEditMode(false);
             setEditReviewId(null);
