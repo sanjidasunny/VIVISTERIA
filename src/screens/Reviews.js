@@ -85,6 +85,7 @@ const Reviews = () => {
       setNewReview("");
       setEditMode(false);
       setEditReviewId(null);
+      window.location.reload();
     } catch (error) {
       console.error("Error adding/editing review:", error);
     }
