@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function Sidebar({ setSelectedCategory }) {
+export default function Sidebar({ selectedCategory, setSelectedCategory }) {
   const [foodCat, setFoodCat] = useState([]);
 
   const loadData = async () => {
@@ -34,28 +34,24 @@ export default function Sidebar({ setSelectedCategory }) {
   const isAdmin = localStorage.getItem("adminStatus") === "true";
 
   return (
-    <div className="sidebar fixed-side">
+    <div>
       <div className="sidebar-content">
-        <span className="fs-4">Sidebar</span>
-        <hr />
-        {isAdmin ? (
+        {isAdmin && (
           <Link className="btn btn-success" to="/addItem">
             Add New Item
           </Link>
-        ) : (
-          ""
         )}
 
         <div
-          className="fs-4"
+          className="fs-4 text-black"
           style={{ marginBottom: "15px", marginTop: "15px" }}
         >
           Categories
         </div>
         <div
-          className="m-2 fs-6"
+          className={`m-2 fs-6 ${selectedCategory === "All" ? "active-category" : ""}`}
           onClick={() => setSelectedCategory("All")}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", color: "black" }}
         >
           All
         </div>
@@ -63,7 +59,7 @@ export default function Sidebar({ setSelectedCategory }) {
           ? foodCat.map((data) => (
             <div
               key={data._id}
-              className="m-2 fs-6"
+              className={`m-2 fs-6 text-black ${selectedCategory === data.CategoryName ? "active-category" : ""}`}
               onClick={() => setSelectedCategory(data.CategoryName)}
               style={{ cursor: "pointer" }}
             >

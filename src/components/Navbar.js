@@ -10,6 +10,11 @@ function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const isAdmin = localStorage.getItem("adminStatus") === 'true';
+  const [navbarOpen, setNavbarOpen] = useState(false);
+
+  const handleToggle = () => {
+    setNavbarOpen(!navbarOpen);
+  };
 
   const [cartView, setCartView] = useState(false);
 
@@ -23,31 +28,30 @@ function Navbar() {
   };
 
   return (
-    <div>
-      <nav className={`navbar navbar-expand-lg shadow fixed-top ${isAdmin ? 'nav2' : 'nav1'}`}>
+    <div className="topbar">
+      <nav className={`navbar1 navbar navbar-expand-lg ${isAdmin ? 'nav2' : 'nav1'}`}>
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <img src="/logo-3.png" className="navbar-logo" alt="" />
           </Link>
           <button
-            className="navbar-toggler active"
+            className="navbar-toggler"
             type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
+            onClick={handleToggle}
             aria-controls="navbarNav"
-            aria-expanded="false"
+            aria-expanded={navbarOpen ? "true" : "false"}
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon" style={{ color: "white" }}></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
+          <div className={`collapse navbar-collapse ${navbarOpen ? 'show' : ''} ${isAdmin ? 'admin' : 'user'}`} id="navbarNav">
             <ul className="navbar-nav me-auto mb-2">
-              {localStorage.getItem("authToken") ?
+              {localStorage.getItem("authToken") &&
                 <li className="nav-item">
                   <Link className="nav-link text-white active" aria-current="page" to="/profile">
                     Profile
                   </Link>
-                </li> : ""
+                </li>
               }
 
               {!isAdmin && localStorage.getItem("authToken") && (
@@ -58,7 +62,7 @@ function Navbar() {
                 </li>
               )}
               {isAdmin && (
-                <div className="d-flex">
+                <>
                   <li className="nav-item">
                     <Link className="nav-link text-white active" aria-current="page" to="/adminPanel">
                       Admin Panel
@@ -69,15 +73,15 @@ function Navbar() {
                       Dashboard
                     </Link>
                   </li>
-                </div>
+                </>
               )}
             </ul>
             {!localStorage.getItem("authToken") ? (
               <div className="d-flex">
-                <Link className="btn bg-white mx-2 text-danger" to="/login">
+                <Link className="btn bg-white mx-2" to="/login">
                   Login
                 </Link>
-                <Link className="btn bg-white mx-2 text-danger" to="/signup">
+                <Link className="btn bg-white mx-2" to="/signup">
                   Sign up
                 </Link>
               </div>
@@ -85,7 +89,7 @@ function Navbar() {
               <div>
                 {!isAdmin && location.pathname === "/" && (
                   <div
-                    className="btn bg-white mx-2 text-danger"
+                    className="btn bg-white mx-2 text-black"
                     onClick={() => setCartView(true)}
                   >
                     <i className="fa-solid fa-cart-shopping"></i>
@@ -101,20 +105,22 @@ function Navbar() {
                   </Modal>
                 )}
                 {location.pathname === "/" && (
-                  <Link className="btn bg-white mx-2 text-danger" to="/reviews">
+                  <Link className="btn bg-white mx-2 text-black" to="/reviews">
                     Reviews
                   </Link>
                 )}
-                <div className="btn bg-white mx-2 text-danger" onClick={Logout}>
+                <div className="btn mx-2 bg-white text-danger" onClick={Logout}>
                   Log out
                 </div>
               </div>
             )}
           </div>
         </div>
-      </nav>
-    </div>
+      </nav >
+    </div >
   );
 }
+
+
 
 export default Navbar;

@@ -1,7 +1,21 @@
+*{
+  color: black;
+
+}
 html, body {
   height: 100%;
   margin: 0;
+  
+  
+  
 }
+#root{
+  background-color: white;
+}
+input{
+  background-color: white;
+}
+
 .App {
   text-align: center;
 }
@@ -43,24 +57,35 @@ html, body {
   }
 }
 
+.category-container {
+  width: 100%;
+  clear: both; /* Ensures each category starts on a new line */
+  margin-bottom: 20px; /* Space between categories */
+}
 
+.category-title {
+  font-size: 1.5em;
+  color: green;
+  margin: 10px 0;
+}
 
 .card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 16px;
-  margin-left: 20%;
-  width: 80%;
+  border-radius: 15px;
+  margin: 12px; 
+  display: flex; 
+  height: 360px; 
+  
 }
 
 .card {
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 8px;
+  
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.2s;
-  height: 350px; 
+  width: 100%;
 }
 
 .card:hover {
@@ -79,49 +104,123 @@ html, body {
   flex-direction: column;
   justify-content: space-between;
   height: calc(100% - 160px); 
+  background-color: white;
 }
 
 
 
 .search{
   margin: 10px;
-  margin-top: 100px;
+  margin-top: 40px;
+ 
+  
 }
-
 .navbar-logo {
   width: 6rem; 
-  height: auto; 
-  
+  height: auto;
+}
+.topbar {
+  box-shadow: 0 4px 8px 0 rgba(52, 50, 50, 0.633), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+}
 
-}
-.nav1{
-  background-color: rgb(255, 85, 85);
-}
-.nav2{
-  background-color: rgb(136, 85, 255);
-}
-.navbar-toggler-icon {
-  color: white;
-}
-.navbar{
+.navbar1 {
   height: 80px;
 }
 
+.nav1 {
+  background-color: rgb(40, 76, 121);
+}
 
-.sidebar {
+.nav2 {
+  background-color: rgb(255, 85, 85);
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  color: white;
+}
+
+.collapse {
+  width: 100%; /* Ensure full width */
+}
+
+.collapse.show.user,
+.collapse.show.admin {
+  position: absolute; /* Position it absolutely to overlay content */
+  top: 80px; /* Adjust based on the height of your navbar */
+  left: 0;
+  background-color: inherit; /* Use the background color of the navbar */
+  padding: 20px;
+  z-index: 9999; /* Ensure it is above other content */
+}
+
+.collapse.show.user {
+  background-color: rgb(40, 76, 121);
+}
+
+.collapse.show.admin {
+  background-color: rgb(255, 85, 85);
+}
+
+
+.home{
   display: flex;
-  position: fixed;
-  
-  
 }
 
-.sidebar-content {
-  width: 100%;
-  min-height: 100vh;
-  padding: 3rem 1rem;
+.sidebar{
+  width: 300px;
   
 }
-.loginPage,.signupPage {
+@media only screen and (max-width:900px){
+	.sidebar{
+		display:none
+	}
+}
+.active-category {
+  background-color: rgb(170, 173, 178);
+  padding: 8px;
+  border-radius: 6px;
+  color: white;
+}
+.main{
+  width: 100%;
+}
+.box{
+  height: 400px;
+  position: relative;
+  float: left;
+  width: 100%;
+  border-color: green;
+
+}
+@media only screen and (min-width:520px){
+	.box{
+	width:50%;}
+}
+@media only screen and (min-width:1050px){
+	.box{
+	width:33.33%;}
+}
+@media only screen and (min-width:1300px){
+	.box{
+	width:25%;}
+}
+@media only screen and (min-width:1500px){
+	.box{
+	width:20%;}
+}
+.logout{
+  color: #218838;
+  background-color: #007bff;
+}
+.loginPage,.signupPage,.adminsignup {
   
   display: flex;
   justify-content: center; 
@@ -136,6 +235,9 @@ html, body {
 }
 .signupPage{
   background-image: url("../public/signup.jpeg");
+}
+.adminsignup{
+  background-image: url("../public/admin.jpg");
 }
 
 .inside {
@@ -384,10 +486,31 @@ html, body {
 }
 
 
-
 .modal-header {
   padding-top: 70px; 
   
 }
 
-
+.AddNew{
+  position: fixed;
+  z-index: 100;
+  padding: 15px;
+  padding-left: 18px;
+  padding-right: 18px;
+  background-color: #1cba39;
+  border-radius: 6px;
+  right: 20px;
+  bottom: 30px;
+  font-size: 20px;
+}
+.AddNew:hover{
+  background-color: #178e2d;
+}
+@media only screen and (min-width:900px){
+	.AddNew{
+		display:none
+	}
+}
+.modal-content,.bkash{
+  background-color: 9e1638;
+} 

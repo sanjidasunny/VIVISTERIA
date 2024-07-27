@@ -9,35 +9,35 @@ function Cart({ showPayment }) {
 
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
-    /*
-    const handleCheckOut = async () => {
-      let userEmail = localStorage.getItem("userEmail");
-      try {
-        const response = await axios.post(
-          'https://vivisteria-2lrx.vercel.app/api/orderData',
-          {
-            order_data: data,
-            email: userEmail,
-            order_date: new Date().toDateString(),
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            }
+  /*
+  const handleCheckOut = async () => {
+    let userEmail = localStorage.getItem("userEmail");
+    try {
+      const response = await axios.post(
+        'https://vivisteria-2lrx.vercel.app/api/orderData',
+        {
+          order_data: data,
+          email: userEmail,
+          order_date: new Date().toDateString(),
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
           }
-        );
-        console.log("Response status:", response.status);
-        if (response.status === 200) {
-          dispatch({ type: "DROP" });
-  
         }
-      } catch (error) {
-        console.error("Fetch error:", error);
-       
+      );
+      console.log("Response status:", response.status);
+      if (response.status === 200) {
+        dispatch({ type: "DROP" });
+ 
       }
-    };
-  
-  */
+    } catch (error) {
+      console.error("Fetch error:", error);
+     
+    }
+  };
+ 
+*/
 
   useEffect(() => {
     if (isPaymentSuccessful) {
@@ -57,9 +57,9 @@ function Cart({ showPayment }) {
 
     axios
       .post("http://localhost:5000/api/payment", {
-        
+
         email: localStorage.getItem("userEmail"),
-        orderedItems: data.map((item) => ({ name: item.name, price: item.price,quantity:item.quantity })),
+        orderedItems: data.map((item) => ({ name: item.name, price: item.price, quantity: item.quantity })),
         totalAmount: totalPrice,
         paymentMethod: selectedPaymentMethod,
       })
@@ -83,7 +83,7 @@ function Cart({ showPayment }) {
         <td className="text-white">{food.quantity}</td>
         <td className="text-white">{food.size}</td>
         <td className="text-white">{food.price}</td>
-        
+
         <td>
           <button
             type="button"
@@ -112,7 +112,7 @@ function Cart({ showPayment }) {
               <th className="text-success" scope="col">Quantity</th>
               <th className="text-success" scope="col">Option</th>
               <th className="text-success" scope="col">Amount</th>
-              
+
               <th className="text-success" scope="col">Actions</th>
             </tr>
           </thead>
@@ -121,13 +121,14 @@ function Cart({ showPayment }) {
       )}
 
       {showPayment && data.length > 0 && (
-        <div className="modal-content text-center">
-          <h3 className="text-center mb-3">Choose Your Payment Method</h3>
+        <div className="modal-content text-center" style={{ backgroundColor: "rgb(34, 34, 34)" }}>
+          <h3 className="text-center mb-3 text-white">Choose Your Payment Method</h3>
           <div className="btn-group mb-3" role="group" aria-label="Payment Method">
             <button
               type="button"
-              className={`btn btn-outline-secondary ${selectedPaymentMethod === "Bkash" ? "active" : ""}`}
+              className={`btn btn-outline-secondary  ${selectedPaymentMethod === "Bkash" ? "active" : ""}`}
               onClick={() => setSelectedPaymentMethod("Bkash")}
+              style={{ backgroundColor: "#e2136e", color: "white" }}
             >
               Bkash
             </button>
@@ -135,6 +136,7 @@ function Cart({ showPayment }) {
               type="button"
               className={`btn btn-outline-secondary ${selectedPaymentMethod === "Nagad" ? "active" : ""}`}
               onClick={() => setSelectedPaymentMethod("Nagad")}
+              style={{ backgroundColor: "#f6921e", color: "white" }}
             >
               Nagad
             </button>
@@ -142,27 +144,28 @@ function Cart({ showPayment }) {
               type="button"
               className={`btn btn-outline-secondary ${selectedPaymentMethod === "Rocket" ? "active" : ""}`}
               onClick={() => setSelectedPaymentMethod("Rocket")}
+              style={{ backgroundColor: "#7c1a84", color: "white" }}
             >
               Rocket
             </button>
-            
+
           </div>
           <div className="mb-3">
             {selectedPaymentMethod && (
-              <div className="border p-3">
-                <p>Selected Payment Method</p>
-                <div className="border p-2">{selectedPaymentMethod}</div>
+              <div className="border p-3 text-white">
+                <p className="text-white">Selected Payment Method</p>
+                <div className="border p-2 text-white ">{selectedPaymentMethod}</div>
               </div>
             )}
           </div>
-          <p className="mb-3">Total Amount: {totalPrice} /-</p>
+          <p className="mb-3 text-white">Total Amount: {totalPrice} /-</p>
           <button className="btn btn-success text-white" onClick={handlePayment}>
             Pay Now
           </button>
         </div>
       )}
 
-      
+
 
       {isPaymentSuccessful && (
         <div className="modal-content text-center">

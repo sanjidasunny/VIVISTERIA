@@ -20,7 +20,7 @@ export default function DetailsPage() {
                     <img
                         src={foodItem.img}
                         alt={foodItem.name}
-                        style={{ width: "auto", maxHeight: "600px", marginTop: "15px", borderRadius: "10px" }}
+                        style={{ width: "auto", maxHeight: "600px", marginTop: "15px", borderRadius: "10px", maxWidth: "100%" }}
                     />
                 </div>
                 <h1 style={{ marginTop: "10px" }}>{foodItem.name}</h1>

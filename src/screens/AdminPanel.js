@@ -82,7 +82,7 @@ export default function AdminPanel() {
   );
 
   return (
-    <div className="main-container">
+    <div className="main-container bg-white">
       <Navbar />
       <div className="content-container">
         <div className="user-container">
@@ -98,36 +98,38 @@ export default function AdminPanel() {
             ""
           )}
           {filteredUsers && filteredUsers.length > 0 ? (
-            filteredUsers.map((data) => (
-              <div className="user-card" key={data._id}>
-                <div className="user-details">
-                  <div className="user-field">
-                    <span className="user-label">Name:</span> {data.name}
-                  </div>
-                  <div className="user-field">
-                    <span className="user-label">Email:</span> {data.email}
-                  </div>
-                  <div className="user-field">
-                    <span className="user-label">Address:</span> {data.location}
-                  </div>
-                  {data.isAdmin && (
+            filteredUsers
+              .sort((a, b) => b.isAdmin - a.isAdmin)
+              .map((data) => (
+                <div className="user-card" key={data._id}>
+                  <div className="user-details">
                     <div className="user-field">
-                      <span className="user-label">Approved as Admin:</span>
-                      <ToggleSwitch
-                        checked={data.isApproved}
-                        onChange={() => toggleApproval(data._id, data.isApproved)}
-                      />
+                      <span className="user-label">Name:</span> {data.name}
                     </div>
-                  )}
+                    <div className="user-field">
+                      <span className="user-label">Email:</span> {data.email}
+                    </div>
+                    <div className="user-field">
+                      <span className="user-label">Address:</span> {data.location}
+                    </div>
+                    {data.isAdmin && (
+                      <div className="user-field">
+                        <span className="user-label">Approved as Admin:</span>
+                        <ToggleSwitch
+                          checked={data.isApproved}
+                          onChange={() => toggleApproval(data._id, data.isApproved)}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    className="delete-button"
+                    onClick={() => deleteUser(data._id)}
+                  >
+                    <i className="fa-solid fa-trash text-white"></i>
+                  </button>
                 </div>
-                <button
-                  className="delete-button"
-                  onClick={() => deleteUser(data._id)}
-                >
-                  <i className="fa-solid fa-trash"></i>
-                </button>
-              </div>
-            ))
+              ))
           ) : (
             <div className="no-users">No users found</div>
           )}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 export default function AddItem() {
     const navigate = useNavigate();
@@ -121,103 +122,107 @@ export default function AddItem() {
     };
 
     return (
-        <div className="container mt-5">
-            <h2>Add New Item</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="itemName" className="form-label">Name</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="itemName"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="categoryName" className="form-label">Category</label>
-                    <select
-                        className="form-control"
-                        id="categoryName"
-                        value={categoryName}
-                        onChange={handleCategoryChange}
-                        required
-                    >
-                        <option value="">Select Category</option>
-                        {foodCat.map((data) => (
-                            <option key={data._id} value={data.CategoryName}>
-                                {data.CategoryName}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                {portions.map((portion, index) => (
-                    <div key={index} className="mb-3 d-flex">
+        <div style={{ height: "100vh" }}>
+            <Navbar />
+            <div className="container mt-5 bg-white" >
+
+                <h2>Add New Item</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="itemName" className="form-label">Name</label>
+                        <input
+                            type="text"
+                            className="form-control bg-white text-black"
+                            id="itemName"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="categoryName" className="form-label">Category</label>
                         <select
-                            name="portion"
-                            className="form-control me-2"
-                            value={portion.portion}
-                            onChange={(e) => handlePortionChange(index, e)}
+                            className="form-control bg-white text-black"
+                            id="categoryName"
+                            value={categoryName}
+                            onChange={handleCategoryChange}
                             required
                         >
-                            <option value="">Select Portion</option>
-                            {priceOptions.map((option, i) => (
-                                <option key={i} value={option}>
-                                    {option}
+                            <option value="">Select Category</option>
+                            {foodCat.map((data) => (
+                                <option key={data._id} value={data.CategoryName}>
+                                    {data.CategoryName}
                                 </option>
                             ))}
                         </select>
+                    </div>
+                    {portions.map((portion, index) => (
+                        <div key={index} className="mb-3 d-flex">
+                            <select
+                                name="portion"
+                                className="form-control me-2 bg-white text-black"
+                                value={portion.portion}
+                                onChange={(e) => handlePortionChange(index, e)}
+                                required
+                            >
+                                <option value="">Select Portion</option>
+                                {priceOptions.map((option, i) => (
+                                    <option key={i} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
+                            </select>
+                            <input
+                                type="text"
+                                name="price"
+                                className="form-control me-2 bg-white text-black"
+                                placeholder="Price"
+                                value={portion.price}
+                                onChange={(e) => handlePortionChange(index, e)}
+                                required
+                            />
+                            <button
+                                type="button"
+                                className="btn btn-danger"
+                                onClick={() => removePortion(index)}
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    ))}
+                    <button
+                        type="button"
+                        className="btn btn-secondary mb-3"
+                        onClick={addPortion}
+                    >
+                        Add Portion
+                    </button>
+                    <div className="mb-3">
+                        <label htmlFor="imageUrl" className="form-label">Image URL</label>
                         <input
                             type="text"
-                            name="price"
-                            className="form-control me-2"
-                            placeholder="Price"
-                            value={portion.price}
-                            onChange={(e) => handlePortionChange(index, e)}
+                            className="form-control bg-white text-black"
+                            id="imageUrl"
+                            value={image}
+                            onChange={(e) => setImage(e.target.value)}
                             required
                         />
-                        <button
-                            type="button"
-                            className="btn btn-danger"
-                            onClick={() => removePortion(index)}
-                        >
-                            Remove
-                        </button>
                     </div>
-                ))}
-                <button
-                    type="button"
-                    className="btn btn-secondary mb-3"
-                    onClick={addPortion}
-                >
-                    Add Portion
-                </button>
-                <div className="mb-3">
-                    <label htmlFor="imageUrl" className="form-label">Image URL</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="imageUrl"
-                        value={image}
-                        onChange={(e) => setImage(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="description" className="form-label">Description</label>
-                    <textarea
-                        className="form-control"
-                        id="description"
-                        rows="3"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    ></textarea>
-                </div>
-                <button type="submit" className="btn btn-primary">
-                    Submit
-                </button>
-            </form>
+                    <div className="mb-3">
+                        <label htmlFor="description" className="form-label">Description</label>
+                        <textarea
+                            className="form-control bg-white text-black"
+                            id="description"
+                            rows="3"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        ></textarea>
+                    </div>
+                    <button type="submit" className="btn btn-primary">
+                        Submit
+                    </button>
+                </form>
+            </div>
         </div>
     );
 }

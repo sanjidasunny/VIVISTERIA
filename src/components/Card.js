@@ -113,12 +113,12 @@ function Card(props) {
           />
         </Link>
         <div className="card-body">
-          <h5 className="card-title">{props.foodItem.name}</h5>
+          <h5 className="card-title text-black">{props.foodItem.name}</h5>
 
           <div className="d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center">
               <select
-                className="m-2 p-1 h-100 rounded"
+                className="m-2 p-1 h-100 rounded bg-white text-black"
                 onChange={(e) => setQuantity(e.target.value)}
               >
                 {Array.from(Array(6), (e, i) => (
@@ -129,9 +129,9 @@ function Card(props) {
               </select>
             </div>
 
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center ">
               <select
-                className="form-select"
+                className="form-select bg-white text-black"
                 ref={priceRef}
                 onChange={handlePortionChange}
                 value={portion}
@@ -144,7 +144,7 @@ function Card(props) {
               </select>
             </div>
 
-            <div className="text-uppercase">{finalPrice}/-</div>
+            <div className="text-uppercase text-black">{finalPrice}/-</div>
           </div>
           <hr />
           {isAdmin ? (
@@ -164,17 +164,17 @@ function Card(props) {
             </div>
           ) : (
             isLoggedIn ? (
-              <button className="btn ms-2 btn-success" onClick={addToCart}>
+              <button className="btn ms-2 text-white" style={{ backgroundColor: "rgb(40, 76, 121)" }} onClick={addToCart}>
                 Add to Cart
               </button>
-            ) : <button className="btn ms-2 btn-success" onClick={() => navigate('/login')}>
+            ) : <button className="btn ms-2 text-white" style={{ backgroundColor: "rgb(40, 76, 121)" }} onClick={() => navigate('/login')}>
               Add to Cart
             </button>
           )
           }
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

@@ -115,7 +115,7 @@ function Signup() {
             </label>
             <input
               type="text"
-              className="form-control w-100"
+              className="form-control w-100 bg-white text-black"
               onChange={onChange}
               value={credentials.name}
               name="name"
@@ -125,13 +125,13 @@ function Signup() {
           <div className="mb-3">
             <label
               htmlFor="exampleInputEmail1"
-              className="form-label text-black"
+              className="form-label text-black "
             >
               Email address
             </label>
             <input
               type="email"
-              className="form-control w-100"
+              className="form-control w-100 bg-white text-black"
               onChange={onChange}
               value={credentials.email}
               name="email"
@@ -151,7 +151,7 @@ function Signup() {
             </label>
             <input
               type="password"
-              className="form-control w-100"
+              className="form-control w-100 bg-white text-black"
               onChange={onChange}
               value={credentials.password}
               name="password"
@@ -167,7 +167,7 @@ function Signup() {
             </label>
             <input
               type="password"
-              className="form-control w-100"
+              className="form-control w-100 bg-white text-black"
               onChange={onChange}
               value={credentials.confirmPassword}
               name="confirmPassword"
@@ -183,7 +183,7 @@ function Signup() {
             </label>
             <input
               type="text"
-              className="form-control w-100"
+              className="form-control w-100 bg-white text-black"
               onChange={onChange}
               value={credentials.location}
               name="location"
@@ -194,10 +194,11 @@ function Signup() {
           <button type="submit" className="btn btn-success">
             Submit
           </button>
-          <Link to="/login" className="m-3" style={{ color: "black" }}>
+          <br></br>
+          <Link to="/login" className="m-3" style={{ color: "black", float: "left" }}>
             Already have an account? Log in
           </Link>
-          <Link to="/adminSignup" className="m-3" style={{ color: "black" }}>
+          <Link to="/adminSignup" className="m-3" style={{ color: "black", display: "flex", float: "left" }}>
             Signup as admin
           </Link>
         </form>

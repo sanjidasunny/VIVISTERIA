@@ -9,7 +9,7 @@ const Reviews = () => {
   const [newReview, setNewReview] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [editReviewId, setEditReviewId] = useState(null);
-  
+  const userID = localStorage.getItem("userID");
   const isAdmin = localStorage.getItem("adminStatus") === 'true';
 
   useEffect(() => {
@@ -28,7 +28,12 @@ const Reviews = () => {
         throw new Error("Failed to fetch reviews");
       }
       const data = await response.json();
-      setReviews(data);
+      const sortedReviews = data.sort((a, b) => {
+        if (a.userId === userID && b.userId !== userID) return -1;
+        if (a.userId !== userID && b.userId === userID) return 1;
+        return 0;
+      });
+      setReviews(sortedReviews);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching reviews:", error);
@@ -99,7 +104,7 @@ const Reviews = () => {
   };
 
   return (
-    <div className="main-container">
+    <div className="main-container bg-white">
       <Navbar />
       <div className="content-container">
         <div className="reviews-container">
@@ -111,7 +116,7 @@ const Reviews = () => {
                 <textarea
                   value={newReview}
                   onChange={(e) => setNewReview(e.target.value)}
-                  className="review-input"
+                  className="review-input bg-white"
                   placeholder="Write your review..."
                   required
                 />
@@ -143,7 +148,7 @@ const Reviews = () => {
                         <span className="review-label">Comment:</span>{" "}
                         {review.comment}
                       </div>
-                      
+
                     </div>
                     {(localStorage.getItem("adminStatus") === "true" || localStorage.getItem("userID") === review.userId) && (
                       <div>

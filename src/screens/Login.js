@@ -29,8 +29,8 @@ function Login() {
       const data = response.data;
 
       if (!data.success) {
-        if (data.errors === "not approved") {
-          alert("You are not approved yet");
+        if (response.status === 401) {
+          alert("You are not approved as an admin yet");
         } else {
           alert("Enter valid email or password");
         }
@@ -51,8 +51,14 @@ function Login() {
         navigate("/");
       }
     } catch (error) {
-      console.error('Error logging in:', error);
-      alert('Error logging in. Please try again.');
+      if (error.response && error.response.status === 401) {
+        alert("You are not approved as an admin yet");
+      } else if (error.response && error.response.status === 400) {
+        alert(error.response.data.errors || "Enter valid email or password");
+      } else {
+        console.error('Error logging in:', error);
+        alert('Error logging in. Please try again.');
+      }
     }
   };
 
@@ -69,7 +75,7 @@ function Login() {
             <label htmlFor="exampleInputEmail1" className="form-label text-black">Email address</label>
             <input
               type="email"
-              className="form-control w-100"
+              className="form-control w-100 bg-white text-black"
               onChange={onChange}
               value={credentials.email}
               name="email"
@@ -82,7 +88,7 @@ function Login() {
             <label htmlFor="exampleInputPassword1" className="form-label text-black">Password</label>
             <input
               type="password"
-              className="form-control w-100"
+              className="form-control w-100 bg-white text-black"
               onChange={onChange}
               value={credentials.password}
               name="password"
