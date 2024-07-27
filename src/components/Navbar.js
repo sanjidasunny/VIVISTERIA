@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Badge } from "react-bootstrap";
 import Modal from "../Modal";
 import Cart from "../screens/Cart";
 import { useCart } from "./ContextReducer";
+
+const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || '[]');
 
 function Navbar() {
   const data = useCart();
@@ -12,35 +14,34 @@ function Navbar() {
   const isAdmin = localStorage.getItem("adminStatus") === 'true';
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [cartView, setCartView] = useState(false);
-  const [cartItemCount, setCartItemCount] = useState(0);
+  const [cart, setCart] = useState(cartFromLocalStorage);
 
   const handleToggle = () => {
     setNavbarOpen(!navbarOpen);
   };
+
   useEffect(() => {
-    const storedCartData = JSON.parse(localStorage.getItem("cartData")) || [];
-    const itemCount = storedCartData.reduce((count, item) => count + item.quantity, 0);
-    setCartItemCount(itemCount);
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setCart(JSON.parse(localStorage.getItem("cart") || '[]'));
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
 
-  // Update localStorage and cart item count whenever the cart data changes
-  useEffect(() => {
-    const itemCount = data.reduce((count, item) => count + item.quantity, 0);
-    setCartItemCount(itemCount);
-    localStorage.setItem("cartData", JSON.stringify(data));
-
-    // If the cart is empty, reset the count to zero
-    if (itemCount === 0) {
-      localStorage.removeItem("cartData");
-    }
-  }, [data]);
   const Logout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userID");
     localStorage.removeItem("userEmail");
     localStorage.removeItem("adminStatus");
     localStorage.removeItem("refreshToken");
-    localStorage.removeItem("cartData");
     navigate("/login");
   };
 
@@ -110,9 +111,9 @@ function Navbar() {
                     onClick={() => setCartView(true)}
                   >
                     <i className="fa-solid fa-cart-shopping"></i>
-                    {"     "}
+                    {" "}
                     <Badge pill bg="danger">
-                      {cartItemCount}
+                      {cart.length}
                     </Badge>
                   </div>
                 )}
