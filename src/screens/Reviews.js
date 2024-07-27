@@ -40,7 +40,7 @@ const Reviews = () => {
     }
   };
 
-  const handleSaveReview = async (event) => {
+   const handleSaveReview = async (event) => {
     event.preventDefault();
     try {
       if (editMode && editReviewId) {
@@ -51,12 +51,19 @@ const Reviews = () => {
           {
             headers: {
               "Content-Type": "application/json",
-            },
+            }
           }
         );
         if (response.status !== 200) {
           throw new Error("Failed to edit review");
         }
+        const updatedReview = response.data;
+        // Optimistically update the state
+        setReviews(prevReviews =>
+          prevReviews.map(review =>
+            review._id === editReviewId ? updatedReview : review
+          )
+        );
       } else {
         // Add new review
         const response = await axios.post("https://vivisteria-2lrx.vercel.app/api/review", {
@@ -66,20 +73,23 @@ const Reviews = () => {
         }, {
           headers: {
             "Content-Type": "application/json",
-          },
+          }
         });
         if (response.status !== 200) {
           throw new Error("Failed to add review");
         }
+        const newReviewData = response.data;
+        // Optimistically update the state
+        setReviews(prevReviews => [newReviewData, ...prevReviews]);
       }
       setNewReview("");
       setEditMode(false);
       setEditReviewId(null);
-      fetchReviews();
     } catch (error) {
       console.error("Error adding/editing review:", error);
     }
   };
+
 
   const handleDeleteReview = async (reviewId) => {
     try {
