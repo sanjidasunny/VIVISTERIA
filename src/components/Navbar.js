@@ -23,18 +23,24 @@ function Navbar() {
     setCartItemCount(itemCount);
   }, []);
 
+  // Update localStorage and cart item count whenever the cart data changes
   useEffect(() => {
     const itemCount = data.reduce((count, item) => count + item.quantity, 0);
     setCartItemCount(itemCount);
     localStorage.setItem("cartData", JSON.stringify(data));
-  }, [data]);
 
+    // If the cart is empty, reset the count to zero
+    if (itemCount === 0) {
+      localStorage.removeItem("cartData");
+    }
+  }, [data]);
   const Logout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userID");
     localStorage.removeItem("userEmail");
     localStorage.removeItem("adminStatus");
     localStorage.removeItem("refreshToken");
+    localStorage.removeItem("cartData");
     navigate("/login");
   };
 
