@@ -17,18 +17,21 @@ function Navbar() {
   const handleToggle = () => {
     setNavbarOpen(!navbarOpen);
   };
-
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem("cartData")) || [];
-    const itemCount = storedCart.reduce((count, item) => count + item.quantity, 0);
-    setCartItemCount(itemCount);
+    const storedCartCount = JSON.parse(localStorage.getItem("cartItemCount")) || 0;
+    setCartItemCount(storedCartCount);
   }, []);
 
   useEffect(() => {
     const itemCount = data.reduce((count, item) => count + item.quantity, 0);
-    setCartItemCount(itemCount);
+    setCartItemCount(prevCount => {
+      const newCount = prevCount + itemCount;
+      localStorage.setItem("cartItemCount", JSON.stringify(newCount));
+      return newCount;
+    });
+    localStorage.setItem("cartData", JSON.stringify(data));
   }, [data]);
-
+  
   const Logout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userID");
