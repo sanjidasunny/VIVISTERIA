@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Badge } from "react-bootstrap";
 import Modal from "../Modal";
 import Cart from "../screens/Cart";
-import { useCart } from "./ContextReducer";
+import { useCart, useDispatchCart } from "./ContextReducer";
 
 function Navbar() {
   const data = useCart();
