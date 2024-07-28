@@ -56,7 +56,11 @@ const Reviews = () => {
 
             const response = await axios({ url, method, data, headers: { "Content-Type": "application/json" } });
             if (response.status !== 200) throw new Error(`Failed to ${editMode ? 'edit' : 'add'} review`);
-            window.location.reload();
+                if (response.data) {
+                window.location.reload();
+                } else {
+                throw new Error(`Failed to ${editMode ? 'edit' : 'add'} review: No data returned`);
+                }
         } catch (error) {
             console.error(`Error ${editMode ? 'editing' : 'adding'} review:`, error);
         }
