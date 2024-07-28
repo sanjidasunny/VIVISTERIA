@@ -19,11 +19,7 @@ function Navbar() {
   };
  
   const Logout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("userID");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("adminStatus");
-    localStorage.removeItem("refreshToken");
+    localStorage.clear(); 
     
     navigate("/login");
   };
