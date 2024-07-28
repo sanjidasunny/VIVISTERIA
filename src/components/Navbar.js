@@ -20,12 +20,8 @@ function Navbar() {
  
   const Logout = () => {
    
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("userID");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("adminStatus");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("cart");
+    localStorage.clear(); // Clears all keys in local storage
+    dispatch({ type: "DROP" });
     
     navigate("/login");
   };
