@@ -9,6 +9,7 @@ function Navbar() {
   const data = useCart();
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatchCart();
   const isAdmin = localStorage.getItem("adminStatus") === 'true';
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [cartView, setCartView] = useState(false);
