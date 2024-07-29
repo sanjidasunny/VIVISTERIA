@@ -11,6 +11,7 @@ const Reviews = () => {
   const [newReview, setNewReview] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [editReviewId, setEditReviewId] = useState(null);
+  const reviewFormRef = useRef(null);
   
   const isAdmin = localStorage.getItem("adminStatus") === 'true';
 
@@ -28,7 +29,10 @@ const Reviews = () => {
       if (response.status !== 200) {
         throw new Error("Failed to fetch reviews");
       }
-      setReviews(response.data);
+      const userId = localStorage.getItem("userID");
+      const userReviews = response.data.filter(review => review.userId === userId);
+      const otherReviews = response.data.filter(review => review.userId !== userId);
+      setReviews([...userReviews, ...otherReviews]);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching reviews:", error);
@@ -103,6 +107,7 @@ const Reviews = () => {
     setEditMode(true);
     setNewReview(comment);
     setEditReviewId(reviewId);
+    reviewFormRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -112,7 +117,7 @@ const Reviews = () => {
         <div className="reviews-container">
           <h1 className="heading">Feedback</h1>
           {!isAdmin && localStorage.getItem("authToken") && (
-            <div className="add-review-container">
+            <div className="add-review-container" ref={reviewFormRef}>
               <h3>{editMode ? "Edit Your Review" : "Add Your Review"}</h3>
               <form onSubmit={handleSaveReview}>
                 <textarea
