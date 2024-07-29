@@ -107,7 +107,7 @@ const Reviews = () => {
     setEditMode(true);
     setNewReview(comment);
     setEditReviewId(reviewId);
-    const yOffset = 80;
+    const yOffset = 10;
     window.scrollTo({
       top: yOffset,
       behavior: "smooth"
