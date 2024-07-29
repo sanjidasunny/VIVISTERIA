@@ -107,7 +107,10 @@ const Reviews = () => {
     setEditMode(true);
     setNewReview(comment);
     setEditReviewId(reviewId);
-    reviewFormRef.current.scrollIntoView({ behavior: "smooth" });
+    window.scrollTo({
+      top: reviewFormRef.current.offsetTop,
+      behavior: "smooth"
+    });
   };
 
   return (
