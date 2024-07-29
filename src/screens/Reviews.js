@@ -121,7 +121,7 @@ const Reviews = () => {
         <div className="reviews-container">
           <h1 className="heading">Feedback</h1>
           {!isAdmin && localStorage.getItem("authToken") && (
-            <div className="add-review-container" ref={reviewFormRef}>
+            <div className="add-review-container bg-white" ref={reviewFormRef}>
               <h3>{editMode ? "Edit Your Review" : "Add Your Review"}</h3>
               <form onSubmit={handleSaveReview}>
                 <textarea
