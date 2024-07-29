@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from 'react';
+
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 import Signup from "./screens/Signup";
@@ -18,21 +18,9 @@ import DetailsPage from "./screens/DetailsPage.js";
 import AddItem from "./screens/AddItem.js";
 import Reviews from './screens/Reviews';
 import ProtectedRoute from './components/ProtectedRoute.js'
-import Loader from "./components/loader.js";
 function App() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-      
-      setTimeout(() => {
-          setLoading(false);
-      }, 3000);
-  }, []);
   return (
     <CartProvider>
-       {loading ? (
-                <Loader />
-            ) : (
       <Router>
         <div>
           <Routes>
@@ -50,7 +38,6 @@ function App() {
           </Routes>
         </div>
       </Router>
-       )}
     </CartProvider>
   );
 }
