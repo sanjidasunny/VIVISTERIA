@@ -3,11 +3,13 @@ import jwt_decode from "jwt-decode";
 import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import Footer from "../components/Footer";
-import ToggleSwitch from "../components/ToggleSwitch"
+import ToggleSwitch from "../components/ToggleSwitch";
+import Loader from "../components/loader"; 
+
 export default function AdminPanel() {
   const [allUsers, setAllUsers] = useState([]);
   const [search, setSearch] = useState("");
-
+  const [loading, setLoading] = useState(true); 
 
   const loadData = async () => {
     try {
@@ -25,6 +27,8 @@ export default function AdminPanel() {
       setAllUsers(flattenedUsers);
     } catch (e) {
       console.error(e);
+    } finally {
+      setLoading(false); // Set loading to false once data is fetched
     }
   };
 
@@ -73,13 +77,17 @@ export default function AdminPanel() {
   };
 
   useEffect(() => {
-
     loadData();
   }, []);
+
   const currentUserId = localStorage.getItem("userID");
   const filteredUsers = allUsers.filter(
     (user) => user.name.toLowerCase().includes(search.toLowerCase()) && user._id !== currentUserId
   );
+
+  if (loading) {
+    return <Loader />; // Display the Loader component when loading
+  }
 
   return (
     <div className="main-container bg-white">

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import Loader from '../components/loader';
+
 export default function AddItem() {
     const navigate = useNavigate();
-
+    const [loading, setLoading] = useState(true); // Add loading state
     const [name, setName] = useState('');
     const [categoryName, setCategoryName] = useState('');
     const [priceOptions, setPriceOptions] = useState([]);
@@ -31,8 +33,10 @@ export default function AddItem() {
                     a.CategoryName.localeCompare(b.CategoryName)
                 );
                 setFoodCat(sortedCategories);
+                setLoading(false); // Set loading to false once data is fetched
             } catch (error) {
                 console.error('Error fetching categories:', error);
+                setLoading(false); // Set loading to false in case of error
             }
         };
 
@@ -120,10 +124,14 @@ export default function AddItem() {
         }
     };
 
+    if (loading) {
+        return <Loader />;
+    }
+
     return (
         <div style={{ height: "100vh" }}>
             <Navbar />
-            <div className="container mt-5 bg-white" >
+            <div className="container mt-5 bg-white">
                 <h2>Add New Item</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">

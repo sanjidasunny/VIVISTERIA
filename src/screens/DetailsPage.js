@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -8,9 +8,16 @@ export default function DetailsPage() {
     const location = useLocation();
     const { state } = location;
     const { foodItem } = state || {}; // Get the foodItem from state
+    const [loading, setLoading] = useState(true); // State to track loading
 
-    if (!foodItem) {
-        return <Loader/>;
+    useEffect(() => {
+        if (foodItem) {
+            setLoading(false); // Set loading to false once foodItem is available
+        }
+    }, [foodItem]);
+
+    if (loading) {
+        return <Loader />;
     }
 
     return (
