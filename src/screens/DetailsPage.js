@@ -2,6 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Loader from "../components/loader";
 
 export default function DetailsPage() {
     const location = useLocation();
@@ -9,7 +10,7 @@ export default function DetailsPage() {
     const { foodItem } = state || {}; // Get the foodItem from state
 
     if (!foodItem) {
-        return <div>Loading...</div>;
+        return <Loader/>;
     }
 
     return (

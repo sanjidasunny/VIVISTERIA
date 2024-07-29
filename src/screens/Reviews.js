@@ -107,8 +107,9 @@ const Reviews = () => {
     setEditMode(true);
     setNewReview(comment);
     setEditReviewId(reviewId);
+    const yOffset = 200;
     window.scrollTo({
-      top: reviewFormRef.current.offsetTop,
+      top: yOffset,
       behavior: "smooth"
     });
   };

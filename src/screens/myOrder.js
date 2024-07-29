@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import axios from "axios";
+import Loader from "../components/loader"; // Import the Loader component
 
 export default function MyOrder() {
   const [orderData, setOrderData] = useState([]);
+  const [loading, setLoading] = useState(true); // State to track loading state
 
   useEffect(() => {
     const fetchMyOrder = async () => {
@@ -24,6 +26,8 @@ export default function MyOrder() {
         setOrderData(responseData); // Assuming responseData is an array of orders
       } catch (error) {
         console.error('Error fetching order data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -46,8 +50,6 @@ export default function MyOrder() {
         </div>
       </div>
     ));
-
-
   };
 
   return (
@@ -56,10 +58,14 @@ export default function MyOrder() {
       <div className="container min-vh-100">
         <h1 className="mt-4">Order History</h1>
         <div className="row">
-          {Array.isArray(orderData) && orderData.length > 0 ? (
-            renderOrderDetails()
+          {loading ? ( // Display the Loader component when loading
+            <Loader />
           ) : (
-            <p className="text-center">No orders found.</p>
+            Array.isArray(orderData) && orderData.length > 0 ? (
+              renderOrderDetails()
+            ) : (
+              <p className="text-center">No orders found.</p>
+            )
           )}
         </div>
       </div>

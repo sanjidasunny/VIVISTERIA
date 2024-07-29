@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from '../components/AxiosInstance';
 import Navbar from "../components/Navbar";
+import Loader from "../components/loader"; 
 
 function Profile() {
   const [profileData, setProfileData] = useState(null);
@@ -12,8 +13,8 @@ function Profile() {
     oldPassword: "",
     newPassword: "",
   });
-  const [loading, setLoading] = useState(false); // State to track loading state
-  const [error, setError] = useState(""); // State to track error message
+  const [loading, setLoading] = useState(false); 
+  const [error, setError] = useState(""); 
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -140,9 +141,8 @@ function Profile() {
                     </label>
                   </div>
                   <button type="submit" disabled={loading}>
-                    {loading ? "Loading..." : "Submit"}
+                    {loading ? <Loader /> : "Submit"} 
                   </button>
-
                   {error && <p className="error-message">{error}</p>}
                 </form>
               ) : (
@@ -169,7 +169,7 @@ function Profile() {
             )}
           </>
         ) : (
-          <p>Loading...</p>
+          <Loader /> 
         )}
       </div>
     </div>
