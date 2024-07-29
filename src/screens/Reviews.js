@@ -3,6 +3,7 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../Reviews.css";
+import Loader from "../components/loader";
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -130,7 +131,7 @@ const Reviews = () => {
             </div>
           )}
           {isLoading ? (
-            <div>Loading...</div>
+            <Loader/>
           ) : (
             <div>
               {reviews.length > 0 ? (

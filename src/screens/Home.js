@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import Card from "../components/Card";
 import Search from "../components/Search";
 import Sidebar from "../components/Sidebar";
+import Loader from "../components/loader";
 import axios from "axios";
 import { Link } from "react-router-dom";
 function Home() {
@@ -52,7 +53,7 @@ function Home() {
     loadData();
   }, []);
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader/>;
   }
 
   const handleDelete = (id) => {
