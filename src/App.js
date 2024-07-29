@@ -17,10 +17,22 @@ import DashBoard from "./screens/DashBoard.js";
 import DetailsPage from "./screens/DetailsPage.js";
 import AddItem from "./screens/AddItem.js";
 import Reviews from './screens/Reviews';
+import Loader from "./components/loader.js";
 import ProtectedRoute from './components/ProtectedRoute.js'
 function App() {
+  const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        
+        setTimeout(() => {
+            setLoading(false);
+        }, 3000);
+    }, []);
   return (
     <CartProvider>
+       {loading ? (
+                <Loader />
+            ) : (
       <Router>
         <div>
           <Routes>
@@ -38,6 +50,7 @@ function App() {
           </Routes>
         </div>
       </Router>
+      )}
     </CartProvider>
   );
 }
