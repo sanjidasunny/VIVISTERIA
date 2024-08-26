@@ -68,7 +68,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 **Contributors:**
 - [Asif A Khuda](https://github.com/AsifAvaas)
-- [Sanjida Amin](https://github.com/)
+- [Sanjida Amin](https://github.com/sanjidasunny)
 
 ## Contact
 
@@ -80,7 +80,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - **Name**: [Asif A Khuda](mailto:asif.cse.20220104005@aust.edu)
 - **GitHub**: [[https://github.com/AsifAvaas](https://github.com/AsifAvaas)](https://github.com/AsifAvaas)
 - **Contributor's Name**: [Sanjida Amin](mailto:sanjida.cse.20220104012@aust.edu)
-- **Contributor's GitHub**: [https://github.com/sanjidasunny](https://github.com/sanjidasunny)
+- **Contributor's GitHub**: [[https://github.com/sanjidasunny](https://github.com/sanjidasunny)](https://github.com/sanjidasunny)
 
 
 
