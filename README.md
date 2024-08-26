@@ -1,70 +1,85 @@
-# Getting Started with Create React App
+# Bhoj - Restaurant Food Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+**Bhoj** is a web application designed for a restaurant, allowing users to browse menus, order food, view their order history, and leave reviews. The application also includes an admin panel for managing food items and menus.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **User Authentication**: Secure login and registration system.
+- **Menu Browsing**: View and browse food menus.
+- **Ordering**: Select and order food items.
+- **Order History**: View previous orders.
+- **Reviews**: Leave reviews for food items.
+- **Admin Panel**: Manage food menus, add or delete items, and perform other administrative tasks.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Tech Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Frontend**: React.js, HTML, CSS, JavaScript
+- **Backend**: Node.js, Express.js 
+- **Database**: MongoDB 
+- **Authentication**: JWT (JSON Web Token)
+- **Styling**: CSS, Bootstrap
+- **Deployment**: Vercel(for frontend and backend)
 
-### `npm test`
+## Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Follow these steps to set up the project locally:
 
-### `npm run build`
+1. **Clone the repository:**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   ```bash
+   git clone https://github.com/sanjidasunny/VIVISTERIA.git
+   cd bhoj
+   ```
+2. **Install dependencies:**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   cd .\backend\
+   npm install bcrypt cors express express-validator  jsonwebtoken mongoose nodemon
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   cd .\frontend\
+   npm install react-router-dom axios recharts bootstrap react-bootstrap 
 
-### `npm run eject`
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. **Run the app:**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   
+   cd .\backend\
+   nodemon index.js
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   npm start
+   The application should now be running on [http://localhost:3000](http://localhost:3000).
+   ```
 
-## Learn More
+## Usage
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Users**: Create an account, log in, browse the menu, place orders, view order history, and leave reviews.
+- **Admins**: Access the admin panel to manage food items, edit menus, and perform other administrative tasks.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Contributing
 
-### Code Splitting
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**Contributors:**
+- [Asif A Khuda](https://github.com/AsifAvaas)
+- [Sanjida Amin](https://github.com/)
 
-### Analyzing the Bundle Size
+## Contact
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **Asif A Khuda**: [asif13.aak@gmail.com](mailto:asif13.aak@gmail.com)
+- **GitHub**: [[https://github.com/AsifAvaas](https://github.com/AsifAvaas)](https://github.com/AsifAvaas)
 
-### Making a Progressive Web App
+## Contact
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- **Name**: [Asif A Khuda](mailto:asif.cse.20220104005@aust.edu)
+- **GitHub**: [[https://github.com/AsifAvaas](https://github.com/AsifAvaas)](https://github.com/AsifAvaas)
+- **Contributor's Name**: [Sanjida Amin](mailto:sanjida.cse.20220104012@aust.edu)
+- **Contributor's GitHub**: [https://github.com/sanjidasunny](https://github.com/sanjidasunny)
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   
