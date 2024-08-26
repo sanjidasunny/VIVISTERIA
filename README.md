@@ -39,8 +39,9 @@ Follow these steps to set up the project locally:
    npm install bcrypt cors express express-validator  jsonwebtoken mongoose nodemon
 
    cd .\frontend\
-   ```
    npm install react-router-dom axios recharts bootstrap react-bootstrap 
+   ```
+   
 
 
 3. **Run the app:**
@@ -51,9 +52,10 @@ Follow these steps to set up the project locally:
    cd .\backend\
    nodemon index.js
 
+   #for Frontend
    npm start
-   The application should now be running on [http://localhost:3000](http://localhost:3000).
    ```
+    The application should now be running on [http://localhost:3000](http://localhost:3000).
 
 ## Usage
 
