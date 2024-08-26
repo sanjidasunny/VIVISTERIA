@@ -70,10 +70,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [Asif A Khuda](https://github.com/AsifAvaas)
 - [Sanjida Amin](https://github.com/sanjidasunny)
 
-## Contact
-
-- **Asif A Khuda**: [asif13.aak@gmail.com](mailto:asif13.aak@gmail.com)
-- **GitHub**: [[https://github.com/AsifAvaas](https://github.com/AsifAvaas)](https://github.com/AsifAvaas)
 
 ## Contact
 
