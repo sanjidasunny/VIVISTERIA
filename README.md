@@ -39,9 +39,9 @@ Follow these steps to set up the project locally:
    npm install bcrypt cors express express-validator  jsonwebtoken mongoose nodemon
 
    cd .\frontend\
+   ```
    npm install react-router-dom axios recharts bootstrap react-bootstrap 
 
-   ```
 
 3. **Run the app:**
 
