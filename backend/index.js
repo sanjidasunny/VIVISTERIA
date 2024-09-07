@@ -11,14 +11,27 @@ const paymentRoute = require('./Routes/PaymentRoute');
 const myOrderRoute = require('./Routes/myorder');
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = 5000;
 
 // Connect to MongoDB
 connectDB();
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://vivisteria.vercel.app'
+];
+
+
+
 
 // CORS middleware
 app.use(cors({
-  origin: 'https://vivisteria.vercel.app',
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['POST', 'GET', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'authToken'],
 }));
@@ -49,4 +62,7 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Internal Server Error');
 });
 
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
 module.exports = app;

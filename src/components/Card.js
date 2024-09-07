@@ -78,9 +78,12 @@ function Card(props) {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`https://vivisteria-2lrx.vercel.app/api/foodData/${props.foodItem._id}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(
+        // `http://localhost:5000/api/foodData/${props.foodItem._id}`,
+        `https://vivisteria-2lrx.vercel.app/api/foodData/${props.foodItem._id}`,
+        {
+          method: 'DELETE',
+        });
       if (response.ok) {
         alert("Food item deleted successfully");
         props.onDelete(props.foodItem._id); // Call the onDelete prop
