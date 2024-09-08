@@ -18,12 +18,15 @@ export default function AddItem() {
         // Fetch category names from backend
         const loadData = async () => {
             try {
-                const response = await fetch('https://vivisteria-2lrx.vercel.app/api/foodCategory', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
+                const response = await fetch(
+                    'http://localhost:5000/api/foodCategory',
+                    // 'https://vivisteria-2lrx.vercel.app/api/foodCategory',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
                 if (!response.ok) {
                     throw new Error('Failed to fetch categories');
                 }
@@ -103,13 +106,16 @@ export default function AddItem() {
         };
 
         try {
-            const response = await fetch('https://vivisteria-2lrx.vercel.app/api/addFoodItem', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newItem),
-            });
+            const response = await fetch(
+                'http://localhost:5000/api/addFoodItem',
+                // 'https://vivisteria-2lrx.vercel.app/api/addFoodItem',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newItem),
+                });
 
             const json = await response.json();
 

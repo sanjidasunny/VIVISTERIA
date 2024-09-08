@@ -17,12 +17,15 @@ function Home() {
 
   const loadData = async () => {
     try {
-      //const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/foodData');
-      const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/foodData', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+
+      const response = await axios.post(
+        'http://localhost:5000/api/foodData',
+        // 'https://vivisteria-2lrx.vercel.app/api/foodData', 
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
       const responseData = response.data;
       if (Array.isArray(responseData) && responseData.length >= 2) {
         setFoodItem(responseData[0] || []);
@@ -53,7 +56,7 @@ function Home() {
     loadData();
   }, []);
   if (loading) {
-    return <Loader/>;
+    return <Loader />;
   }
 
   const handleDelete = (id) => {

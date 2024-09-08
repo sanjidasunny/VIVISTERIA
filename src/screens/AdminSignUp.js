@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios"
 
 export default function AdminSignUp() {
+    const [msg, setMsg] = useState("")
+    const [err, setErr] = useState("")
     const [credentials, setCredentials] = useState({
         name: "",
         password: "",
@@ -13,100 +17,88 @@ export default function AdminSignUp() {
     });
 
     let navigate = useNavigate();
-    /*
-   const submit = async (e) => {
-     e.preventDefault();
-     if (credentials.name.length < 5) {
-       alert("Username must be at least 5 characters long");
-       return;
-     }
- 
-     if (credentials.password.length < 6) {
-       alert("Password must be at least 6 characters long");
-       return;
-     }
-     try {
-       const response = await fetch('https://vivisteria-2lrx.vercel.app/api/createuser', {
-         method: 'POST',
-         headers: {
-           'Content-Type': 'application/json',
-         },
-         body: JSON.stringify({
-           name: credentials.name,
-           email: credentials.email,
-           password: credentials.password,
-           location: credentials.location,
-           isAdmin: credentials.isAdmin,
-           isApproved: credentials.isApproved
-         }),
-       });
- 
-       const data = await response.json();
- 
-       if (!data.success) {
-         if (data.errors === 'same email') {
-        alert("email aleady exist")
-      } else {
-        alert("enter valid credentials");
-      }
-       } else {
-         navigate('/login');
-       }
-     } catch (error) {
-       console.error('Error creating user:', error);
-       //alert('Error creating user. Please try again.');
-     }
-   };
- */
     const submit = async (e) => {
-        e.preventDefault();
-        if (credentials.name.length < 5) {
-            alert("Username must be at least 5 characters long");
-            return;
-        }
+        e.preventDefault()
         if (credentials.password !== credentials.confirmPassword) {
-            alert("Password doesn't match");
-            return;
-        }
-        if (credentials.password.length < 6) {
-            alert("Password must be at least 6 characters long");
-            return;
-        }
-        const response = await fetch("https://vivisteria-2lrx.vercel.app/api/createuser", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                name: credentials.name,
-                password: credentials.password,
-                confirmPassword: credentials.confirmPassword,
-                email: credentials.email,
-                location: credentials.location,
-                isAdmin: credentials.isAdmin,
-                isApproved: credentials.isApproved
-            }),
-        });
-        const json = await response.json();
-        console.log(json);
+            setErr("password don't match")
+            setMsg("")
+            return
 
-        if (!json.success) {
-            if (json.errors === 'same email') {
-                alert("email aleady exist")
+        }
+        try {
+            const response = await axios.post(
+                'http://localhost:5000/api/createuser',
+                // 'https://vivisteria-2lrx.vercel.app/api/createuser',
+                {
+                    name: credentials.name,
+                    email: credentials.email,
+                    password: credentials.password,
+                    location: credentials.location,
+                    isAdmin: credentials.isAdmin,
+                    isApproved: credentials.isApproved
+                })
+
+
+
+            if (response.data.errorMessage) {
+                setErr(response.data.errorMessage[0].msg)
+                setMsg("")
+            } else if (response.data.error) {
+                setErr(response.data.error)
+                setMsg("")
             } else {
-                alert("enter valid credentials");
+                setMsg(response.data.message)
+                setErr("")
+                setCredentials({
+                    name: "",
+                    password: "",
+                    confirmPassword: "",
+                    email: "",
+                    location: "",
+                })
             }
-        } else {
-            navigate("/login");
+        } catch (error) {
+            console.error('Error creating user:', error)
+            //alert('Error creating user. Please try again.')
         }
     };
     const onChange = (e) => {
-        setCredentials({ ...credentials, [e.target.name]: e.target.value });
+        setCredentials({ ...credentials, [e.target.name]: e.target.value })
+    }
+    const googleData = async (e) => {
+        try {
+            const response = await axios.post(
+                `http://localhost:5000/api/google/login`,
+                // `https://vivisteria-2lrx.vercel.app/api/google/login`,
+                {
+                    name: e.name,
+                    email: e.email,
+                    profilePic: e.picture,
+                    isAdmin: true
+                }
+            );
+            const data = response.data;
+            if (response.data.success) {
+                localStorage.setItem("userEmail", e.email);
+                localStorage.setItem("userID", data.userID);
+                localStorage.setItem("authToken", data.authToken);
+                localStorage.setItem("refreshToken", data.refreshToken);
+                localStorage.setItem("adminStatus", data.adminStatus.toString());
+                localStorage.setItem("profilePic", data.profilePic);
+                navigate("/");
+            } else if (response.data.error) {
+                setErr(response.data.error);
+                setMsg("");
+                navigate("/login");
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
     return (
         <div className="adminsignup">
             <div className="inside container p-10">
-                <h1 className="text-black">Admin Sign up</h1>
+                <h1 className="text-black">Sign up</h1>
                 <form onSubmit={submit}>
                     <div className="mb-3">
                         <label htmlFor="userName" className="form-label text-black">
@@ -189,14 +181,43 @@ export default function AdminSignUp() {
                             id="exampleInputLocation1"
                         />
                     </div>
+                    {msg && (
 
+                        <div className="p-2 m-3 bg-success rounded-1 text-white">
+                            {msg}
+                        </div>
+
+                    )}
+                    {err && (
+
+                        <div className="p-2 m-3 bg-danger rounded-1 text-white">{err}</div>
+
+                    )}
                     <button type="submit" className="btn btn-success">
                         Submit
                     </button>
-                    <Link to="/login" className="m-3" style={{ color: "black" }}>
+                    <div className="mt-4">
+                        <GoogleLogin
+                            onSuccess={(credentialResponse) => {
+                                let userData = jwtDecode(credentialResponse.credential);
+
+                                googleData(userData);
+                            }}
+                            onError={() => {
+                                console.log("Login Failed");
+                            }}
+                        />
+                    </div>
+                    <br></br>
+                    <Link to="/login" className="m-3" style={{ color: "black", float: "left" }}>
                         Already have an account? Log in
                     </Link>
+                    <Link to="/adminSignup" className="m-3" style={{ color: "black", display: "flex", float: "left" }}>
+                        Signup as admin
+                    </Link>
                 </form>
+                <br />
+
             </div>
         </div>
     );

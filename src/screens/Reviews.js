@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -12,7 +12,7 @@ const Reviews = () => {
   const [editMode, setEditMode] = useState(false);
   const [editReviewId, setEditReviewId] = useState(null);
   const reviewFormRef = useRef(null);
-  
+
   const isAdmin = localStorage.getItem("adminStatus") === 'true';
 
   useEffect(() => {
@@ -21,7 +21,10 @@ const Reviews = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.post("https://vivisteria-2lrx.vercel.app/api/displayreviews", {}, {
+      const response = await axios.post(
+        "http://localhost:5000/api/displayreviews",
+        // "https://vivisteria-2lrx.vercel.app/api/displayreviews", 
+        {}, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -45,7 +48,8 @@ const Reviews = () => {
       if (editMode && editReviewId) {
         // Edit existing review
         const response = await axios.put(
-          `https://vivisteria-2lrx.vercel.app/api/review/${editReviewId}`,
+          `http://localhost:5000/api/review/${editReviewId}`,
+          // `https://vivisteria-2lrx.vercel.app/api/review/${editReviewId}`,
           { comment: newReview },
           {
             headers: {
@@ -59,11 +63,12 @@ const Reviews = () => {
       } else {
         // Add new review
         const response = await axios.post(
-          "https://vivisteria-2lrx.vercel.app/api/review",
-          { 
-            comment: newReview, 
-            userId: localStorage.getItem("userID"), 
-            email: localStorage.getItem("userEmail") 
+          "http://localhost:5000/api/review",
+          // "https://vivisteria-2lrx.vercel.app/api/review",
+          {
+            comment: newReview,
+            userId: localStorage.getItem("userID"),
+            email: localStorage.getItem("userEmail")
           },
           {
             headers: {
@@ -87,7 +92,8 @@ const Reviews = () => {
   const handleDeleteReview = async (reviewId) => {
     try {
       const response = await axios.delete(
-        `https://vivisteria-2lrx.vercel.app/api/review/${reviewId}`,
+        `http://localhost:5000/api/review/${reviewId}`,
+        // `https://vivisteria-2lrx.vercel.app/api/review/${reviewId}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -140,7 +146,7 @@ const Reviews = () => {
             </div>
           )}
           {isLoading ? (
-            <Loader/>
+            <Loader />
           ) : (
             <div>
               {reviews.length > 0 ? (
@@ -159,7 +165,7 @@ const Reviews = () => {
                         <span className="review-label">Comment:</span>{" "}
                         {review.comment}
                       </div>
-                      
+
                     </div>
                     {(localStorage.getItem("adminStatus") === "true" || localStorage.getItem("userID") === review.userId) && (
                       <div>

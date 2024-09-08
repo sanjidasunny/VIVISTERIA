@@ -79,8 +79,8 @@ function Card(props) {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        // `http://localhost:5000/api/foodData/${props.foodItem._id}`,
-        `https://vivisteria-2lrx.vercel.app/api/foodData/${props.foodItem._id}`,
+        `http://localhost:5000/api/foodData/${props.foodItem._id}`,
+        // `https://vivisteria-2lrx.vercel.app/api/foodData/${props.foodItem._id}`,
         {
           method: 'DELETE',
         });

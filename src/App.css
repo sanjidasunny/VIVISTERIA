@@ -511,4 +511,13 @@ input{
 .modal-content,.bkash{
   background-color: 9e1638;
 } 
-
+.profile-image-container{
+  display: flex;
+  justify-content: center;
+}
+.profile-image{
+  height: 200px;
+  width: auto;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}

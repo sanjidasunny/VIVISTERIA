@@ -9,7 +9,7 @@ const UserSchema = new Schema({
     },
     location: {
         type: String,
-        required: true
+
     },
     email: {
         type: String,
@@ -17,7 +17,7 @@ const UserSchema = new Schema({
     },
     password: {
         type: String,
-        required: true
+
     },
     date: {
         type: Date,
@@ -30,6 +30,15 @@ const UserSchema = new Schema({
     isApproved: {
         type: Boolean,
         required: true
+    },
+    profilePic: {
+        type: String,
+        default: '',
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
     }
+
 });
 module.exports = mongoose.model('User', UserSchema)

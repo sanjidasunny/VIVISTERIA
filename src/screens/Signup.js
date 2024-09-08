@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-
+import React, { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import axios from "axios"
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 function Signup() {
+  const [msg, setMsg] = useState("")
+  const [err, setErr] = useState("")
   const [credentials, setCredentials] = useState({
     name: "",
     password: "",
@@ -11,54 +14,92 @@ function Signup() {
     location: "",
     isAdmin: false,
     isApproved: false
-  });
+  })
 
-  let navigate = useNavigate();
+  let navigate = useNavigate()
   const submit = async (e) => {
-    e.preventDefault();
-    if (credentials.name.length < 5) {
-      alert("Username must be at least 5 characters long");
-      return;
-    }
+    e.preventDefault()
+
     if (credentials.password !== credentials.confirmPassword) {
-      alert("Password doesn't match");
-      return;
+      setErr("password don't match")
+      setMsg("")
+      return
+
     }
-    if (credentials.password.length < 6) {
-      alert("Password must be at least 6 characters long");
-      return;
-    }
+
 
     try {
-      const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/createuser', {
-        name: credentials.name,
-        email: credentials.email,
-        password: credentials.password,
-        confirmPassword: credentials.confirmPassword,
-        location: credentials.location,
-        isAdmin: credentials.isAdmin,
-        isApproved: credentials.isApproved
-      });
+      const response = await axios.post(
+        'http://localhost:5000/api/createuser',
+        // 'https://vivisteria-2lrx.vercel.app/api/createuser',
+        {
+          name: credentials.name,
+          email: credentials.email,
+          password: credentials.password,
+          location: credentials.location,
+          isAdmin: credentials.isAdmin,
+          isApproved: credentials.isApproved
+        })
 
-      const data = response.data;
 
-      if (!data.success) {
-        if (data.errors === 'same email') {
-          alert("email aleady exist")
-        } else {
-          alert("enter valid credentials");
-        }
+
+      if (response.data.errorMessage) {
+        setErr(response.data.errorMessage[0].msg)
+        setMsg("")
+      } else if (response.data.error) {
+        setErr(response.data.error)
+        setMsg("")
       } else {
-        navigate('/login');
+        setMsg(response.data.message)
+        setErr("")
+        setCredentials({
+          name: "",
+          password: "",
+          confirmPassword: "",
+          email: "",
+          location: "",
+        })
       }
     } catch (error) {
-      console.error('Error creating user:', error);
-      //alert('Error creating user. Please try again.');
+      console.error('Error creating user:', error)
+      //alert('Error creating user. Please try again.')
+    }
+  }
+  const onChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value })
+  }
+
+  const googleData = async (e) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/google/login`,
+        // `https://vivisteria-2lrx.vercel.app/api/google/login`,
+        {
+          name: e.name,
+          email: e.email,
+          profilePic: e.picture,
+          isAdmin: false
+        }
+      );
+      const data = response.data;
+      if (response.data.success) {
+        localStorage.setItem("userEmail", e.email);
+        localStorage.setItem("userID", data.userID);
+        localStorage.setItem("authToken", data.authToken);
+        localStorage.setItem("refreshToken", data.refreshToken);
+        localStorage.setItem("adminStatus", data.adminStatus.toString());
+        localStorage.setItem("profilePic", data.profilePic);
+        navigate("/");
+      } else if (response.data.error) {
+        setErr(response.data.error);
+        setMsg("");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
-  const onChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
-  };
+
 
   return (
     <div className="signupPage">
@@ -146,10 +187,33 @@ function Signup() {
               id="exampleInputLocation1"
             />
           </div>
+          {msg && (
 
+            <div className="p-2 m-3 bg-success rounded-1 text-white">
+              {msg}
+            </div>
+
+          )}
+          {err && (
+
+            <div className="p-2 m-3 bg-danger rounded-1 text-white">{err}</div>
+
+          )}
           <button type="submit" className="btn btn-success">
             Submit
           </button>
+          <div className="mt-4">
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                let userData = jwtDecode(credentialResponse.credential);
+
+                googleData(userData);
+              }}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+            />
+          </div>
           <br></br>
           <Link to="/login" className="m-3" style={{ color: "black", float: "left" }}>
             Already have an account? Log in
@@ -158,9 +222,11 @@ function Signup() {
             Signup as admin
           </Link>
         </form>
+        <br />
+
       </div>
     </div>
-  );
+  )
 }
 
-export default Signup;
+export default Signup

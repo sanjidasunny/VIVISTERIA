@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: 'https://vivisteria-2lrx.vercel.app/api',
+    baseURL:
+        'http://localhost:5000/api',
+    // 'https://vivisteria-2lrx.vercel.app/api',
 });
 
 axiosInstance.interceptors.request.use(
@@ -12,7 +14,9 @@ axiosInstance.interceptors.request.use(
         // Check if token is expired
         if (token && isTokenExpired(token)) {
             try {
-                const response = await axios.post('https://vivisteria-2lrx.vercel.app/api/refresh-token', { refreshToken });
+                const response = await axios.post(
+                    'http://localhost:5000/api/refresh-token',
+                    { refreshToken });
                 token = response.data.token;
                 localStorage.setItem('authToken', token);
             } catch (error) {

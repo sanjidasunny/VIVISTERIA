@@ -18,6 +18,7 @@ import DetailsPage from "./screens/DetailsPage.js";
 import AddItem from "./screens/AddItem.js";
 import Reviews from './screens/Reviews';
 import ProtectedRoute from './components/ProtectedRoute.js'
+import ForgotPassword from "./screens/ForgotPassword.js";
 function App() {
   return (
     <CartProvider>
@@ -28,6 +29,7 @@ function App() {
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/signup" element={<Signup />} />
             <Route exact path="/adminSignup" element={<AdminSignUp />} />
+            <Route exact path='/forgotPassword' element={<ForgotPassword />} />
             <Route exact path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route exact path="/myOrder" element={<ProtectedRoute><MyOrder /></ProtectedRoute>} />
             <Route exact path="/adminPanel" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
@@ -41,5 +43,12 @@ function App() {
     </CartProvider>
   );
 }
+
+//  add pic to profile
+//  access token in protected routes
+//  forgot password
+//  footer
+
+
 
 export default App;

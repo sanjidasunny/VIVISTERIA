@@ -4,21 +4,24 @@ import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import Footer from "../components/Footer";
 import ToggleSwitch from "../components/ToggleSwitch";
-import Loader from "../components/loader"; 
+import Loader from "../components/loader";
 
 export default function AdminPanel() {
   const [allUsers, setAllUsers] = useState([]);
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   const loadData = async () => {
     try {
-      let response = await fetch("https://vivisteria-2lrx.vercel.app/api/displayuser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      let response = await fetch(
+        "http://localhost:5000/api/displayuser",
+        // "https://vivisteria-2lrx.vercel.app/api/displayuser", 
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
@@ -36,7 +39,8 @@ export default function AdminPanel() {
     try {
       console.log(userId);
       let response = await fetch(
-        `https://vivisteria-2lrx.vercel.app/api/deleteuser/${userId}`,
+        `http://localhost:5000/api/deleteuser/${userId}`,
+        // `https://vivisteria-2lrx.vercel.app/api/deleteuser/${userId}`,           
         {
           method: "DELETE",
           headers: {
@@ -57,7 +61,8 @@ export default function AdminPanel() {
   const toggleApproval = async (userId, isApproved) => {
     try {
       let response = await fetch(
-        `https://vivisteria-2lrx.vercel.app/api/toggleapproval/${userId}`,
+        `http://localhost:5000/api/toggleapproval/${userId}`,
+        // `https://vivisteria-2lrx.vercel.app/api/toggleapproval/${userId}`,
         {
           method: "PUT",
           headers: {

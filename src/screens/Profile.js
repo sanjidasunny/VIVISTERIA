@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axiosInstance from '../components/AxiosInstance';
 import Navbar from "../components/Navbar";
-import Loader from "../components/loader"; 
+import Loader from "../components/loader";
 
 function Profile() {
   const [profileData, setProfileData] = useState(null);
@@ -13,9 +13,9 @@ function Profile() {
     oldPassword: "",
     newPassword: "",
   });
-  const [loading, setLoading] = useState(false); 
-  const [error, setError] = useState(""); 
-
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const fileInputRef = useRef(null);
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -48,18 +48,29 @@ function Profile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if ((formData.oldPassword || formData.newPassword) && formData.newPassword.length < 6) {
-      alert("New Password length must be at least 6 characters");
-      return;
-    }
+
     setLoading(true);
+    const formDataObj = new FormData();
+    formDataObj.append("id", localStorage.getItem("userID"));
+    formDataObj.append("name", formData.name);
+    formDataObj.append("email", formData.email);  // Though the email is readonly
+    formDataObj.append("location", formData.location);
+    formDataObj.append("oldPassword", formData.oldPassword);
+    formDataObj.append("newPassword", formData.newPassword);
+
+    if (fileInputRef.current.files[0]) {
+      formDataObj.append("image", fileInputRef.current.files[0]);  // Append image file
+    }
     try {
-      const response = await axiosInstance.post("/profile/update", {
-        id: localStorage.getItem("userID"),
-        ...formData,
+      const response = await axiosInstance.post("/profile/update", formDataObj, {
+        headers: {
+          "Content-Type": "multipart/form-data",  // Important for file uploads
+        },
       });
       if (response.data.success) {
         setProfileData(response.data.profileData);
+        console.log(response.data.profileData.profilePic)
+        localStorage.setItem('profilePic', response.data.profileData.profilePic)
         setEditMode(false);
         setError("");
       } else {
@@ -78,13 +89,28 @@ function Profile() {
       <Navbar />
       <div className="profile" style={{ marginTop: "120px" }}>
         {profileData ? (
-          <>
+          <><div className="profile-image-container">
+
+            {profileData.profilePic ? <img className="profile-image" src={profileData.profilePic} alt="Profile image" /> :
+              <img className="profile-image" src="/profile.jpg" alt="Profile image" />
+            }
+          </div>
             <div className="profile-header">
               <h1>Profile Information</h1>
             </div>
             <div className="profile-info">
               {editMode ? (
                 <form onSubmit={handleSubmit}>
+                  <div>
+                    <label>
+                      Profile Picture:
+                      <input
+                        type="file"
+                        ref={fileInputRef}  // Use ref to access the file
+                        accept="image/*"
+                      />
+                    </label>
+                  </div>
                   <div>
                     <label>
                       Name:
@@ -104,6 +130,7 @@ function Profile() {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
+                        readOnly
                       />
                     </label>
                   </div>
@@ -141,7 +168,7 @@ function Profile() {
                     </label>
                   </div>
                   <button type="submit" disabled={loading}>
-                    {loading ? <Loader /> : "Submit"} 
+                    {loading ? <Loader /> : "Submit"}
                   </button>
                   {error && <p className="error-message">{error}</p>}
                 </form>
@@ -169,7 +196,7 @@ function Profile() {
             )}
           </>
         ) : (
-          <Loader /> 
+          <Loader />
         )}
       </div>
     </div>
