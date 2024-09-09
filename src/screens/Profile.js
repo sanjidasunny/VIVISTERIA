@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import axiosInstance from '../components/AxiosInstance';
 import Navbar from "../components/Navbar";
 import Loader from "../components/loader";
+import axios from "axios";
 
 function Profile() {
   const [profileData, setProfileData] = useState(null);
@@ -19,7 +20,7 @@ function Profile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axiosInstance.post("/profile", {
+        const response = await axios.post("https://vivisteria-2lrx.vercel.app/api/profile", {
           id: localStorage.getItem("userID"),
         });
         setProfileData(response.data.profileData);

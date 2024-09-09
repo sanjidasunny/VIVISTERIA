@@ -7,7 +7,7 @@ const upload = require('../Middleware/multer')
 const { body, validationResult } = require('express-validator');
 const cloudinary = require('../utils/cloudinary')
 
-router.post('/profile', authenticateToken, async (req, res) => {
+router.post('/profile', async (req, res) => {
     try {
         const data = await User.findById(req.body.id);
         if (!data) {
