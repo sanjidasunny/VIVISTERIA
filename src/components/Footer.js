@@ -28,7 +28,6 @@ function Footer() {
           </Link>
         </li>
       </ul>
-
     </footer>
 
   )

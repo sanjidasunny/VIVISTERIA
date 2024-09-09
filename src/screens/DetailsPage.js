@@ -33,6 +33,23 @@ export default function DetailsPage() {
                 </div>
                 <h1 style={{ marginTop: "10px" }}>{foodItem.name}</h1>
                 <p>{foodItem.description}</p>
+                <div>
+                    <h2>Price:</h2>
+                    <div className="container">
+                        {foodItem.options && foodItem.options.map((data, index) => (
+                            <div key={index} className="row align-items-center my-3 p-2 border rounded shadow-sm">
+                                <div className="col-6">
+                                    <h5 className="mb-0">Portion: {data.portion}</h5>
+                                </div>
+                                <div className="col-6 text-end">
+                                    <span className="fw-bold text-primary">Price: ${data.price}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+
+                </div>
             </div>
             <Footer />
         </div>

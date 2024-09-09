@@ -133,7 +133,7 @@ const Reviews = () => {
                 <textarea
                   value={newReview}
                   onChange={(e) => setNewReview(e.target.value)}
-                  className="review-input"
+                  className="review-input bg-white"
                   placeholder="Write your review..."
                   required
                 />
