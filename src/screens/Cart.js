@@ -51,11 +51,11 @@ function Cart({ showPayment }) {
   const renderTableRows = () => {
     return data.map((food, index) => (
       <tr key={index}>
-        <th className="text-white" scope="row">{index + 1}</th>
-        <td className="text-white">{food.name}</td>
-        <td className="text-white">{food.quantity}</td>
-        <td className="text-white">{food.size}</td>
-        <td className="text-white">{food.price}</td>
+        <th className="text-black" scope="row">{index + 1}</th>
+        <td className="text-black">{food.name}</td>
+        <td className="text-black">{food.quantity}</td>
+        <td className="text-black">{food.size}</td>
+        <td className="text-black">{food.price}</td>
 
         <td>
           <button
@@ -73,13 +73,13 @@ function Cart({ showPayment }) {
   };
 
   return (
-    <div className="container m-auto mt-5">
+    <div style={{ backgroundColor: "rgb(34, 34, 34)" }} className="container m-auto mt-5">
       {data.length === 0 ? (
         <h2 className="text-center text-white">The cart is empty</h2>
       ) : (
-        <table className="table table-hover text-white">
+        <table className="table table-hover text-black">
           <thead className="fs-4">
-            <tr>
+            <tr  >
               <th className="text-success" scope="col">#</th>
               <th className="text-success" scope="col">Name</th>
               <th className="text-success" scope="col">Quantity</th>
@@ -125,14 +125,14 @@ function Cart({ showPayment }) {
           </div>
           <div className="mb-3">
             {selectedPaymentMethod && (
-              <div className="border p-3 text-white">
-                <p className=" text-white">Selected Payment Method</p>
-                <div className="border p-2 text-white">{selectedPaymentMethod}</div>
+              <div className="border p-3 text-black">
+                <p className=" text-black">Selected Payment Method</p>
+                <div className="border p-2 text-black">{selectedPaymentMethod}</div>
               </div>
             )}
           </div>
           <p className="mb-3 text-white">Total Amount: {totalPrice} /-</p>
-          <button className="btn btn-success text-white" onClick={handlePayment}>
+          <button className="btn btn-success text-black" onClick={handlePayment}>
             Pay Now
           </button>
         </div>
