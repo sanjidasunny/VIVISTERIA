@@ -27,8 +27,8 @@ export default function AdminSignUp() {
         }
         try {
             const response = await axios.post(
-                'http://localhost:5000/api/createuser',
-                // 'https://vivisteria-2lrx.vercel.app/api/createuser',
+                // 'http://localhost:5000/api/createuser',
+                'https://vivisteria-2lrx.vercel.app/api/createuser',
                 {
                     name: credentials.name,
                     email: credentials.email,
@@ -68,8 +68,8 @@ export default function AdminSignUp() {
     const googleData = async (e) => {
         try {
             const response = await axios.post(
-                `http://localhost:5000/api/google/login`,
-                // `https://vivisteria-2lrx.vercel.app/api/google/login`,
+                // `http://localhost:5000/api/google/login`,
+                `https://vivisteria-2lrx.vercel.app/api/google/login`,
                 {
                     name: e.name,
                     email: e.email,

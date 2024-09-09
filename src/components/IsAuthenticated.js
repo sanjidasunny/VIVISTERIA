@@ -26,8 +26,8 @@ const isAuthenticated = async () => {
         if (!token || !decodedToken || decodedToken.exp < currentTime) {
             try {
                 const response = await axios.post(
-                    `http://localhost:5000/api/refresh-token`,
-                    // `https://vivisteria-2lrx.vercel.app/api/refresh-token`,
+                    // `http://localhost:5000/api/refresh-token`,
+                    `https://vivisteria-2lrx.vercel.app/api/refresh-token`,
                     { refreshToken }
                 );
 

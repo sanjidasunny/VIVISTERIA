@@ -19,8 +19,8 @@ export default function AddItem() {
         const loadData = async () => {
             try {
                 const response = await fetch(
-                    'http://localhost:5000/api/foodCategory',
-                    // 'https://vivisteria-2lrx.vercel.app/api/foodCategory',
+                    // 'http://localhost:5000/api/foodCategory',
+                    'https://vivisteria-2lrx.vercel.app/api/foodCategory',
                     {
                         method: 'POST',
                         headers: {
@@ -107,8 +107,8 @@ export default function AddItem() {
 
         try {
             const response = await fetch(
-                'http://localhost:5000/api/addFoodItem',
-                // 'https://vivisteria-2lrx.vercel.app/api/addFoodItem',
+                // 'http://localhost:5000/api/addFoodItem',
+                'https://vivisteria-2lrx.vercel.app/api/addFoodItem',
                 {
                     method: 'POST',
                     headers: {

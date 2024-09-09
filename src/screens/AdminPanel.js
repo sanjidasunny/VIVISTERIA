@@ -14,8 +14,8 @@ export default function AdminPanel() {
   const loadData = async () => {
     try {
       let response = await fetch(
-        "http://localhost:5000/api/displayuser",
-        // "https://vivisteria-2lrx.vercel.app/api/displayuser", 
+        // "http://localhost:5000/api/displayuser",
+        "https://vivisteria-2lrx.vercel.app/api/displayuser",
         {
           method: "POST",
           headers: {
@@ -39,8 +39,8 @@ export default function AdminPanel() {
     try {
       console.log(userId);
       let response = await fetch(
-        `http://localhost:5000/api/deleteuser/${userId}`,
-        // `https://vivisteria-2lrx.vercel.app/api/deleteuser/${userId}`,           
+        // `http://localhost:5000/api/deleteuser/${userId}`,
+        `https://vivisteria-2lrx.vercel.app/api/deleteuser/${userId}`,
         {
           method: "DELETE",
           headers: {
@@ -61,8 +61,8 @@ export default function AdminPanel() {
   const toggleApproval = async (userId, isApproved) => {
     try {
       let response = await fetch(
-        `http://localhost:5000/api/toggleapproval/${userId}`,
-        // `https://vivisteria-2lrx.vercel.app/api/toggleapproval/${userId}`,
+        // `http://localhost:5000/api/toggleapproval/${userId}`,
+        `https://vivisteria-2lrx.vercel.app/api/toggleapproval/${userId}`,
         {
           method: "PUT",
           headers: {

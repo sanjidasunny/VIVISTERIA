@@ -1,12 +1,16 @@
 .topbar{
     height: 90px;
     width: 100%;
-    background-color: rgb(40, 76, 121);
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-
+.admin-navbar {
+  background-color: #8B0000; 
+}
+.user-navbar{
+  background-color: rgb(40, 76, 121);
+}
 .icon{
     height: 80px;
     width: auto;
@@ -14,7 +18,7 @@
     margin-right: 20px;
 }
 
-.links{
+.links,.logins{
     text-decoration: none;
     color: white;
     margin-right:20px;
@@ -22,7 +26,7 @@
 
 }
 
-.links:hover{
+.links:hover,.logins:hover{
     color: rgb(176, 176, 176);
 }
 .profile-icon{

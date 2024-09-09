@@ -22,8 +22,8 @@ const Reviews = () => {
   const fetchReviews = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/displayreviews",
-        // "https://vivisteria-2lrx.vercel.app/api/displayreviews", 
+        // "http://localhost:5000/api/displayreviews",
+        "https://vivisteria-2lrx.vercel.app/api/displayreviews",
         {}, {
         headers: {
           "Content-Type": "application/json",
@@ -48,8 +48,8 @@ const Reviews = () => {
       if (editMode && editReviewId) {
         // Edit existing review
         const response = await axios.put(
-          `http://localhost:5000/api/review/${editReviewId}`,
-          // `https://vivisteria-2lrx.vercel.app/api/review/${editReviewId}`,
+          // `http://localhost:5000/api/review/${editReviewId}`,
+          `https://vivisteria-2lrx.vercel.app/api/review/${editReviewId}`,
           { comment: newReview },
           {
             headers: {
@@ -63,8 +63,8 @@ const Reviews = () => {
       } else {
         // Add new review
         const response = await axios.post(
-          "http://localhost:5000/api/review",
-          // "https://vivisteria-2lrx.vercel.app/api/review",
+          // "http://localhost:5000/api/review",
+          "https://vivisteria-2lrx.vercel.app/api/review",
           {
             comment: newReview,
             userId: localStorage.getItem("userID"),
@@ -92,8 +92,8 @@ const Reviews = () => {
   const handleDeleteReview = async (reviewId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/review/${reviewId}`,
-        // `https://vivisteria-2lrx.vercel.app/api/review/${reviewId}`,
+        // `http://localhost:5000/api/review/${reviewId}`,
+        `https://vivisteria-2lrx.vercel.app/api/review/${reviewId}`,
         {
           headers: {
             "Content-Type": "application/json",

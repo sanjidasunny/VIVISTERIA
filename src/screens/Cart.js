@@ -27,8 +27,8 @@ function Cart({ showPayment }) {
     }
 
     axios.post(
-      "http://localhost:5000/api/payment",
-      // "https://vivisteria-2lrx.vercel.app/api/payment", 
+      // "http://localhost:5000/api/payment",
+      "https://vivisteria-2lrx.vercel.app/api/payment",
       {
 
         email: localStorage.getItem("userEmail"),

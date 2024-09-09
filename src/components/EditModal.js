@@ -28,8 +28,8 @@ const EditModal = ({ isOpen, onRequestClose, foodItem, onSave }) => {
         const loadData = async () => {
             try {
                 const response = await fetch(
-                    'http://localhost:5000/api/foodCategory',
-                    // 'https://vivisteria-2lrx.vercel.app/api/foodCategory', 
+                    //'http://localhost:5000/api/foodCategory',
+                    'https://vivisteria-2lrx.vercel.app/api/foodCategory',
                     {
                         method: 'POST',
                         headers: {

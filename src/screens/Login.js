@@ -16,8 +16,8 @@ function Login() {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/loginuser',
-        // 'https://vivisteria-2lrx.vercel.app/api/loginuser',
+        // 'http://localhost:5000/api/loginuser',
+        'https://vivisteria-2lrx.vercel.app/api/loginuser',
         {
           email: credentials.email,
           password: credentials.password,
@@ -46,28 +46,7 @@ function Login() {
         setMsg(response.data.message);
         setErr("");
       }
-      // if (!data.success) {
-      //   if (response.status === 401) {
-      //     alert("You are not approved as an admin yet");
-      //   } else {
-      //     alert("Enter valid email or password");
-      //   }
-      // } else {
-      //   localStorage.setItem("userEmail", credentials.email);
-      //   localStorage.setItem("userID", data.userID);
-      //   localStorage.setItem("authToken", data.authToken);
-      //   localStorage.setItem("refreshToken", data.refreshToken);
-      //   localStorage.setItem("adminStatus", data.adminStatus.toString());
 
-      //   console.log(localStorage.getItem("userID"));
-      //   if (localStorage.getItem("adminStatus") === "true") {
-      //     console.log("user is an admin");
-      //   } else {
-      //     console.log("user is not an admin");
-      //   }
-
-      //   navigate("/");
-      // }
     } catch (error) {
       if (error.response && error.response.status === 401) {
         alert("You are not approved as an admin yet");
@@ -83,8 +62,8 @@ function Login() {
   const resend = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/user/resend`,
-        // `https://vivisteria-2lrx.vercel.app/api/user/resend`,
+        // `http://localhost:5000/api/user/resend`,
+        `https://vivisteria-2lrx.vercel.app/api/user/resend`,
         {
           email: credentials.email,
           password: credentials.password,
@@ -101,8 +80,8 @@ function Login() {
   const googleData = async (e) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/google/login`,
-        // `https://vivisteria-2lrx.vercel.app/api/google/login`,
+        // `http://localhost:5000/api/google/login`,
+        `https://vivisteria-2lrx.vercel.app/api/google/login`,
         {
           name: e.name,
           email: e.email,

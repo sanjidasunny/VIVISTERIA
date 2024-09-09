@@ -30,8 +30,8 @@ function Signup() {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/createuser',
-        // 'https://vivisteria-2lrx.vercel.app/api/createuser',
+        // 'http://localhost:5000/api/createuser',
+        'https://vivisteria-2lrx.vercel.app/api/createuser',
         {
           name: credentials.name,
           email: credentials.email,
@@ -49,7 +49,7 @@ function Signup() {
       } else if (response.data.error) {
         setErr(response.data.error)
         setMsg("")
-      } else {
+      } else if (response.data.success) {
         setMsg(response.data.message)
         setErr("")
         setCredentials({
@@ -59,6 +59,9 @@ function Signup() {
           email: "",
           location: "",
         })
+      } else {
+        setErr("An unexpected error occured")
+        setMsg("")
       }
     } catch (error) {
       console.error('Error creating user:', error)
@@ -72,8 +75,8 @@ function Signup() {
   const googleData = async (e) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/google/login`,
-        // `https://vivisteria-2lrx.vercel.app/api/google/login`,
+        // `http://localhost:5000/api/google/login`,
+        `https://vivisteria-2lrx.vercel.app/api/google/login`,
         {
           name: e.name,
           email: e.email,
