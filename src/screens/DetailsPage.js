@@ -42,7 +42,7 @@ export default function DetailsPage() {
                                     <h5 className="mb-0">Portion: {data.portion}</h5>
                                 </div>
                                 <div className="col-6 text-end">
-                                    <span className="fw-bold text-primary">Price: ${data.price}</span>
+                                    <span className="fw-bold text-primary">Price: {data.price}/-</span>
                                 </div>
                             </div>
                         ))}
