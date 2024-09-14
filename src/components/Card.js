@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatchCart, useCart } from "./ContextReducer";
 import { Link, useNavigate } from "react-router-dom";
 import EditModal from "./EditModal";
-
+import isAuthenticated from './IsAuthenticated'
 function Card(props) {
   const priceRef = useRef();
   const dispatch = useDispatchCart();
@@ -166,11 +166,18 @@ function Card(props) {
               />
             </div>
           ) : (
-            isLoggedIn ? (
-              <button className="btn ms-2 text-white" style={{ backgroundColor: "rgb(40, 76, 121)" }} onClick={addToCart}>
-                Add to Cart
-              </button>
-            ) : <button className="btn ms-2 text-white" style={{ backgroundColor: "rgb(40, 76, 121)" }} onClick={() => navigate('/login')}>
+            <button
+              className="btn ms-2 text-white"
+              style={{ backgroundColor: "rgb(40, 76, 121)" }}
+              onClick={async () => {
+                const isAuthenticatedUser = await isAuthenticated();
+                if (isAuthenticatedUser) {
+                  addToCart();
+                } else {
+                  navigate('/login');
+                }
+              }}
+            >
               Add to Cart
             </button>
           )
