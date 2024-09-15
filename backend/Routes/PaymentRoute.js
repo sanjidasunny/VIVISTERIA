@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const Payment = require('../models/payment');
-
+const FoodCategory = require('../models/FoodCategory')
 router.post('/payment', async (req, res) => {
   const { userId, email, orderedItems, totalAmount, paymentMethod } = req.body;
 
+  console.log("Hello")
   try {
     const newPayment = new Payment({
       userId,
@@ -20,7 +21,6 @@ router.post('/payment', async (req, res) => {
     });
 
     await newPayment.save();
-
     for (const item of orderedItems) {
       const category = await FoodCategory.findOne({ CategoryName: item.category });
 
@@ -36,7 +36,7 @@ router.post('/payment', async (req, res) => {
     res.status(201).json({ message: 'Payment details saved successfully!' });
   } catch (err) {
     console.error('Error saving payment:', err);
-    res.status(500).json({ error: 'Failed to save payment details' });
+    res.status(500).json({ error: err });
   }
 });
 
