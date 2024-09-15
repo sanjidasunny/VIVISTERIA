@@ -7,8 +7,9 @@ const PaymentSchema = new mongoose.Schema({
     name: String,
     size: String, // Portion
     price: Number,
-    quantity: Number ,// Quantity of each item
-    
+    quantity: Number,
+    category: String,
+
   }],
   orderDate: { type: Date, default: Date.now }, // Date of order
   totalAmount: Number,
