@@ -26,13 +26,14 @@ function Cart({ showPayment }) {
       return;
     }
 
+
     axios.post(
       // "http://localhost:5000/api/payment",
       "https://vivisteria-2lrx.vercel.app/api/payment",
       {
 
         email: localStorage.getItem("userEmail"),
-        orderedItems: data.map((item) => ({ name: item.name, price: item.price, quantity: item.quantity })),
+        orderedItems: data.map((item) => ({ name: item.name, price: item.price, quantity: item.quantity, category: item.CategoryName })),
         totalAmount: totalPrice,
         paymentMethod: selectedPaymentMethod,
       })
@@ -126,8 +127,8 @@ function Cart({ showPayment }) {
           <div className="mb-3">
             {selectedPaymentMethod && (
               <div className="border p-3 text-black">
-                <p className=" text-black">Selected Payment Method</p>
-                <div className="border p-2 text-black">{selectedPaymentMethod}</div>
+                <p className=" text-white">Selected Payment Method</p>
+                <div className="border p-2 text-white">{selectedPaymentMethod}</div>
               </div>
             )}
           </div>

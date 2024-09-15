@@ -152,10 +152,28 @@ function Card(props) {
           <hr />
           {isAdmin ? (
             <div>
-              <button className="btn ms-2 btn-warning" onClick={handleEdit}>
+              <button className="btn ms-2 btn-warning"
+                onClick={async () => {
+                  const isAuthenticatedUser = await isAuthenticated();
+                  if (isAuthenticatedUser) {
+                    handleEdit();
+                  } else {
+                    navigate('/login');
+                  }
+                }}
+              >
                 Edit
               </button>
-              <button className="btn ms-2 btn-danger" onClick={handleDelete}>
+              <button className="btn ms-2 btn-danger"
+                onClick={async () => {
+                  const isAuthenticatedUser = await isAuthenticated();
+                  if (isAuthenticatedUser) {
+                    handleDelete();
+                  } else {
+                    navigate('/login');
+                  }
+                }}
+              >
                 Delete
               </button>
               <EditModal
