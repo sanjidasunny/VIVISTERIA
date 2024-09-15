@@ -26,7 +26,7 @@ router.post('/payment', async (req, res) => {
 
       if (category) {
         // Increment the purchased number by the quantity of the item
-        category.purchased += item.quantity;
+        category.purchased = Number(category.purchased) + Number(item.quantity);
         await category.save(); // Save the updated category document
       } else {
         console.error(`Category ${item.category} not found for item ${item.name}`);

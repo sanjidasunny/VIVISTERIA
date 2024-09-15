@@ -6,7 +6,7 @@ function Cart({ showPayment }) {
   const data = useCart();
   const dispatch = useDispatchCart();
   const totalPrice = data.reduce((total, food) => total + food.price, 0);
-
+  const cartData = localStorage.getItem('cart')
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
 
@@ -25,6 +25,9 @@ function Cart({ showPayment }) {
       alert("Please select a payment method before proceeding.");
       return;
     }
+
+    console.log(cartData)
+    console.log(data)
 
 
     axios.post(
