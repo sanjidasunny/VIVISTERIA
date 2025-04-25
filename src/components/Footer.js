@@ -17,11 +17,7 @@ function Footer() {
             <i className="fa-brands fa-github fa-2x"></i>
           </Link>
         </li>
-        <li className="ms-3">
-          <Link to="https://www.facebook.com/asif.avaas.52" target="_blank" rel="noopener noreferrer">
-            <i className="fa-brands fa-facebook fa-2x"></i>
-          </Link>
-        </li>
+       
         <li className="ms-3">
           <Link to="https://github.com/sanjidasunny" target="_blank" rel="noopener noreferrer">
             <i className="fa-brands fa-square-github fa-2x"></i>
